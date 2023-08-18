@@ -26,6 +26,7 @@ const Hero = () => {
 
           <p className={`${styles.ptext} my-4 max-w-[800px]`}>
             La Facultad de Veterinaria renueva su compromiso con la Sociedad con un enfoque transdisciplinario, multisectorial y colaborativo en Una Salud, Un Mundo, Un Bienestar.
+          prueba branch vice
           </p>
          
           <Button text={'Ver nuestra Mision y Vision'} className={'mt-6'}/>
