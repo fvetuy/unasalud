@@ -19,6 +19,11 @@ const App = () => (
         <MisionVision/>
       </div>
     </div>
+    <div className={`${styles.paddingX} ${styles.flexCenter}`}> 
+      <div className={`${styles.boxWidth}`}>
+        <MuestraActividades/>
+      </div>
+    </div>
     <div className={`mb-0`}>
       <Footer/>
     </div>

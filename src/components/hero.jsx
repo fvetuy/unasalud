@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from '../style';
-import { trazoAnimales } from '../assets';
+import { trazoAnimales, logoFvetColor, logoUdelarColor } from '../assets';
 import Button from './ui/button';
 
 const Header = () => (
-  <div className='flex flex-col w-full '>
+  <div className='flex flex-col w-[130%]'>
     <div className='flex flex-row justify-between'>
-      <div>Logo udelar</div>
+      <div className='ml-16'><img src={ logoFvetColor } alt="una salud" className="w-52 h-22"/></div>
       <img src={trazoAnimales} alt="logo-header" className="h-[110px] "/>
-      <div>Logo FVET</div>
+      <div><img src={ logoUdelarColor } alt="una salud" className="w-52 h-22"/></div>
     </div>
     <div className='w-full h-0.5 mb-5'>
       <div className='bg-gradient-to-r from-white via-[#101010] to-white w-full h-0.5 '/>
@@ -18,15 +18,14 @@ const Header = () => (
 
 const Hero = () => {
   return (
-    <section id='home' className={`flex md:flex-col flex-col ${styles.paddingY}`}>
-      <div className="flex flex-col items-center text-center">
+    <section id='home' className={`flex md:flex-col flex-col ${styles.paddingY} mt-14`}>
+      <div className="flex flex-col items-center text-center mb-10">
           <Header/>
           <h1 className={`${styles.h1text} mt-4`}>Programa <span className='text-[#19C5EB]'>Una Salud</span>
           </h1>
 
           <p className={`${styles.ptext} my-4 max-w-[800px]`}>
             La Facultad de Veterinaria renueva su compromiso con la Sociedad con un enfoque transdisciplinario, multisectorial y colaborativo en Una Salud, Un Mundo, Un Bienestar.
-          prueba push origin vice
           </p>
          
           <Button text={'Ver nuestra Mision y Vision'} className={'mt-6'}/>
