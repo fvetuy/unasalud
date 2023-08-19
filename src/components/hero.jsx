@@ -21,7 +21,7 @@ const Hero = () => {
     <section id='home' className={`flex md:flex-col flex-col ${styles.paddingY}`}>
       <div className="flex flex-col items-center text-center">
           <Header/>
-          <h1 className={`${styles.h1text} mt-4`}>Programa <span   className='text-[#19C5EB]'>Una Salud</span>
+          <h1 className={`${styles.h1text} mt-4`}>Programa <span className='text-[#19C5EB]'>Una Salud</span>
           </h1>
 
           <p className={`${styles.ptext} my-4 max-w-[800px]`}>

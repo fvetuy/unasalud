@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './style';
-import { NavBar, Hero, Footer } from './components';
+import { NavBar, Hero, MisionVision, MuestraActividades, Footer } from './components';
 
 const App = () => (
   <div className='bg-white w-full overflow-hidden'>
@@ -14,6 +14,15 @@ const App = () => (
         <Hero/>
       </div>
     </div>
+    <div className={`${styles.paddingX} ${styles.flexCenter}`}> 
+      <div className={`${styles.boxWidth}`}>
+        <MisionVision/>
+      </div>
+    </div>
+    <div className={`mb-0`}>
+      <Footer/>
+    </div>
+      
   </div>
 )
 
