@@ -11,7 +11,7 @@ const muestraActividades = () => {
       Actividades
     </h4>
     
-    <button className="text-black bg-transparent border-none">Ver todos<BsArrowRightShort/></button>
+    <button className="text-black bg-transparent border-none">Ver todos</button>
   </div>
   
   {actividades.map((actividades) => (
@@ -23,6 +23,10 @@ const muestraActividades = () => {
         <h4 className={`${styles.h3text} text-black self-auto mb-3 p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
           {actividades.id}
         </h4>
+        <div className='pb-3 cursor-pointer'> 
+        <BsArrowRightShort/>
+        </div>
+        
       </div>
       <p className={`${styles.ptext} font-poppins font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-normal text-black self-auto`}>
         {actividades.texto}
