@@ -18,7 +18,7 @@ export const navLinks = [
       title: "Noticias",
     },
     {
-        id: "ubicacionContacto",
+        id: "ubicacion-contacto",
         title: "Ubicacion y Contacto",
     }
   ];

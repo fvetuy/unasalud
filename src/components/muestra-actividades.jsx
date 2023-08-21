@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../style';
 import { actividades } from '../constants';
-import { BsArrowRightShort } from "react-icons/bs";
+import { BsArrowRight } from "react-icons/bs";
 
 const muestraActividades = () => {
   return (
@@ -11,7 +11,7 @@ const muestraActividades = () => {
       Actividades
     </h4>
     
-    <button className="text-black bg-transparent border-none">Ver todos</button>
+    <button className="text-black bg-transparent border-none"><a href="/actividades">Ver todos</a></button>
   </div>
   
   {actividades.map((actividades) => (
@@ -24,7 +24,7 @@ const muestraActividades = () => {
           {actividades.id}
         </h4>
         <div className='pb-3 cursor-pointer'> 
-        <BsArrowRightShort/>
+        <BsArrowRight/>
         </div>
         
       </div>
