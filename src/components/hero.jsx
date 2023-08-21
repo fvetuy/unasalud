@@ -19,7 +19,7 @@ const Header = () => (
 const Hero = () => {
   return (
     <section id='home' className={`flex md:flex-col flex-col`}>
-      <div className="flex flex-col items-center text-center mb-10 mt-5">
+      <div className="flex flex-col items-center text-center mb-28 mt-5">
           <Header/>
           <h1 className={`${styles.h1text} mt-4`}>Programa <span className='text-[#19C5EB]'>Una Salud</span>
           </h1>

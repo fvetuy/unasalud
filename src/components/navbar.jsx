@@ -13,7 +13,7 @@ const NavBar = () => {
           <li
             key={nav.id}
             className={`dmsans font-normal cursor-pointer text-[16px] ${index === navLinks.length - 1 ? 'ml-auto' : 'ml-10'} text-white`}>
-            <a href={`${nav.id}`}>{nav.title}</a>
+            <a href={nav.id === "inicio" ? "/" : `/${nav.id}`}>{nav.title}</a>
           </li>
         ))}
       </ul>

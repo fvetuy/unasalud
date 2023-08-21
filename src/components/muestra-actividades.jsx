@@ -14,7 +14,7 @@ const muestraActividades = () => {
     <button className="text-black bg-transparent border-none"><a href="/actividades">Ver todos</a></button>
   </div>
   
-  {actividades.map((actividades) => (
+  {[...actividades].slice(0, 3).map((actividades) => (
     <div key={actividades.id} className={`${styles.flexCenter} flex-1 flex items-center flex-col m-3 mt-5`}>
       <div className="flex items-center">
         <div className="w-16 h-16"> 
@@ -24,7 +24,7 @@ const muestraActividades = () => {
           {actividades.id}
         </h4>
         <div className='pb-3 cursor-pointer'> 
-        <BsArrowRight/>
+        <a href={`${"actividades/" + actividades.id}`}><BsArrowRight/></a>
         </div>
         
       </div>
