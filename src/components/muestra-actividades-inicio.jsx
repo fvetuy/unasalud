@@ -23,14 +23,14 @@ const muestraActividadesInicio = () => {
                   <img src={actividad.icono} alt="Imagen de la actividad" />
                 </div>
                 <h4 className={`${styles.h3text} text-black self-auto mb-3 p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
-                  {actividad.id}
+                  {actividad.id.slice(0, 20)}
                 </h4>
                 <div className='pb-3 cursor-pointer'> 
                   <a href={`${"actividades/" + actividad.id}`}><BsArrowRight/></a>
                 </div>
               </div>
               <p className={`${styles.ptext} font-poppins font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-normal text-black self-auto`}>
-                {actividad.texto}
+                {actividad.texto.slice(0, 150)}
               </p>
             </div>
           ))}
