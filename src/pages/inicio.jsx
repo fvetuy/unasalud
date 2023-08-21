@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../style';
-import { NavBar, Hero, MisionVision, MuestraActividades, Footer } from '../components';
+import { Hero, MisionVision, MuestraActividadesInicio } from '../components';
 
 const inicio = () => {
   return (
@@ -17,7 +17,7 @@ const inicio = () => {
     </div>
     <div className={`${styles.paddingX} ${styles.flexCenter}`}> 
       <div className={`${styles.boxWidth}`}>
-        <MuestraActividades/>
+        <MuestraActividadesInicio/>
       </div>
     </div>
     </div>

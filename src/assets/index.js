@@ -3,9 +3,12 @@ import trazoAnimales from "./trazoAnimales.png";
 import trazoAnimalesBlanco from "./trazoAnimalesBlanco.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
-import actividad1 from "./actividad1.png";
-import actividad2 from "./actividad2.png";
-import actividad3 from "./actividad3.png";
+import ImgActividad1 from "./ImgActividad1.jpg";
+import ImgActividad2 from "./ImgActividad2.jpg";
+import ImgActividad3 from "./ImgActividad3.jpg";
+import IconoActividad1 from "./IconoActividad1.png";
+import IconoActividad2 from "./IconoActividad2.png";
+import IconoActividad3 from "./IconoActividad3.png";
 import logoFvetColor from "./logoFvetColor.png";
 import logoUdelarColor from "./logoUdelarColor.png";
 
@@ -17,7 +20,10 @@ export {
     logoUdelarColor,
     menu,
     close,
-    actividad1,
-    actividad2,
-    actividad3,
+    ImgActividad1,
+    ImgActividad2,
+    ImgActividad3,
+    IconoActividad1,
+    IconoActividad2,
+    IconoActividad3,
 };
