@@ -1,5 +1,6 @@
 import logo from "./logo.png";
 import trazoAnimales from "./trazoAnimales.png";
+import trazoAnimalesBlanco from "./trazoAnimalesBlanco.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
 import actividad1 from "./actividad1.png";
@@ -11,6 +12,7 @@ import logoUdelarColor from "./logoUdelarColor.png";
 export {
     logo,
     trazoAnimales,
+    trazoAnimalesBlanco,
     logoFvetColor,
     logoUdelarColor,
     menu,

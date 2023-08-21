@@ -1,29 +1,28 @@
 import React from 'react';
 import styles from '../style';
-import { trazoAnimales, logoFvetColor, logoUdelarColor } from '../assets';
+import { logoFvetColor, logoUdelarColor } from '../assets';
 import Button from './ui/button';
 
+
 const Header = () => (
-  <div className='flex flex-col w-[130%]'>
-    <div className='flex flex-row justify-between'>
-      <div className='ml-16'><img src={ logoFvetColor } alt="una salud" className="w-52 h-22"/></div>
-      <img src={trazoAnimales} alt="logo-header" className="h-[110px] "/>
-      <div><img src={ logoUdelarColor } alt="una salud" className="w-52 h-22"/></div>
-    </div>
-    <div className='w-full h-0.5 mb-5'>
-      <div className='bg-gradient-to-r from-white via-[#101010] to-white w-full h-0.5 '/>
-    </div>
+  <div className='flex justify-between items-center h-[100px] w-full '>
+      <div className="flex items-center justify-end">
+        <img className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] object-contain" src={logoFvetColor} alt="logo-fvet"/>
+      </div>
+      
+      <div className="flex items-center justify-end">
+        <img className="w-[170px] h-[170px] sm:w-[230px] sm:h-[230px] object-contain" src={logoUdelarColor} alt="logo-fvet"/>
+      </div>
   </div>
 )
 
 const Hero = () => {
   return (
-    <section id='home' className={`flex md:flex-col flex-col ${styles.paddingY} mt-14`}>
-      <div className="flex flex-col items-center text-center mb-10">
+    <section id='home' className={`flex md:flex-col flex-col`}>
+      <div className="flex flex-col items-center text-center mb-10 mt-5">
           <Header/>
           <h1 className={`${styles.h1text} mt-4`}>Programa <span className='text-[#19C5EB]'>Una Salud</span>
           </h1>
-
           <p className={`${styles.ptext} my-4 max-w-[800px]`}>
             La Facultad de Veterinaria renueva su compromiso con la Sociedad con un enfoque transdisciplinario, multisectorial y colaborativo en Una Salud, Un Mundo, Un Bienestar.
           </p>

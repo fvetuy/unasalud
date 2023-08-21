@@ -1,4 +1,4 @@
-import NavBar from './nabvar';
+import NavBar from './navbar';
 import Hero from "./hero";
 import Footer from "./footer";
 import MisionVision from './mision-vision';
