@@ -1,14 +1,13 @@
 import React from 'react'
 import styles from './style';
 import { Route, Routes } from 'react-router-dom';
-import { Inicio, Programa, Actividades, Noticias, UbicacionContacto } from './pages';
+import { Inicio, Programa, Actividades, Noticias } from './pages';
 import { NavBar, Footer } from './components';
 
 const EInicio = () => <Inicio/> 
 const EPrograma = () => <Programa/> 
 const EActividades = () => <Actividades/> 
 const ENoticias = () => <Noticias/> 
-const EUbicacionContacto = () => <UbicacionContacto/> 
 
 const App = () => (
   <div className='bg-white w-full overflow-hidden'>
@@ -24,7 +23,6 @@ const App = () => (
         <Route path='/programa' element={<EPrograma />}/>  
         <Route path='/actividades' element={<EActividades />}/>
         <Route path='/noticias' element={<ENoticias />}/>
-        <Route path='/ubicacion-contacto' element={<EUbicacionContacto />}/>
     </Routes>
 
     <div className={`mb-0`}>

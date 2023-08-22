@@ -10,7 +10,7 @@ const inicio = () => {
         <Hero/>
       </div>
     </div>
-    <div className={`${styles.paddingX} ${styles.flexCenter}`}> 
+    <div className={`sm:px-6 px-0 ${styles.flexCenter}`}> 
       <div className={`${styles.boxWidth}`}>
         <MisionVision/>
       </div>
