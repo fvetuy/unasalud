@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { close, trazoAnimalesBlanco, menu } from "../assets";
 import { navLinks } from "../constants";
+import ContactInfoPopup from "./ui/contact_info_popup";
+import Button from "./ui/button";
 
 const NavBar = () => {
   const [toggle, setToggle] = useState(false)
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handlePopupToggle = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
   
   return (
     <nav className="w-full flex py-6 navbar">
@@ -13,7 +21,11 @@ const NavBar = () => {
           <li
             key={nav.id}
             className={`dmsans font-normal cursor-pointer text-[16px] ${index === navLinks.length - 1 ? 'ml-auto' : 'ml-10'} text-white`}>
-            <a href={nav.id === "inicio" ? "/" : `/${nav.id}`}>{nav.title}</a>
+            {index === navLinks.length - 1 ? 
+            (<button className="px-4 py-4  text-white rounded" onClick={handlePopupToggle} text={nav.title}>
+             Ubicacion y contacto
+            </button>)  : 
+            (<a href={nav.id === "inicio" ? "/" : `/${nav.id}`}>{nav.title}</a>)}
           </li>
         ))}
       </ul>
@@ -33,6 +45,8 @@ const NavBar = () => {
        </ul>
           </div>
       </div>
+
+      {isPopupOpen && <ContactInfoPopup onClose={handlePopupToggle} />}
     </nav>
   )
 }
