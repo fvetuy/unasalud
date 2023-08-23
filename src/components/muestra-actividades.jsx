@@ -8,13 +8,13 @@ const MuestraActividades = () => {
     <section id='muestraActividades' className="flex justify-center items-center flex-col sm:flex-row flex-wrap sm:mb-20 m-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
         {actividades.map((actividad) => (
-          <div key={actividad.id} className={`${styles.flexCenter} flex-1 flex items-center flex-col m-3 mt-5`}>
+          <div key={actividad.id} className='mb-6 xs:mb-10'>
             <div className="flex items-center">
               <div className="w-full h-full">
                 <LazyLoad height={200} once placeholder={<div className="placeholder" style={{ height: '200px' }} />} >
                   <img src={actividad.img} alt="Imagen de la actividad" className='rounded-md' />
                 </LazyLoad>
-                <h4 className={`${styles.h3text} text-black self-auto mb-3 p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
+                <h4 className={`${styles.h3text} self-auto pl-0 xs:mb-3 xs:pl-0 xs:p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
                   {actividad.id.slice(0, 20)}
                 </h4>
               </div>
