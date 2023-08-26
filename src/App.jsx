@@ -3,11 +3,14 @@ import styles from './style';
 import { Route, Routes } from 'react-router-dom';
 import { Inicio, Programa, Actividades, Noticias } from './pages';
 import { NavBar, Footer } from './components';
+import { useFirebaseApp } from 'reactfire'; 
+
 
 const EInicio = () => <Inicio/> 
 const EPrograma = () => <Programa/> 
 const EActividades = () => <Actividades/> 
 const ENoticias = () => <Noticias/> 
+
 
 const App = () => (
   <div className='bg-white w-full overflow-hidden'>
@@ -28,7 +31,6 @@ const App = () => (
     <div className={`mb-0`}>
       <Footer/>
     </div>
-      
   </div>
 )
 
