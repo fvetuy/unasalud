@@ -1,40 +1,36 @@
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import NewData from './models/new';
-import ActivityData from './models/activity';
+import { initializeApp } from 'firebase/app';
 
-// Obtener referencia a la base de datos
+// Initialize Firebase
+export const config = {
+  apiKey: "AIzaSyDJMk_1p3NGU_VStWxGg7miTGlULG8rgkQ",
+  authDomain: "una-salud-6c316.firebaseapp.com",
+  projectId: "una-salud-6c316",
+  storageBucket: "una-salud-6c316.appspot.com",
+  messagingSenderId: "430339610758",
+  appId: "1:430339610758:web:f5c813f3963d836c031907",
+  measurementId: "G-1EYG2MNTK5"
+};
+
+initializeApp(config);
+
 const db = getFirestore();
 
-// Leer noticia
-export const readNew = async (newId) => {
+const readAllNews = async () => {
   try {
-    const docRef = doc(db, 'actividades', documentId);
-    const docSnapshot = await getDoc(docRef);
+    const querySnapshot = await getDocs(collection(db, 'news'));
 
-    if (docSnapshot.exists()) {
-      const { titulo, descripcion, imagen, fecha } = docSnapshot.data();
+    const noticiasArray = querySnapshot.docs.map((doc) => {
+      const { titulo, descripcion, imagen, fecha } = doc.data();
       return new NewData(titulo, descripcion, imagen, fecha);
-    } else {
-      return null;
-    }
+    });
+
+    return noticiasArray;
   } catch (error) {
-    return null;
+    console.error('Error fetching noticias:', error);
+    return [];
   }
 };
 
-// Leer noticia
-export const readActivity = async (activityId) => {
-  try {
-    const docRef = doc(db, 'actividades', activityId);
-    const docSnapshot = await getDoc(docRef);
-
-    if (docSnapshot.exists()) {
-      const { titulo, descripcion, imagen, fecha, categoria} = docSnapshot.data();
-      return new ActivityData(titulo, descripcion, imagen, fecha, categoria);
-    } else {
-      return null;
-    }
-  } catch (error) {
-    return null;
-  }
-};
+export default readAllNews;

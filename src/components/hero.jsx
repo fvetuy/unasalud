@@ -2,9 +2,6 @@ import React from 'react';
 import styles from '../style';
 import { logoFvetColor, logoUdelarColor } from '../assets';
 import Button from './ui/button';
-import { readNew } from '../api/firebase_actions';
-
-
 
 const Header = () => (
   <div className='flex justify-between items-center h-[100px] w-full '>
@@ -19,26 +16,10 @@ const Header = () => (
 )
 
 const Hero = () => {
-  const [latestNew, setNew] = useState(null);
-
-  useEffect(() => {
-    const fetchNoticia = async () => {
-      const newData = await readNew('AdBb1OK89gFEwfkgNHeX');
-
-      if (newData) {
-        setNew(newData);
-      }
-    };
-
-
-    fetchNoticia();
-  }, []);
-
   return (
     <section id='home' className={`flex md:flex-col flex-col`}>
       <div className="flex flex-col items-center text-center mb-28 mt-5">
           <Header/>
-          <div>{latestNew.titulo}</div>
           <h1 className={`${styles.h1text} mt-4`}>Programa <span className='text-[#19C5EB]'>Una Salud</span>
           </h1>
           <p className={`${styles.ptext} my-4 max-w-[800px]`}>
