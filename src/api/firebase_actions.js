@@ -4,7 +4,7 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 // Initialize Firebase
-export const config = {
+ const config = {
   apiKey: "AIzaSyDJMk_1p3NGU_VStWxGg7miTGlULG8rgkQ",
   authDomain: "una-salud-6c316.firebaseapp.com",
   projectId: "una-salud-6c316",
@@ -18,7 +18,7 @@ initializeApp(config);
 
 const db = getFirestore();
 
- const readAllNews = async () => {
+export const readAllNews = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, 'news'));
 
@@ -34,7 +34,7 @@ const db = getFirestore();
   }
 };
 
-const login = async (email, password) => {
+export const login = async (email, password) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -47,9 +47,4 @@ const login = async (email, password) => {
       console.log("error")
       return "error";
     });
-};
-
-export default {
-  readAllNews,
-  login,
 };

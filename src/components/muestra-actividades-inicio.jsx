@@ -17,7 +17,7 @@ const muestraActividadesInicio = () => {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[...actividades].slice(0, 3).map((actividad) => (
-            <div key={actividad.id} className={`${styles.flexStart} flex-1 flex  flex-col m-3 mt-5`}>
+           <div key={actividad.id} className={${styles.flexStart} flex-1 flex  flex-col m-3 mt-5 py-12 px-8 bg-[#E3DEC8]  rounded-xl }>
               <div className="flex items-center">
                 <div className="w-16 h-16"> 
                   <img src={actividad.icono} alt="Imagen de la actividad" />

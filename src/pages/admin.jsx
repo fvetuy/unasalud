@@ -1,5 +1,5 @@
 import {React, useState} from 'react';
-import login from '../api/firebase_actions';
+import { login } from '../api/firebase_actions';
 
 const Admin = () => {
   const [email, setEmail] = useState('');

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import readAllNews from '../api/firebase_actions'
+import { readAllNews } from '/src/api/firebase_actions';
 
 const Noticias = () => {
   const [noticias, setNoticias] = useState([]);
