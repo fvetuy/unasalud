@@ -1,6 +1,7 @@
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import NewData from './models/new';
 import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 // Initialize Firebase
 export const config = {
@@ -17,7 +18,7 @@ initializeApp(config);
 
 const db = getFirestore();
 
-const readAllNews = async () => {
+ const readAllNews = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, 'news'));
 
@@ -33,4 +34,22 @@ const readAllNews = async () => {
   }
 };
 
-export default readAllNews;
+const login = async (email, password) => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user.email)
+      return "logged in";
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("error")
+      return "error";
+    });
+};
+
+export default {
+  readAllNews,
+  login,
+};
