@@ -4,7 +4,7 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 // Initialize Firebase
- const config = {
+const config = {
   apiKey: "AIzaSyDJMk_1p3NGU_VStWxGg7miTGlULG8rgkQ",
   authDomain: "una-salud-6c316.firebaseapp.com",
   projectId: "una-salud-6c316",
@@ -29,7 +29,6 @@ export const readAllNews = async () => {
 
     return noticiasArray;
   } catch (error) {
-    console.error('Error fetching noticias:', error);
     return [];
   }
 };

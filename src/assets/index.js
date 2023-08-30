@@ -11,7 +11,8 @@ import IconoActividad2 from "./IconoActividad2.png";
 import IconoActividad3 from "./IconoActividad3.png";
 import logoFvetColor from "./logoFvetColor.png";
 import logoUdelarColor from "./logoUdelarColor.png";
-
+import programHeaderImage from "./programHeaderImage.png";
+import cordinatorPhoto from "./cordinatorPhoto.png";
 export {
     logo,
     trazoAnimales,
@@ -26,4 +27,6 @@ export {
     IconoActividad1,
     IconoActividad2,
     IconoActividad3,
+    programHeaderImage,
+    cordinatorPhoto,
 };

@@ -21,7 +21,7 @@ const Noticias = () => {
     <div>
       <h1>Noticias</h1>
       {isLoading ? (
-        <div>Loading...</div> // Display loading circle while fetching data
+        <div>Loading...</div>
       ) : (
         noticias.map((noticia) => (
           <div>

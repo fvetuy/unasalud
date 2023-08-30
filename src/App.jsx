@@ -13,7 +13,7 @@ const EAdmin = () => <Admin />;
 const App = () => {
   return (
     <div className="w-full overflow-hidden" >
-      <div className={`bg-primary ${styles.paddingX} ${styles.flexCenter}`}>
+      <div className={`bg-black ${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
           <NavBar />
         </div>
