@@ -34,9 +34,9 @@ export const misionYVision = [
   }
 ];
 
-export const cordinatorName = "Maria Teresa Correa, Asistente Academica para Una Salud";
+export const cordinatorName = "Maria Teresa Correa";
 
-export const cordinatorInfo = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem";
+export const cordinatorInfo = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting.";
 
 export const actividades = [
    // Se van a mostrar solamente los primeros tres elementos del array de actividades en la pagina principal

@@ -13,6 +13,8 @@ import logoFvetColor from "./logoFvetColor.png";
 import logoUdelarColor from "./logoUdelarColor.png";
 import programHeaderImage from "./programHeaderImage.png";
 import cordinatorPhoto from "./cordinatorPhoto.png";
+import logoBadge from "./logoBadge.jpg";
+
 export {
     logo,
     trazoAnimales,
@@ -29,4 +31,5 @@ export {
     IconoActividad3,
     programHeaderImage,
     cordinatorPhoto,
+    logoBadge,
 };

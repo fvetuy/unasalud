@@ -10,12 +10,12 @@ const inicio = () => {
         <Hero/>
       </div>
     </div>
-    <div className={`sm:px-6 px-0 ${styles.flexCenter}`}> 
+    <div className={`${styles.flexCenter}`}> 
       <div className={`${styles.boxWidth}`}>
         <MisionVision/>
       </div>
     </div>
-    <div className={`${styles.paddingX} ${styles.flexCenter}`}> 
+    <div className={`${styles.paddingX} ${styles.flexCenter} mt-20`}> 
       <div className={`${styles.boxWidth}`}>
         <MuestraActividadesInicio/>
       </div>
