@@ -2,12 +2,19 @@ import React from 'react';
 import styles from '../style';
 import { actividades } from '../constants';
 import { BsArrowRight } from "react-icons/bs";
+import { logoBadge } from '../assets';
 
 const muestraActividadesInicio = () => {
   return (
 
       <section id='muestraActividades' className="flex justify-center items-center flex-col sm:flex-row flex-wrap sm:mb-20 m-6">
-        <div className="w-full flex items-center"> 
+        
+        <div className={`${styles.flexCenter}`}>
+          <img className="w-[110px] h-[110px] sm:w-[160px] sm:h-[160px] object-contain mb-16" src={logoBadge} alt="logo-fvet"/>
+        </div>
+      
+        <div className="w-full flex items-center mt-6"> 
+
           <h4 className={`${styles.h4text} xs:mb-2 mb-10 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
             Actividades
           </h4>
@@ -17,10 +24,10 @@ const muestraActividadesInicio = () => {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[...actividades].slice(0, 3).map((actividad) => (
-           <div key={actividad.id} className={`${styles.flexStart} flex-1 flex flex-col m-3 mt-5 py-12 px-8 bg-[#E3DEC8] rounded-xl`}>
+           <div key={actividad.id} className={`${styles.flexStart} flex-1 flex flex-col m-3 mt-2 sm:py-12 pb-6 px-8 bg-[#E3DEC8] rounded-xl`}>
               <div className="flex items-center">
                 <div className="w-16 h-16"> 
-                  <img src={actividad.icono} alt="Imagen de la actividad" />
+                  <img className='rounded-3xl' src={actividad.icono} alt="Imagen de la actividad" />
                 </div>
                 <h4 className={`${styles.h3text} text-black self-auto mb-3 p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
                   {actividad.id.slice(0, 20)}
