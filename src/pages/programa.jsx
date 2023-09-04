@@ -13,7 +13,7 @@ const programa = () => {
           <h1 className="font-dmsans text-[30px] md:text-[40px] font-semibold text-black w-full">El programa</h1>
         </div>
        </div>
-       <div className={`flex flex-col mt-20 ${styles.marginX}`}>
+       <div className={`flex flex-col mt-48 ${styles.marginX}`}>
         <div className={`flex flex-row`}>
           <div className="relative w-[200px] h-[200px] md:w-[270px] md:h-[270px]">
             <div className='w-[80%] h-[80%] bg-zinc-100 absolute bottom-5 left-0'></div>
@@ -21,14 +21,13 @@ const programa = () => {
           </div>
           <div className='flex flex-1 flex-col items-start'>
             <h1 className="font-dmsans text-[18px] font-medium text-black w-full text-left mb-2">Coordinadora<span className='text-amber-500'> · </span>{cordinatorName}</h1>
-            <img className="w-[150px] h-[150px] object-contain block md:hidden" src={logoBadge} alt="program-header-image"/>
             <p className={`${styles.ptext} text-left max-w-[900px] hidden md:block`}>{cordinatorInfo}</p>
           </div>
         </div>
         <p className={`${styles.ptext} text-left max-w-[700px] block md:hidden mt-5`}>{cordinatorInfo}</p>
        </div>
-       <img className="w-[200px] h-[200px] object-contain mx-auto mt-20" src={logoBadge} alt="program-header-image"/>
-       <div className='mt-30 mb-20'>
+       
+       <div className='mb-52'>
         <MisionVision/>
        </div>
     </div>

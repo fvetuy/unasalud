@@ -29,19 +29,20 @@ const NavBar = () => {
         ))}
       </ul>
       
-      <div className="sm:hidden flex flex-row flex-1 justify-between items-center">
+      <div className="sm:hidden flex flex-row flex-1 justify-between items-center z-[2]">
       <img src={trazoAnimalesBlanco} alt="una salud" className="w-[150px] h-[40px] object-contain"/>
-          <img src={toggle ?  close : menu} alt="menu" className="w-[28px] h-[28px] object-contain" onClick={() => setToggle((prev) => !prev )}/>
-          <div className={`${toggle ? 'flex' : 'hidden'} p-6 bg-black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}>
-          <ul className="list-none flex flex-col justify-end items-center flex-1">
-        {navLinks.map((nav, index) => (
+          <img src={toggle ?  close : menu} alt="menu" className="w-[28px] h-[28px] object-contain z-[1]" onClick={() => setToggle((prev) => !prev )}/>
+          <div className={`${toggle ? 'flex' : 'hidden'} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50`}>
+          <ul className="flex flex-col items-center bg-black p-6 rounded-xl shadow-lg">
+        {[...navLinks].slice(0,4).map((nav, index) => (
 
           <li key={nav.id} className={`font-poppins font-normal cursor-pointer text-[16px] ${index === navLinks.length - 1 ? 'mr-0' : 'mb-4'} text-white`}>
-                 <a href={`#${nav.id}`}>
-                  {nav.title}
-                 </a>
+                 <a href={nav.id === "inicio" ? "/" : `/${nav.id}`}>{nav.title}</a>
           </li>
         ))}
+        <li>
+                 <a href="#a" className="text-white">Ubicacion y Contacto</a>
+          </li>
        </ul>
           </div>
       </div>
