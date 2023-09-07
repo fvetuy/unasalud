@@ -6,7 +6,7 @@ import { actividades } from '../constants';
 const MuestraActividades = () => {
   return (
     <section id='muestraActividades' className="flex justify-center items-center flex-col sm:flex-row flex-wrap sm:mb-20 m-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:px-2">
         {actividades.map((actividad) => (
           <div key={actividad.id} className='mb-6 xs:mb-10'>
             <div className="flex items-center">
@@ -20,7 +20,7 @@ const MuestraActividades = () => {
               </div>
             </div>
             <p className={`${styles.ptext} font-poppins font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-normal text-black self-auto`}>
-              {actividad.texto.slice(0, 150) + "..."} <button className="text-black bg-transparent border-none"><a href={`${"actividades/" + actividad.id}`}>Más información</a></button>
+              {actividad.texto.slice(0, 99) + "..."} <button className="text-black bg-transparent border-none md:text-[18px] sm:text-[16px]"><a href={`${"actividades/" + actividad.id.toLowerCase()}`}>Más info</a></button>
             </p>
           </div>
         ))}

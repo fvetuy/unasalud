@@ -33,7 +33,7 @@ const muestraActividadesInicio = () => {
                   {actividad.id.slice(0, 20)}
                 </h4>
                 <div className='pb-3 cursor-pointer'> 
-                  <a href={`${"actividades/" + actividad.id}`}><BsArrowRight/></a>
+                  <a href={`${"actividades/" + actividad.id.toLowerCase()}`}><BsArrowRight/></a>
                 </div>
               </div>
               <p className={`${styles.ptext} font-poppins font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-normal text-black self-auto`}>
