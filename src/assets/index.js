@@ -14,6 +14,9 @@ import logoUdelarColor from "./logoUdelarColor.png";
 import programHeaderImage from "./programHeaderImage.png";
 import cordinatorPhoto from "./cordinatorPhoto.png";
 import logoBadge from "./logoBadge.jpg";
+import imagenActividad1 from "./imagen_actividad_1.png";
+import imagenActividad2 from "./imagen_actividad_2.png";
+import imagenActividad3 from "./imagen_actividad_3.png";
 
 export {
     logo,
@@ -32,4 +35,7 @@ export {
     programHeaderImage,
     cordinatorPhoto,
     logoBadge,
+    imagenActividad1,
+    imagenActividad2,
+    imagenActividad3,
 };
