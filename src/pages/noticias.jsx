@@ -19,9 +19,10 @@ const Noticias = () => {
 
   return (
     <div>
-      <h1>Noticias</h1>
-      {isLoading ? (
-        <div>Loading...</div>
+      {!isLoading ? (
+        <div className='flex justify-center items-center h-[500px]'>
+          <div className='loader'></div>
+        </div>
       ) : (
         noticias.map((noticia) => (
           <div>
