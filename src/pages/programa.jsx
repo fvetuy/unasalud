@@ -26,8 +26,8 @@ const programa = () => {
           </div>
         </div>
         <p className={`${styles.ptext} text-left max-w-[700px] block md:hidden mt-10`}>{cordinatorInfo}</p>
-        <img className="w-[200px] h-[200px] object-contain mx-auto mt-20 hidden md:block" src={logoBadge} alt="program-header-image"/>
        </div>
+       <img className="w-[200px] h-[200px] object-contain mx-auto mt-20 hidden md:block" src={logoBadge} alt="program-header-image"/>
        <MisionVision/>
        <div className='mt-20 relative w-full h-[300px] p-4 md:p-6'>
         <div className="absolute top-0 w-[200px] h-[200px] sm:w-[270px] sm:h-[270px]">
