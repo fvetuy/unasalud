@@ -12,7 +12,7 @@ const EAdmin = () => <Admin />;
 
 const App = () => {
   return (
-    <div className="w-full overflow-hidden" >
+    <div className="w-full overflow-hidden" style={{backgroundImage: "url(\"../src/assets/background_texture.jpg",  backgroundSize: "cover", backgroundAttachment: "fixed"} }>
       <div className={`bg-black ${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
           <NavBar />

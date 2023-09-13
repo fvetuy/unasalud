@@ -5,7 +5,6 @@ import ContactInfoPopup from "./ui/contact_info_popup";
 
 const NavBar = () => {
   const [toggle, setToggle] = useState(false);
-
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handlePopupToggle = () => {

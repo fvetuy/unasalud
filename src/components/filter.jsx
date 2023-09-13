@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
+const Filter = () => {  
   const [isFilterSelected, setIsFilterSelected] = useState(false);
 
   const handFilterSelection = () => {
     setIsFilterSelected(!isFilterSelected);
   };
 
-const filter = () => (
+    return (
     <section id='muestraActividades' className="flex items-center flex-col sm:flex-row flex-wrap mx-6 my-10 sm:my-16 md:my-16">
         <ul className='grid grid-cols-3 gap-10 md:px-2 md:ml-2 sm:ml-2'> 
             <li>
@@ -20,12 +21,13 @@ const filter = () => (
                 </button>
             </li>
             <li>
-               <button>
+                <button>
                 <span>Extension</span>
-               </button>
+                </button>
             </li>
         </ul>
     </section>
-  )
+    );
+};
 
-export default filter
+export default Filter;
