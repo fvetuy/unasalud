@@ -26,11 +26,11 @@ export const navLinks = [
 export const misionYVision = [
   {
     id: "Mision",
-    texto: "El Programa aborda las problemáticas de la interfaz humano-animal, como enfermedades de origen animal, bienestar y producción, en armonía con el medio ambiente y los intereses de la sociedad. Utiliza un enfoque multidisciplinario y participativo, colaborando con expertos y la comunidad para lograr sus objetivos.      "
+    texto: "Trabajar desde un espacio multidisciplinario y participativo en busca de soluciones a las problemáticas de la interfaz humano-animal intrínsecamente relacionada a enfermedades de origen animal, el bienestar, y la producción en conexión con el medio ambiente y en armonía con los intereses de la sociedad."
   },
   {
     id: "Vision",
-    texto: "El Programa aborda las problemáticas de la interfaz humano-animal, como enfermedades de origen animal, bienestar y producción, en armonía con el medio ambiente y los intereses de la sociedad. Utiliza un enfoque multidisciplinario y participativo, colaborando con expertos y la comunidad para lograr sus objetivos."
+    texto: "Ser un programa de referencia donde se aúnen esfuerzos con otros actores de la salud enfocados en mejorar la vida de humana y animal y su relación con el medio ambiente; respectando los espacios acción profesional de cada uno de sus integrantes para beneficio de la comunidad."
   }
 ];
 
