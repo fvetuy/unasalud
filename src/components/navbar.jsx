@@ -18,7 +18,7 @@ const NavBar = () => {
         <img src={trazoAnimalesBlanco} alt="una salud" className="w-[150px] h-[40px] object-contain"/>
         {navLinks.map((nav, index) => (
           <li
-            key={nav.id} className={`dmsans font-normal cursor-pointer text-[16px] ${index === navLinks.length - 1 ? 'ml-auto' : 'ml-10'} text-white`}>
+            key={nav.id} className={`dmsans font-normal cursor-pointer text-[15px] ${index === navLinks.length - 1 ? 'ml-auto' : 'ml-10'} text-white`}>
             {index === navLinks.length - 1 ? 
             (<button className="ml-5 px-4 py-4  text-white rounded" onClick={handlePopupToggle} text={nav.title}>
              Ubicacion y contacto

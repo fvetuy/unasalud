@@ -5,7 +5,7 @@ import { logoBadge } from '../assets';
 
 const misionVision = () => {
   return (
-    <section id='mision-vision' className={`${styles.marginX} mt-60`}>
+    <section id='mision-vision' className={`${styles.marginX} mt-40`}>
       <div className='flex-col grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 sm:gap-60 gap-2'>
   {misionYVision.map((misionVision) => (
     <div key={misionVision.id} className="flex flex-col mt-0">
@@ -14,7 +14,7 @@ const misionVision = () => {
           {misionVision.id}
         </h4>
       </div>
-      <p className={`${styles.ptext} max-w-[1400px] text-left`}>
+      <p className={`${styles.ptext} max-w-[1400px] text-center`}>
         {misionVision.texto}
       </p>
     </div>

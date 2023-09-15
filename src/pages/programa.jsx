@@ -16,7 +16,7 @@ const programa = () => {
        <div className={`flex flex-col mt-40 ${styles.marginX}`}>
         <div className={`flex flex-row`}>
           <div className="relative w-[200px] h-[200px] md:w-[270px] md:h-[270px]">
-            <div className='w-[80%] h-[80%] bg-zinc-100 absolute bottom-5 left-0'></div>
+            <div className='w-[80%] h-[80%] bg-black/10 absolute bottom-7 left-2'></div>
             <img className="w-[80%] h-[80%] object-cover absolute top-0 right-5" src={cordinatorPhoto} alt="program-header-image"/>
           </div>
           <div className='flex flex-1 flex-col items-start'>
@@ -29,18 +29,18 @@ const programa = () => {
        </div>
        <img className="w-[200px] h-[200px] object-contain mx-auto mt-20 hidden md:block" src={logoBadge} alt="program-header-image"/>
        <MisionVision/>
-       <div className='mt-20 relative w-full h-[300px] p-4 md:p-6'>
+       <div className='mt-60 mb-10 relative w-full h-[300px] p-4 md:p-6'>
         <div className="absolute top-0 w-[200px] h-[200px] sm:w-[270px] sm:h-[270px]">
-            <div className='w-[80%] h-[80%] bg-zinc-100 absolute bottom-7 left-2'></div>
+            <div className='w-[80%] h-[80%] bg-black/10 absolute bottom-7 left-2'></div>
             <img className="w-[80%] h-[80%] object-cover absolute top-0 right-5" src={imagenActividad1} alt="program-header-image"/>
         </div> 
         <div className="absolute right-[35%] bottom-7 w-[220px] h-[220px] sm:w-[290px] sm:h-[290px] hidden md:block">
-            <div className='w-[80%] h-[80%] bg-zinc-100 absolute bottom-7 left-2'></div>
+            <div className='w-[80%] h-[80%] bg-black/10 absolute bottom-7 left-2'></div>
             <img className="w-[100%] h-[80%] object-cover absolute top-0 right-5" src={imagenActividad2} alt="program-header-image"/>
         </div> 
         <div className="absolute right-0 bottom-0 w-[210px] h-[210px] sm:w-[290px] sm:h-[290px]">
-            <div className='w-[100%] h-[80%] bg-zinc-100 absolute bottom-8 right-2'></div>
-            <img className="w-[100%] h-[80%] object-cover absolute top-0 right-5" src={imagenActividad2} alt="program-header-image"/>
+            <div className='w-[100%] h-[80%] bg-black/10 absolute bottom-8 right-2'></div>
+            <img className="w-[100%] h-[80%] object-cover absolute top-0 right-5" src={imagenActividad3} alt="program-header-image"/>
         </div> 
        </div>
     </div>

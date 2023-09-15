@@ -5,7 +5,7 @@ import { logoBadge } from '../assets';
 
 const inicio = () => {
   return (
-    <div>
+    <div className='mb-40'>
       <div className={`${styles.paddingX} ${styles.flexCenter}`}> 
       <div className={`${styles.boxWidth}`}>
         <Hero/>

@@ -7,11 +7,11 @@ const Filter = ({ selectedButton, changeCategory }) => {
   };
 
   return (
-    <section id='muestraActividades' className="flex items-center flex-col sm:flex-row flex-wrap mx-6 my-10 sm:my-16 md:my-16">
+    <section id='muestraActividades' className="flex items-center flex-col sm:flex-row flex-wrap  my-10 sm:my-16 md:my-16">
       <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:px-2 md:ml-2 sm:ml-2'>
         <li className="sm:col-span-1 flex justify-center">
           <button
-            className={`p-2 px-6 py-2 rounded-3xl text-center ${selectedButton === 'educacion' ? 'bg-[#19C5EB] text-black' : 'bg-white'}`}
+            className={`p-2 px-6 py-2 rounded-3xl text-center ${selectedButton === 'educacion' ? 'bg-amber-500 text-white' : 'bg-white'}`}
             onClick={() => handleClick('educacion')}
           >
             Educacion
@@ -19,7 +19,7 @@ const Filter = ({ selectedButton, changeCategory }) => {
         </li>
         <li className="sm:col-span-1 flex justify-center">
           <button
-            className={`p-2 md:px-6 md:py-2 rounded-3xl text-center ${selectedButton === 'investigacion' ? 'bg-[#19C5EB] text-black' : 'bg-white'}`}
+            className={`p-2 md:px-6 md:py-2 rounded-3xl text-center ${selectedButton === 'investigacion' ? 'bg-amber-500 text-white' : 'bg-white'}`}
             onClick={() => handleClick('investigacion')}
           >
             Investigacion
@@ -27,7 +27,7 @@ const Filter = ({ selectedButton, changeCategory }) => {
         </li>
         <li className="sm:col-span-1 flex justify-center">
           <button
-            className={`p-2 md:px-6 md:py-2 rounded-3xl text-center ${selectedButton === 'extension' ? 'bg-[#19C5EB] text-black' : 'bg-white'}`}
+            className={`p-2 md:px-6 md:py-2 rounded-3xl text-center ${selectedButton === 'extension' ? 'bg-amber-500 text-white' : 'bg-white'}`}
             onClick={() => handleClick('extension')}
           >
             Extension
