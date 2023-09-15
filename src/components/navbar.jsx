@@ -4,12 +4,8 @@ import { navLinks } from "../constants";
 import ContactInfoPopup from "./ui/contact_info_popup";
 
 const NavBar = () => {
-<<<<<<< HEAD
   const [toggle, setToggle] = useState(false)
 
-=======
-  const [toggle, setToggle] = useState(false);
->>>>>>> 0326211a1222698ccb6200857f19cc4fdc36ae68
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handlePopupToggle = () => {
