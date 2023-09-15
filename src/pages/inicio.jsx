@@ -19,11 +19,6 @@ const inicio = () => {
         <MisionVision/>
       </div>
     </div>
-    <div className={`${styles.paddingX} ${styles.flexCenter} mt-20`}> 
-      <div className={`${styles.boxWidth}`}>
-        <MuestraActividadesInicio/>
-      </div>
-    </div>
     </div>
   )
 }

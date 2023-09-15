@@ -45,21 +45,21 @@ export const actividades = [
     icono: IconoActividad1,
     img: ImgActividad1,
     texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "Investigacion" 
+    categoria: "educacion" 
   },
   {
     id: "Investigacion",
     icono: IconoActividad2,
     img: ImgActividad2,
     texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "Investigacion" 
+    categoria: "investigacion" 
   },
   {
     id: "Extension",
     icono: IconoActividad3,
     img: ImgActividad3,
     texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "Investigacion" 
+    categoria: "extension" 
   },
   {
     id: "ActividadX",

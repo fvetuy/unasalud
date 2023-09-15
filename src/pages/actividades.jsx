@@ -1,27 +1,69 @@
-import React from 'react'
+import React, { useState } from 'react';
 import styles from '../style';
-import { MuestraActividades, Filter } from '../components';
 
-const actividades = () => {
+const Filter = ({ selectedButton, changeCategory }) => {
+  const handleClick = (button) => {
+    changeCategory(button);
+  };
+
   return (
-  <div>
+    <section id='muestraActividades' className="flex items-center flex-col sm:flex-row flex-wrap mx-6 my-10 sm:my-16 md:my-16">
+      <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:px-2 md:ml-2 sm:ml-2'>
+        <li className="sm:col-span-1 flex justify-center">
+          <button
+            className={`p-2 px-6 py-2 rounded-3xl text-center ${selectedButton === 'educacion' ? 'bg-[#19C5EB] text-black' : 'bg-white'}`}
+            onClick={() => handleClick('educacion')}
+          >
+            Educacion
+          </button>
+        </li>
+        <li className="sm:col-span-1 flex justify-center">
+          <button
+            className={`p-2 md:px-6 md:py-2 rounded-3xl text-center ${selectedButton === 'investigacion' ? 'bg-[#19C5EB] text-black' : 'bg-white'}`}
+            onClick={() => handleClick('investigacion')}
+          >
+            Investigacion
+          </button>
+        </li>
+        <li className="sm:col-span-1 flex justify-center">
+          <button
+            className={`p-2 md:px-6 md:py-2 rounded-3xl text-center ${selectedButton === 'extension' ? 'bg-[#19C5EB] text-black' : 'bg-white'}`}
+            onClick={() => handleClick('extension')}
+          >
+            Extension
+          </button>
+        </li>
+      </ul>
+    </section>
+  );
+};
+
+const Actividades = ({category}) => {
+  const [currentCategory, setCurrentCategory] = useState("educacion");
+
+  const changeCurrentCategory = (newCategory) => {
+    setCurrentCategory(newCategory);
+  };
+
+  return (
+    <div>
       <div className={`${styles.paddingX} ${styles.flexStart}`}> 
         <div className={`${styles.boxWidth}`}>
-           <div>
+          <div>
             <h2 className={`${styles.h2text} mt-16  mb-6 ml-7 xs:mb-10 xs:ml-7`} >Nuestras actividades</h2>
-           </div>
-           <div className={`${styles.boxWidth}`}>
-          <Filter/>
-        </div>
+          </div>
+          <div className={`${styles.boxWidth}`}>
+            <Filter selectedButton={currentCategory} changeCategory={changeCurrentCategory} />
+          </div>
         </div>
       </div>
       <div className={`${styles.paddingX} ${styles.flexCenter}`}> 
         <div className={`${styles.boxWidth}`}>
-          <MuestraActividades />
+          {/* Aquí puedes usar currentCategory para mostrar el contenido correspondiente a la categoría seleccionada */}
         </div>
+      </div>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default actividades
+export default Actividades;
