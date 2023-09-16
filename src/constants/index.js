@@ -30,7 +30,7 @@ export const misionYVision = [
   },
   {
     id: "Vision",
-    texto: "Ser un programa de referencia donde se aúnen esfuerzos con otros actores de la salud enfocados en mejorar la vida de humana y animal y su relación con el medio ambiente; respectando los espacios acción profesional de cada uno de sus integrantes para beneficio de la comunidad."
+    texto: "Ser un programa de referencia donde se aúnen esfuerzos con otros actores de la salud enfocados en mejorar la vida de humana y animal y su relación con el medio ambiente; respetando los espacios acción profesional de cada uno de sus integrantes para beneficio de la comunidad."
   }
 ];
 

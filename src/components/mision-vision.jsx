@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from '../style';
 import { misionYVision } from '../constants';
-import { logoBadge } from '../assets';
 
 const misionVision = () => {
   return (
-    <section id='mision-vision' className={`${styles.marginX} mt-40`}>
+    <section id='mision-vision' className={`${styles.marginX} mt-10`}>
       <div className='flex-col grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 sm:gap-60 gap-2'>
   {misionYVision.map((misionVision) => (
     <div key={misionVision.id} className="flex flex-col mt-0">

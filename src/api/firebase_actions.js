@@ -1,6 +1,6 @@
 import NewData from './models/new';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Import signInWithEmailAndPassword
 import { getAuth } from 'firebase/auth'; // Import getAuth
 
@@ -25,13 +25,44 @@ export const readAllNews = async () => {
     const querySnapshot = await getDocs(collection(db, 'news'));
 
     const noticiasArray = querySnapshot.docs.map((doc) => {
+      const id = doc.id;
       const { titulo, descripcion, imagen, fecha } = doc.data();
-      return new NewData(titulo, descripcion, imagen, fecha);
+      return new NewData(titulo, descripcion, imagen, fecha, id);
     });
 
     return noticiasArray;
   } catch (error) {
     return [];
+  }
+};
+
+export const addNew = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, 'news'));
+
+    const noticiasArray = querySnapshot.docs.map((doc) => {
+      const id = doc.id;
+      const { titulo, descripcion, imagen, fecha } = doc.data();
+      return new NewData(titulo, descripcion, imagen, fecha, id);
+    });
+
+    return noticiasArray;
+  } catch (error) {
+    return [];
+  }
+};
+
+export const deleteNewById = async (newId) => {
+  try {
+    const newRef = doc(db, 'news', newId);
+
+    await deleteDoc(newRef);
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    
+    return false;
   }
 };
 

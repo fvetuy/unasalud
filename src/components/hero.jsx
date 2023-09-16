@@ -1,20 +1,24 @@
 import React from 'react';
 import styles from '../style';
 import { logoFvetColor, logoUdelarColor, logoBadge, imagenActividad1, imagenActividad3 } from '../assets';
-import Button from './ui/button';
 
 const Header = () => (
   <div className='flex justify-between items-center h-[100px] w-full '>
-    <div className="flex items-center justify-end">
+      <div className="flex items-center justify-end">
         <img className="w-[90px] h-[90px] sm:w-[140px] sm:h-[140px] object-contain" src={logoBadge} alt="logo-fvet"/>
       </div>
-      <div className="flex items-center justify-end">
-        <img className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] object-contain" src={logoFvetColor} alt="logo-fvet"/>
-      </div>
+
+      <a href='https://www.fvet.edu.uy'>
+        <div className="flex items-center justify-end">
+          <img className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] object-contain" src={logoFvetColor} alt="logo-fvet"/>
+        </div>
+      </a>
       
-      <div className="flex items-center justify-end">
-        <img className="w-[170px] h-[170px] sm:w-[230px] sm:h-[230px] object-contain" src={logoUdelarColor} alt="logo-fvet"/>
-      </div>
+      <a href='https://udelar.edu.uy/portal/'>
+        <div className="flex items-center justify-end">
+          <img className="w-[170px] h-[170px] sm:w-[230px] sm:h-[230px] object-contain" src={logoUdelarColor} alt="logo-fvet"/>
+        </div>
+      </a>
   </div>
 )
 

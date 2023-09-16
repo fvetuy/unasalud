@@ -20,7 +20,7 @@ const programa = () => {
             <img className="w-[80%] h-[80%] object-cover absolute top-0 right-5" src={cordinatorPhoto} alt="program-header-image"/>
           </div>
           <div className='flex flex-1 flex-col items-start'>
-            <h1 className="font-dmsans text-[18px] font-medium text-black w-full text-left mb-2">Coordinadora<span className='text-amber-500'> · </span>{cordinatorName}</h1>
+            <h1 className="font-dmsans text-[18px] font-medium text-black w-full text-left mb-2">Coordinadora<span className='text-cyan-600'> · </span>{cordinatorName}</h1>
             <p className={`${styles.ptext} text-left max-w-[900px] hidden md:block mt-5`}>{cordinatorInfo}</p>
             <img className="w-[150px] h-[150px] object-contain block md:hidden" src={logoBadge} alt="program-header-image"/>
           </div>

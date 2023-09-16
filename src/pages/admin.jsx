@@ -1,25 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { login, checkUserLoggedIn, validateUserAdminToken, logout } from '../api/firebase_actions';
 import styles from '../style';
-import { AiOutlineMail, AiOutlineLock, AiFillEye, AiOutlineEye } from "react-icons/ai";
-import { readAllNews } from '../api/firebase_actions';
+import ReactDOM from 'react-dom'
+import { AiOutlineMail, AiOutlineLock, AiFillEye, AiOutlineEye, AiFillDelete, AiOutlinePlus } from "react-icons/ai";
+import { readAllNews, deleteNewById, addNew } from '../api/firebase_actions';
+import NewData from '../api/models/new';
+import ReactQuill from 'react-quill';
 
 const AdminNewsAndActivities = ({ logout }) => { // Pass logout as a prop
   const [adminFilter, setAdminFilter] = useState("noticias");
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [dataToShow, setDataToShow] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [newsToShow, setNewsToShow] = useState([new NewData()]);
+  const [activitiesToShow, setActivitiesToShow] = useState([]);
+  const [isDeletingNew, setIsDeletingNew] = useState(false);
+
+  const [newDataForm, setNewDataForm] = useState({
+    titulo: '',
+    descripcion: '',
+    contenido: '',
+    imagenUrl: '', // Para almacenar la URL de la imagen
+  });
+
+  const [editorValue, setEditorValue] = useState('');
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewDataForm({
+      ...newDataForm,
+      [name]: value,
+    });
+  };
+
+  const handleImageUpload = () => {
+    // Implement image upload logic here
+  };
 
   useEffect(() => {
-    setIsLoading(true);
-    
     const loadNews = async () => {
       try {
+        setIsLoading(true);
         const news = await readAllNews();
-        setDataToShow(news);
+        setNewsToShow(news);
         
         setError(null);
+        setIsLoading(false);
       } catch (error) {
+        setNewsToShow([])
         setError('Ocurrió un error');
       }
     };
@@ -27,26 +54,25 @@ const AdminNewsAndActivities = ({ logout }) => { // Pass logout as a prop
     if(adminFilter === "noticias"){
       loadNews();
     }
-
-    setIsLoading(false);
   }, []);
+
 
   const handleFilterClick = (filter) => {
     setAdminFilter(filter);
   }
-
+  
   return (
     <div className={`flex flex-col mt-10 ${styles.marginX}`}>
       <p className={`${styles.h4text}`}>Bienvenido, Admin!</p>
       <div className='flex flex-row mt-5'>
         <button
-              className={`p-2 px-6 py-2 rounded-3xl text-center ${adminFilter === 'noticias' ? 'bg-amber-500 text-white' : 'bg-white'}`}
+              className={`p-2 px-6 py-2 rounded-3xl text-center ${adminFilter === 'noticias' ? 'bg-cyan-600 text-white' : 'bg-white'}`}
               onClick={() => handleFilterClick('noticias')}
             >
               Noticias
         </button>
         <button
-              className={`p-2 px-6 py-2 ml-3 rounded-3xl text-center ${adminFilter === 'actividades' ? 'bg-amber-500 text-white' : 'bg-white'}`}
+              className={`p-2 px-6 py-2 ml-3 rounded-3xl text-center ${adminFilter === 'actividades' ? 'bg-cyan-600 text-white' : 'bg-white'}`}
               onClick={() => handleFilterClick('actividades')}
             >
               Actividades
@@ -58,15 +84,56 @@ const AdminNewsAndActivities = ({ logout }) => { // Pass logout as a prop
            <div className="loader"></div>
          </div>
          :
-         (error != null || (!(dataToShow.length > 0))
+         (
+          adminFilter == "noticias" ? 
+          (error != null || (!(newsToShow.length > 0))
           ? 
-          <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>Ha ocurrido un error.</p>
+            <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>Ha ocurrido un error.</p>
           :
-          <div className='flex flex-col'>
-            {dataToShow.map((data, index) => (
-              <div>{data.title}</div>
-            ))}
-          </div>
+            <div className='flex flex-col mt-4'>
+              {newsToShow.map((newData, index) => (
+              <div key={newData.id} className='flex flex-row items-center'>
+                <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
+                  <img className="w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md" src={newData.imagen} alt={`logo-${newData.title}`} />
+                  <div className='flex flex-col ml-3 sm:ml-5'>
+                    <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{newData.titulo}</p>
+                    <p className={`${styles.ptext} line-clamp-2 sm:line-clamp-3`}>{newData.descripcion}</p>
+                  </div>
+                </div>
+                <button className={`h-[30px] w-[30px] rounded-full bg-red-500 ml-2 items-center justify-center ${isDeletingNew ? 'hidden' : 'flex'}`} onClick={() => {
+                  setIsLoading(true);
+                  const success = deleteNewById(newData.id)
+                  if(success)
+                  {
+                    setIsLoading(false);
+                  }
+                }}>
+                  <AiFillDelete color='#FFDCDC' />
+                </button>
+              </div>
+              ))}
+               <button className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[155px]' onClick={() => toogleNewPopup()}> {/* Call the logout function */}
+                 <div className='flex flex-row items-center justify-between'>
+                  <AiOutlinePlus/>
+                  Agregar noticia
+                 </div>
+               </button>
+               <input
+                  type="text"
+                  name="titulo"
+                  placeholder="Título"
+                  value={newDataForm.titulo}
+                  onChange={handleInputChange}
+                  className={`mt-3`}
+                />
+                {/* ... Other input fields */}
+                <button
+                  className={`bg-cyan-600 text-white p-2 mt-4 rounded-md text-[17px] w-full`}
+                  onClick={() => {}}
+                ></button>
+            </div>
+          ) : 
+            <div>Actividades</div>
          )
        }
       <button className='bg-red-500 p-2 my-10 rounded-md text-white text-[17px] w-[130px]' onClick={() => logout()}> {/* Call the logout function */}
@@ -188,7 +255,7 @@ const Admin = () => {
         </div>
        
         <div className="form-group">
-          <button type="submit" className='bg-amber-500 p-2 mt-5 rounded-md text-white text-[17px]'>
+          <button type="submit" className='bg-cyan-600 p-2 mt-5 rounded-md text-white text-[17px]'>
             Iniciar Sesión
           </button>
         </div>

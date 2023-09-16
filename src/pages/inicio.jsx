@@ -14,7 +14,7 @@ const inicio = () => {
     <div className={`${styles.flexCenter}`}> 
       <div className={`${styles.boxWidth}`}>
         <div className={`${styles.flexCenter}`}>
-          <img className="w-[110px] h-[110px] sm:w-[160px] sm:h-[160px] object-contain" src={logoBadge} alt="logo-fvet"/>
+          <img className="w-[110px] h-[110px] sm:w-[160px] sm:h-[160px] object-contain mt-20" src={logoBadge} alt="logo-fvet"/>
         </div>
         <MisionVision/>
       </div>
