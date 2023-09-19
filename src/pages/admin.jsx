@@ -112,25 +112,34 @@ const AdminNewsAndActivities = ({ logout }) => { // Pass logout as a prop
                 </button>
               </div>
               ))}
-               <button className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[155px]' onClick={() => toogleNewPopup()}> {/* Call the logout function */}
+               
+               <div className='flex flex-row items-center w-full'>
+                <input
+                    id="titulo"
+                    name="titulo"
+                    type="text"
+                    required
+                    value={newDataForm.titulo}
+                    placeholder="Título"
+                    className="mt-3 p-1"
+                    onChange={handleInputChange}
+                    maxLength={40}
+                />
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className={`mt-3`}
+                />
+
+               </div>
+                <button className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[155px]' onClick={() => toogleNewPopup()}> {/* Call the logout function */}
                  <div className='flex flex-row items-center justify-between'>
                   <AiOutlinePlus/>
                   Agregar noticia
                  </div>
-               </button>
-               <input
-                  type="text"
-                  name="titulo"
-                  placeholder="Título"
-                  value={newDataForm.titulo}
-                  onChange={handleInputChange}
-                  className={`mt-3`}
-                />
-                {/* ... Other input fields */}
-                <button
-                  className={`bg-cyan-600 text-white p-2 mt-4 rounded-md text-[17px] w-full`}
-                  onClick={() => {}}
-                ></button>
+                 </button>
             </div>
           ) : 
             <div>Actividades</div>
