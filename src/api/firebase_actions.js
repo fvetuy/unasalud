@@ -1,8 +1,9 @@
 import NewData from './models/new';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, deleteDoc, doc, addDoc} from 'firebase/firestore';
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Import signInWithEmailAndPassword
 import { getAuth } from 'firebase/auth'; // Import getAuth
+import { getStorage, ref, uploadString, getDownloadURL } from 'firebase/storage';
 
 // Initialize Firebase
 const config = {

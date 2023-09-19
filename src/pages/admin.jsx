@@ -6,23 +6,22 @@ import { AiOutlineMail, AiOutlineLock, AiFillEye, AiOutlineEye, AiFillDelete, Ai
 import { readAllNews, deleteNewById, addNew } from '../api/firebase_actions';
 import NewData from '../api/models/new';
 import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import {quillModules, quillFormats} from '../constants/index';
 
-const AdminNewsAndActivities = ({ logout }) => { // Pass logout as a prop
-  const [adminFilter, setAdminFilter] = useState("noticias");
+const AdminNewsAndActivities = ({ logout }) => {
+  const [adminFilter, setAdminFilter] = useState('noticias');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [newsToShow, setNewsToShow] = useState([new NewData()]);
-  const [activitiesToShow, setActivitiesToShow] = useState([]);
   const [isDeletingNew, setIsDeletingNew] = useState(false);
 
-  const [newDataForm, setNewDataForm] = useState({
-    titulo: '',
-    descripcion: '',
-    contenido: '',
-    imagenUrl: '', // Para almacenar la URL de la imagen
-  });
+  const [newDataForm, setNewDataForm] = useState(new NewData(
+  ));
 
   const [editorValue, setEditorValue] = useState('');
+
+  const [selectedImage, setSelectedImage] = useState(null); // Para almacenar la imagen seleccionada
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,8 +31,11 @@ const AdminNewsAndActivities = ({ logout }) => { // Pass logout as a prop
     });
   };
 
-  const handleImageUpload = () => {
-    // Implement image upload logic here
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; // Obtener el primer archivo seleccionado
+    setSelectedImage(file);
+
+    // Puedes también almacenar la URL de la imagen en newDataForm.imagenUrl si deseas
   };
 
   useEffect(() => {
@@ -42,112 +44,133 @@ const AdminNewsAndActivities = ({ logout }) => { // Pass logout as a prop
         setIsLoading(true);
         const news = await readAllNews();
         setNewsToShow(news);
-        
+
         setError(null);
         setIsLoading(false);
       } catch (error) {
-        setNewsToShow([])
+        setNewsToShow([]);
         setError('Ocurrió un error');
       }
     };
-    
-    if(adminFilter === "noticias"){
+
+    if (adminFilter === 'noticias') {
       loadNews();
     }
-  }, []);
-
+  }, [adminFilter]);
 
   const handleFilterClick = (filter) => {
     setAdminFilter(filter);
-  }
-  
+  };
+
   return (
     <div className={`flex flex-col mt-10 ${styles.marginX}`}>
       <p className={`${styles.h4text}`}>Bienvenido, Admin!</p>
       <div className='flex flex-row mt-5'>
         <button
-              className={`p-2 px-6 py-2 rounded-3xl text-center ${adminFilter === 'noticias' ? 'bg-cyan-600 text-white' : 'bg-white'}`}
-              onClick={() => handleFilterClick('noticias')}
-            >
-              Noticias
+          className={`p-2 px-6 py-2 rounded-3xl text-center ${
+            adminFilter === 'noticias' ? 'bg-cyan-600 text-white' : 'bg-white'
+          }`}
+          onClick={() => handleFilterClick('noticias')}
+        >
+          Noticias
         </button>
         <button
-              className={`p-2 px-6 py-2 ml-3 rounded-3xl text-center ${adminFilter === 'actividades' ? 'bg-cyan-600 text-white' : 'bg-white'}`}
-              onClick={() => handleFilterClick('actividades')}
-            >
-              Actividades
+          className={`p-2 px-6 py-2 ml-3 rounded-3xl text-center ${
+            adminFilter === 'actividades' ? 'bg-cyan-600 text-white' : 'bg-white'
+          }`}
+          onClick={() => handleFilterClick('actividades')}
+        >
+          Actividades
         </button>
       </div>
-      {isLoading 
-         ? 
-         <div className="flex mt-10">
-           <div className="loader"></div>
-         </div>
-         :
-         (
-          adminFilter == "noticias" ? 
-          (error != null || (!(newsToShow.length > 0))
-          ? 
+      {isLoading ? (
+        <div className='flex mt-10'>
+          <div className='loader'></div>
+        </div>
+      ) : (
+        adminFilter == 'noticias' ? (
+          error != null || !(newsToShow.length > 0) ? (
             <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>Ha ocurrido un error.</p>
-          :
+          ) : (
             <div className='flex flex-col mt-4'>
               {newsToShow.map((newData, index) => (
-              <div key={newData.id} className='flex flex-row items-center'>
-                <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
-                  <img className="w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md" src={newData.imagen} alt={`logo-${newData.title}`} />
-                  <div className='flex flex-col ml-3 sm:ml-5'>
-                    <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{newData.titulo}</p>
-                    <p className={`${styles.ptext} line-clamp-2 sm:line-clamp-3`}>{newData.descripcion}</p>
+                <div key={newData.id} className='flex flex-row items-center'>
+                  <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
+                    <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={newData.imagen} alt={`logo-${newData.title}`} />
+                    <div className='flex flex-col ml-3 sm:ml-5'>
+                      <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{newData.titulo}</p>
+                      <p className={`${styles.ptext} line-clamp-2 sm:line-clamp-3`}>{newData.descripcion}</p>
+                    </div>
                   </div>
+                  <button
+                    className={`h-[30px] w-[30px] rounded-full bg-red-500 ml-2 items-center justify-center ${
+                      isDeletingNew ? 'hidden' : 'flex'
+                    }`}
+                    onClick={() => {
+                      setIsLoading(true);
+                      const success = deleteNewById(newData.id);
+                      if (success) {
+                        setIsLoading(false);
+                      }
+                    }}
+                  >
+                    <AiFillDelete color='#FFDCDC' />
+                  </button>
                 </div>
-                <button className={`h-[30px] w-[30px] rounded-full bg-red-500 ml-2 items-center justify-center ${isDeletingNew ? 'hidden' : 'flex'}`} onClick={() => {
-                  setIsLoading(true);
-                  const success = deleteNewById(newData.id)
-                  if(success)
-                  {
-                    setIsLoading(false);
-                  }
-                }}>
-                  <AiFillDelete color='#FFDCDC' />
-                </button>
-              </div>
               ))}
-               
-               <div className='flex flex-row items-center w-full'>
+              <div className='bg-zinc-400 w-full h-[2px] mt-8 mb-8'></div>
+              <p className={`${styles.h4text}`}>Agregar nueva noticia</p>
+              <input
+                id='titulo'
+                name='titulo'
+                type='text'
+                required
+                value={newDataForm.titulo}
+                placeholder='Título de la noticia (max 60 caracteres)'
+                className='mt-4 p-1.5 rounded-md'
+                onChange={handleInputChange}
+                maxLength={60}
+              />
+              <div>
+                <label htmlFor='fileInput' className='mr-3'>
+                  Selecciona una imagen
+                </label>
                 <input
-                    id="titulo"
-                    name="titulo"
-                    type="text"
-                    required
-                    value={newDataForm.titulo}
-                    placeholder="Título"
-                    className="mt-3 p-1"
-                    onChange={handleInputChange}
-                    maxLength={40}
+                  type='file'
+                  accept='image/*'
+                  onChange={handleImageChange}
+                  id='fileInput'
+                  className={`mt-6 mb-6`}
                 />
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className={`mt-3`}
-                />
-
-               </div>
-                <button className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[155px]' onClick={() => toogleNewPopup()}> {/* Call the logout function */}
-                 <div className='flex flex-row items-center justify-between'>
-                  <AiOutlinePlus/>
+              </div>
+              <ReactQuill
+                value={editorValue}
+                onChange={setEditorValue}
+                placeholder='Escribe aquí la descripción de la noticia...'
+                modules={quillModules}
+                formats={quillFormats}
+                className='bg-white'
+              />
+              <button
+                className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[155px]'
+                onClick={() => toogleNewPopup()} // Agrega tu lógica para subir noticias aquí
+              >
+                <div className='flex flex-row items-center justify-between'>
+                  <AiOutlinePlus />
                   Agregar noticia
-                 </div>
-                 </button>
+                </div>
+              </button>
             </div>
-          ) : 
-            <div>Actividades</div>
-         )
-       }
-      <button className='bg-red-500 p-2 my-10 rounded-md text-white text-[17px] w-[130px]' onClick={() => logout()}> {/* Call the logout function */}
-        Cerrar Sesión
-      </button>
+          )
+        ) : (
+          <div>Actividades</div>
+        )
+      )}
+      <div className='form-group'>
+        <button type="submit" className='bg-red-500 p-2 my-10 rounded-md text-white text-[17px] w-[130px]' onClick={() => logout()}> {/* Call the logout function */}
+          Cerrar Sesión
+        </button>
+      </div>
     </div>
   );
 };
