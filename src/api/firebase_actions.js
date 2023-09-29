@@ -1,6 +1,6 @@
 import NewData from './models/new';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, deleteDoc, doc, addDoc} from 'firebase/firestore';
+import { getFirestore, collection, getDocs, deleteDoc, doc, setDoc, serverTimestamp} from 'firebase/firestore';
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Import signInWithEmailAndPassword
 import { getAuth } from 'firebase/auth'; // Import getAuth
 import { getStorage, ref, uploadString, getDownloadURL } from 'firebase/storage';
@@ -26,8 +26,7 @@ export const readAllNews = async () => {
     const querySnapshot = await getDocs(collection(db, 'news'));
 
     const noticiasArray = querySnapshot.docs.map((doc) => {
-      const id = doc.id;
-      const { titulo, descripcion, imagen, fecha } = doc.data();
+      const { titulo, descripcion, imagen, fecha, id} = doc.data();
       return new NewData(titulo, descripcion, imagen, fecha, id);
     });
 
@@ -37,21 +36,6 @@ export const readAllNews = async () => {
   }
 };
 
-export const addNew = async () => {
-  try {
-    const querySnapshot = await getDocs(collection(db, 'news'));
-
-    const noticiasArray = querySnapshot.docs.map((doc) => {
-      const id = doc.id;
-      const { titulo, descripcion, imagen, fecha } = doc.data();
-      return new NewData(titulo, descripcion, imagen, fecha, id);
-    });
-
-    return noticiasArray;
-  } catch (error) {
-    return [];
-  }
-};
 
 export const deleteNewById = async (newId) => {
   try {
@@ -98,3 +82,34 @@ export const logout = async () => {
     throw new Error('Logout failed. Please try again.'); // Throw an error for handling in the component
   }
 };
+
+export const uploadNewWithImage = async (newData, imageFile) => {
+  const newId = Date.now().toString();
+  const storage = getStorage();
+  const storageRef = ref(storage, `newsImages/${newId}`); // Set the storage reference for the image
+
+  try {
+    // Upload the image to Firebase Storage
+    await uploadString(storageRef, imageFile);
+    const imageUrl = await getDownloadURL(storageRef);
+
+    // Add the newData to Firestore with the custom ID
+    const newsCollection = collection(db, 'news');
+    const newDocRef = doc(newsCollection, newId); // Use the custom ID directly
+    const newDataToUpload = {
+      titulo: newData.titulo,
+      descripcion: newData.descripcion,
+      imagenURL: imageUrl,
+      fecha: serverTimestamp(),
+      id: newId,
+    };
+
+    await setDoc(newDocRef, newDataToUpload); // Use setDoc to create the document
+
+    return true; // Upload successful
+  } catch (error) {
+    console.error(error);
+    return false; // Upload failed
+  }
+};
+

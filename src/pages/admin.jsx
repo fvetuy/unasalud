@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { login, checkUserLoggedIn, validateUserAdminToken, logout } from '../api/firebase_actions';
+import { login, checkUserLoggedIn, validateUserAdminToken, logout, uploadNewWithImage, readAllNews, deleteNewById,} from '../api/firebase_actions';
 import styles from '../style';
-import ReactDOM from 'react-dom'
 import { AiOutlineMail, AiOutlineLock, AiFillEye, AiOutlineEye, AiFillDelete, AiOutlinePlus } from "react-icons/ai";
-import { readAllNews, deleteNewById, addNew } from '../api/firebase_actions';
 import NewData from '../api/models/new';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -13,30 +11,62 @@ const AdminNewsAndActivities = ({ logout }) => {
   const [adminFilter, setAdminFilter] = useState('noticias');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [newsToShow, setNewsToShow] = useState([new NewData()]);
+  const [newsToShow, setNewsToShow] = useState([new NewData({})]);
   const [isDeletingNew, setIsDeletingNew] = useState(false);
 
-  const [newDataForm, setNewDataForm] = useState(new NewData(
-  ));
+  const [newDataForm, setNewDataForm] = useState(new NewData({}));
 
-  const [editorValue, setEditorValue] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const [selectedImage, setSelectedImage] = useState(null); // Para almacenar la imagen seleccionada
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewDataForm({
-      ...newDataForm,
-      [name]: value,
-    });
+  const handleTitleChange = (newValue) => {
+    setNewDataForm((prevDataForm) => ({
+      ...prevDataForm,
+      titulo: newValue,
+    }));
+  };
+  
+  const handleDescriptionChange = (newValue) => {
+    setNewDataForm((prevDataForm) => ({
+      ...prevDataForm,
+      descripcion: newValue,
+    }));
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]; // Obtener el primer archivo seleccionado
     setSelectedImage(file);
-
-    // Puedes también almacenar la URL de la imagen en newDataForm.imagenUrl si deseas
   };
+
+  const handleAddNew = async () => {
+    setIsLoading(true);
+  
+    try {
+      // Assuming you have the required data for the new news item
+      const newNewsData = {
+        titulo: newDataForm.titulo,
+        descripcion: newDataForm.descripcion,
+        // Add other properties as needed
+      };
+  
+      // Call the addNew function from your Firebase configuration
+      const success = await uploadNewWithImage(newNewsData, selectedImage);
+  
+      if (success) {
+        setNewDataForm(new NewData({}));
+        setSelectedImage(null);
+      }
+
+      else{
+       setError('Ocurrió un error al agregar la noticia');
+      }
+  
+      setIsLoading(false);
+    } catch (error) {
+      setError('Ocurrió un error al agregar la noticia');
+      setIsLoading(false);
+    }
+  };
+  
 
   useEffect(() => {
     const loadNews = async () => {
@@ -89,14 +119,14 @@ const AdminNewsAndActivities = ({ logout }) => {
         </div>
       ) : (
         adminFilter == 'noticias' ? (
-          error != null || !(newsToShow.length > 0) ? (
+          error != null ? (
             <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>Ha ocurrido un error.</p>
           ) : (
             <div className='flex flex-col mt-4'>
               {newsToShow.map((newData, index) => (
                 <div key={newData.id} className='flex flex-row items-center'>
                   <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
-                    <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={newData.imagen} alt={`logo-${newData.title}`} />
+                    <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={newData.imagen} alt={`...`} />
                     <div className='flex flex-col ml-3 sm:ml-5'>
                       <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{newData.titulo}</p>
                       <p className={`${styles.ptext} line-clamp-2 sm:line-clamp-3`}>{newData.descripcion}</p>
@@ -120,6 +150,20 @@ const AdminNewsAndActivities = ({ logout }) => {
               ))}
               <div className='bg-zinc-400 w-full h-[2px] mt-8 mb-8'></div>
               <p className={`${styles.h4text}`}>Agregar nueva noticia</p>
+              {selectedImage && (
+                <img
+                  src={URL.createObjectURL(selectedImage)}
+                  alt="Imagen seleccionada"
+                  className="mt-5 mb-2 rounded-md w-full h-[350px] object-cover"
+                />
+              )}
+              <input
+                type='file'
+                accept='image/*'
+                onChange={handleImageChange}
+                id='fileInput'
+                className={`mb-3 mt-5`}
+              />
               <input
                 id='titulo'
                 name='titulo'
@@ -127,25 +171,13 @@ const AdminNewsAndActivities = ({ logout }) => {
                 required
                 value={newDataForm.titulo}
                 placeholder='Título de la noticia (max 60 caracteres)'
-                className='mt-4 p-1.5 rounded-md'
-                onChange={handleInputChange}
+                className='mb-7 mt-3 p-1.5 rounded-md'
+                onChange={(e) => handleTitleChange(e.target.value)}
                 maxLength={60}
               />
-              <div>
-                <label htmlFor='fileInput' className='mr-3'>
-                  Selecciona una imagen
-                </label>
-                <input
-                  type='file'
-                  accept='image/*'
-                  onChange={handleImageChange}
-                  id='fileInput'
-                  className={`mt-6 mb-6`}
-                />
-              </div>
               <ReactQuill
-                value={editorValue}
-                onChange={setEditorValue}
+                value={newDataForm.descripcion}
+                onChange={handleDescriptionChange}
                 placeholder='Escribe aquí la descripción de la noticia...'
                 modules={quillModules}
                 formats={quillFormats}
@@ -153,8 +185,8 @@ const AdminNewsAndActivities = ({ logout }) => {
               />
               <button
                 className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[155px]'
-                onClick={() => toogleNewPopup()} // Agrega tu lógica para subir noticias aquí
-              >
+                onClick={handleAddNew}
+             >
                 <div className='flex flex-row items-center justify-between'>
                   <AiOutlinePlus />
                   Agregar noticia
