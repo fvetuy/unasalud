@@ -74,6 +74,7 @@ const AdminNewsAndActivities = ({ logout }) => {
         setIsLoading(true);
         const news = await readAllNews();
         setNewsToShow(news);
+        
 
         setError(null);
         setIsLoading(false);
@@ -147,6 +148,7 @@ const AdminNewsAndActivities = ({ logout }) => {
                     <AiFillDelete color='#FFDCDC' />
                   </button>
                 </div>
+                
               ))}
               <div className='bg-zinc-400 w-full h-[2px] mt-8 mb-8'></div>
               <p className={`${styles.h4text}`}>Agregar nueva noticia</p>

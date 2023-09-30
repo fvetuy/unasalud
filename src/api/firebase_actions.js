@@ -1,9 +1,9 @@
 import NewData from './models/new';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, deleteDoc, doc, setDoc, serverTimestamp} from 'firebase/firestore';
-import { signInWithEmailAndPassword } from 'firebase/auth'; // Import signInWithEmailAndPassword
-import { getAuth } from 'firebase/auth'; // Import getAuth
+import { getFirestore, collection, getDocs, getDoc, deleteDoc, doc, setDoc, serverTimestamp} from 'firebase/firestore';
+import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'; // Import signInWithEmailAndPassword
 import { getStorage, ref, uploadString, getDownloadURL } from 'firebase/storage';
+import * as fileType from 'file-type'; // Import file-type for MIME type detection
 
 // Initialize Firebase
 const config = {
@@ -26,7 +26,10 @@ export const readAllNews = async () => {
     const querySnapshot = await getDocs(collection(db, 'news'));
 
     const noticiasArray = querySnapshot.docs.map((doc) => {
-      const { titulo, descripcion, imagen, fecha, id} = doc.data();
+      const data = doc.data();
+      console.log('Document Data:', data);
+      const { titulo, descripcion, imagen, fecha, id } = data;
+      console.log('Extracted Data:', titulo, descripcion, imagen, fecha, id);
       return new NewData(titulo, descripcion, imagen, fecha, id);
     });
 
@@ -41,15 +44,21 @@ export const deleteNewById = async (newId) => {
   try {
     const newRef = doc(db, 'news', newId);
 
-    await deleteDoc(newRef);
-
-    return true;
+    const docSnapshot = await getDoc(newRef);
+    if (docSnapshot.exists()) {
+      console.log("exists");
+      await deleteDoc(newRef);
+      return true;
+    } else {
+      console.log("donest");
+      return false;
+    }
   } catch (error) {
     console.log(error);
-    
     return false;
   }
 };
+
 
 // Function to log in a user
 export const login = async (email, password) => {
@@ -85,31 +94,39 @@ export const logout = async () => {
 
 export const uploadNewWithImage = async (newData, imageFile) => {
   const newId = Date.now().toString();
-  const storage = getStorage();
-  const storageRef = ref(storage, `newsImages/${newId}`); // Set the storage reference for the image
+  const storageRef = ref(storage, `newsImages/${newId}`);
 
   try {
-    // Upload the image to Firebase Storage
-    await uploadString(storageRef, imageFile);
-    const imageUrl = await getDownloadURL(storageRef);
+    // Get the MIME type of the image using fileType library
+    const buffer = await imageFile.arrayBuffer();
+    const mime = (await fileType.fromBuffer(buffer))?.mime;
 
-    // Add the newData to Firestore with the custom ID
-    const newsCollection = collection(db, 'news');
-    const newDocRef = doc(newsCollection, newId); // Use the custom ID directly
-    const newDataToUpload = {
-      titulo: newData.titulo,
-      descripcion: newData.descripcion,
-      imagenURL: imageUrl,
-      fecha: serverTimestamp(),
-      id: newId,
-    };
+    if (mime && mime.startsWith('image')) {
+      // Upload the image to Firebase Storage as bytes
+      await uploadBytes(storageRef, imageFile);
 
-    await setDoc(newDocRef, newDataToUpload); // Use setDoc to create the document
+      // Get the download URL of the uploaded image
+      const imageUrl = await getDownloadURL(storageRef);
 
-    return true; // Upload successful
+      // Add the newData to Firestore with the custom ID
+      const newsCollection = collection(db, 'news');
+      const newDocRef = doc(newsCollection, newId);
+      const newDataToUpload = {
+        titulo: newData.titulo,
+        descripcion: newData.descripcion,
+        imagenURL: imageUrl,
+        fecha: serverTimestamp(),
+        id: newId,
+      };
+
+      await setDoc(newDocRef, newDataToUpload);
+
+      return true; // Upload successful
+    } else {
+      throw new Error('Invalid image file type.'); // Handle invalid file type
+    }
   } catch (error) {
     console.error(error);
     return false; // Upload failed
   }
 };
-

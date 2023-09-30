@@ -14,6 +14,7 @@
     "@heroicons/react": "^2.0.18",
     "bootstrap": "^5.3.1",
     "bootstrap-icons": "^1.10.5",
+    "file-type": "^18.5.0",
     "firebase": "^10.3.0",
     "heroicons": "^2.0.18",
     "heroicons-react": "^1.4.1",
