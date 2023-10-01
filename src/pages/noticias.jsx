@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { readAllNews } from '/src/api/firebase_actions';
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
+import DOMPurify from 'dompurify';
+import styles from '../style';
 
 const Noticias = () => {
   const [noticias, setNoticias] = useState([]);
@@ -52,21 +54,35 @@ const Noticias = () => {
           <div className="relative h-[300px] md:h-[450px]">
             <img
               className="w-full h-full object-cover relative"
-              src={currentNoticia.imagen}
-              alt={`noticia-${currentNoticia.titulo}`}
+              src={currentNoticia.imagenURL}
+              alt={`...`}
             />
             <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-t from-black/80 to-black/0"></div>
-            <div className="absolute bottom-10 md:bottom-20 flex flex-row justify-between w-full px-6 sm:px-16">
-              <button onClick={() => changeSelectedNoticia(false)}>
-                <FiChevronLeft size={22} color="#ffffff" />
-              </button>
-              <h1 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
-                {currentNoticia.titulo}
-              </h1>
-              <button onClick={() => changeSelectedNoticia(true)}>
-                <FiChevronRight size={22} color="#ffffff" />
-              </button>
-            </div>
+            {
+              noticias.length > 1 
+              ? 
+              <div className="absolute bottom-10 md:bottom-20 flex flex-row justify-between w-full px-6 sm:px-16">
+                <button onClick={() => changeSelectedNoticia(false)}>
+                  <FiChevronLeft size={22} color="#ffffff" />
+                </button>
+                <h1 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
+                  {currentNoticia.titulo}
+                </h1>
+                <button onClick={() => changeSelectedNoticia(true)}>
+                  <FiChevronRight size={22} color="#ffffff" />
+                </button>
+              </div> 
+              : 
+              <div className="absolute bottom-10 md:bottom-20 flex flex-row justify-center w-full px-6 sm:px-16">
+                <h1 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
+                  {currentNoticia.titulo}
+                </h1>
+              </div> 
+            }
+          </div>
+          <div className={`mt-10 ${styles.marginX}`}>
+           <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(currentNoticia.descripcion)}} className={`font-dmsans text-[16px] line-clamp-2 sm:line-clamp-3`}></div>
+           <div className='w-full h-[180px]'></div>
           </div>
         </div>
       )}

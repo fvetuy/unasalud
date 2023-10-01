@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { login, checkUserLoggedIn, validateUserAdminToken, logout, uploadNewWithImage, readAllNews, deleteNewById,} from '../api/firebase_actions';
+import { login, checkUserLoggedIn, validateUserAdminToken, logout, uploadNewWithImage, readAllNews, deleteNewById } from '../api/firebase_actions';
 import styles from '../style';
 import { AiOutlineMail, AiOutlineLock, AiFillEye, AiOutlineEye, AiFillDelete, AiOutlinePlus } from "react-icons/ai";
 import NewData from '../api/models/new';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {quillModules, quillFormats} from '../constants/index';
+import { quillModules, quillFormats } from '../constants/index';
+import DOMPurify from 'dompurify';
 
 const AdminNewsAndActivities = ({ logout }) => {
   const [adminFilter, setAdminFilter] = useState('noticias');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [newsToShow, setNewsToShow] = useState([new NewData({})]);
+  const [newsToShow, setNewsToShow] = useState([]); // Initialize with an empty array
   const [isDeletingNew, setIsDeletingNew] = useState(false);
 
   const [newDataForm, setNewDataForm] = useState(new NewData({}));
@@ -24,7 +25,7 @@ const AdminNewsAndActivities = ({ logout }) => {
       titulo: newValue,
     }));
   };
-  
+
   const handleDescriptionChange = (newValue) => {
     setNewDataForm((prevDataForm) => ({
       ...prevDataForm,
@@ -33,68 +34,59 @@ const AdminNewsAndActivities = ({ logout }) => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0]; // Obtener el primer archivo seleccionado
+    const file = e.target.files[0];
     setSelectedImage(file);
   };
 
   const handleAddNew = async () => {
     setIsLoading(true);
-  
+
     try {
-      // Assuming you have the required data for the new news item
       const newNewsData = {
         titulo: newDataForm.titulo,
         descripcion: newDataForm.descripcion,
-        // Add other properties as needed
       };
-  
-      // Call the addNew function from your Firebase configuration
+
       const success = await uploadNewWithImage(newNewsData, selectedImage);
-  
+
       if (success) {
         setNewDataForm(new NewData({}));
         setSelectedImage(null);
+        await loadNews();
+      } else {
+        setError('Ocurrió un error al agregar la noticia');
       }
 
-      else{
-       setError('Ocurrió un error al agregar la noticia');
-      }
-  
       setIsLoading(false);
-
-      await loadNews();
     } catch (error) {
-      console.log(error)
+      console.error(error);
       setError('Ocurrió un error al agregar la noticia');
       setIsLoading(false);
     }
   };
-  
+
   const loadNews = async () => {
     try {
-      setIsLoading(true);
       const news = await readAllNews();
       setNewsToShow(news);
-
       setError(null);
-      setIsLoading(false);
     } catch (error) {
       setNewsToShow([]);
-      setError('Ocurrió un error');
+      setError('Ocurrió un error al cargar las noticias');
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (adminFilter === 'noticias') {
       loadNews();
     }
-  }, [adminFilter]
-  );
+  }, [adminFilter]);
 
   const handleFilterClick = (filter) => {
     setAdminFilter(filter);
   };
-
 
   return (
     <div className={`flex flex-col mt-10 ${styles.marginX}`}>
@@ -122,9 +114,9 @@ const AdminNewsAndActivities = ({ logout }) => {
           <div className='loader'></div>
         </div>
       ) : (
-        adminFilter == 'noticias' ? (
-          error != null ? (
-            <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>Ha ocurrido un error.</p>
+        adminFilter === 'noticias' ? (
+          error ? (
+            <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>{error}</p>
           ) : (
             <div className='flex flex-col mt-4'>
               {newsToShow.map((newData, index) => (
@@ -133,31 +125,26 @@ const AdminNewsAndActivities = ({ logout }) => {
                     <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={newData.imagenURL} alt={`...`} />
                     <div className='flex flex-col ml-3 sm:ml-5'>
                       <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{newData.titulo}</p>
-                      <div dangerouslySetInnerHTML={{__html: newData.descripcion}} className={`font-dmsans text-[16px] line-clamp-2 sm:line-clamp-3`}></div>
+                      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(newData.descripcion)}} className={`font-dmsans text-[16px] line-clamp-2 sm:line-clamp-3`}></div>
                     </div>
                   </div>
                   <button
                     className={`h-[30px] w-[30px] rounded-full bg-red-500 ml-2 items-center justify-center ${
                       isDeletingNew ? 'hidden' : 'flex'
                     }`}
-                    onClick={() => {
+                    onClick={async () => {
                       setIsLoading(true);
-                      const success = deleteNewById(newData.id);
+                      const success = await deleteNewById(newData.id);
                       if (success) {
-                        // Create a new array with items that don't have the specified ID
                         const updatedNewsToShow = newsToShow.filter((singleNew) => singleNew.id !== newData.id);
-
-                        // Update the state with the new array
                         setNewsToShow(updatedNewsToShow);
-
-                        setIsLoading(false);
                       }
+                      setIsLoading(false);
                     }}
                   >
                     <AiFillDelete color='#FFDCDC' />
                   </button>
                 </div>
-                
               ))}
               <div className='bg-zinc-400 w-full h-[2px] mt-8 mb-8'></div>
               <p className={`${styles.h4text}`}>Agregar nueva noticia</p>
@@ -171,6 +158,7 @@ const AdminNewsAndActivities = ({ logout }) => {
               <input
                 type='file'
                 accept='image/*'
+                required
                 onChange={handleImageChange}
                 id='fileInput'
                 className={`mb-3 mt-5`}
@@ -189,6 +177,7 @@ const AdminNewsAndActivities = ({ logout }) => {
               <ReactQuill
                 value={newDataForm.descripcion}
                 onChange={handleDescriptionChange}
+                required
                 placeholder='Escribe aquí la descripción de la noticia...'
                 modules={quillModules}
                 formats={quillFormats}
@@ -197,7 +186,7 @@ const AdminNewsAndActivities = ({ logout }) => {
               <button
                 className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[155px]'
                 onClick={handleAddNew}
-             >
+              >
                 <div className='flex flex-row items-center justify-between'>
                   <AiOutlinePlus />
                   Agregar noticia
@@ -210,7 +199,7 @@ const AdminNewsAndActivities = ({ logout }) => {
         )
       )}
       <div className='form-group'>
-        <button type="submit" className='bg-red-500 p-2 my-10 rounded-md text-white text-[17px] w-[130px]' onClick={() => logout()}> {/* Call the logout function */}
+        <button type="submit" className='bg-red-500 p-2 my-10 rounded-md text-white text-[17px] w-[130px]' onClick={() => logout()}>
           Cerrar Sesión
         </button>
       </div>
@@ -230,7 +219,6 @@ const Admin = () => {
     const checkLoggedInUser = async () => {
       try {
         setIsLoading(true);
-
         const loggedInUser = await checkUserLoggedIn();
 
         if (loggedInUser) {
@@ -251,7 +239,7 @@ const Admin = () => {
 
     try {
       const success = await login(email, password);
-      
+
       setError(null);
 
       if (success) {
@@ -260,11 +248,11 @@ const Admin = () => {
         if (loggedInUser) {
           setIsAdmin(validateUserAdminToken(loggedInUser));
         }
-        setIsLoading(false);
       } else {
         setError('No se ha podido entrar como Admin. Por favor verifica las credenciales');
-        setIsLoading(false);
       }
+
+      setIsLoading(false);
     } catch (error) {
       setError(error.message);
       setIsLoading(false);
@@ -282,7 +270,7 @@ const Admin = () => {
 
   const handleAdminUI = () => {
     if (isAdmin) {
-      return <AdminNewsAndActivities logout={handleLogout} /> 
+      return <AdminNewsAndActivities logout={handleLogout} />;
     }
 
     if (isLoading) {
@@ -294,10 +282,13 @@ const Admin = () => {
     }
 
     return (
-      <form className={`form-group ${styles.marginX} ${styles.marginY}`} onSubmit={(e) => {
-        e.preventDefault();
-        handleLogin();
-      }}>
+      <form
+        className={`form-group ${styles.marginX} ${styles.marginY}`}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleLogin();
+        }}
+      >
         <p className={`${styles.h4text} mb-7`}>Ingresa la cuenta de Admin</p>
         <div className="form-group mb-3 flex flwx-row items-center">
           <AiOutlineMail className='mr-2'/>

@@ -108,7 +108,8 @@ export const uploadNewWithImage = async (newData, imageFile) => {
   const newId = Date.now().toString();
   const storage = getStorage();
   const storageRef = ref(storage, `newsImages/${newId}`);
-
+  
+ 
   try {
     // Upload the image to Firebase Storage as bytes
     await uploadBytes(storageRef, imageFile);
