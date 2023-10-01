@@ -61,37 +61,40 @@ const AdminNewsAndActivities = ({ logout }) => {
       }
   
       setIsLoading(false);
+
+      await loadNews();
     } catch (error) {
+      console.log(error)
       setError('Ocurrió un error al agregar la noticia');
       setIsLoading(false);
     }
   };
   
+  const loadNews = async () => {
+    try {
+      setIsLoading(true);
+      const news = await readAllNews();
+      setNewsToShow(news);
+
+      setError(null);
+      setIsLoading(false);
+    } catch (error) {
+      setNewsToShow([]);
+      setError('Ocurrió un error');
+    }
+  }
 
   useEffect(() => {
-    const loadNews = async () => {
-      try {
-        setIsLoading(true);
-        const news = await readAllNews();
-        setNewsToShow(news);
-        
-
-        setError(null);
-        setIsLoading(false);
-      } catch (error) {
-        setNewsToShow([]);
-        setError('Ocurrió un error');
-      }
-    };
-
     if (adminFilter === 'noticias') {
       loadNews();
     }
-  }, [adminFilter]);
+  }, [adminFilter]
+  );
 
   const handleFilterClick = (filter) => {
     setAdminFilter(filter);
   };
+
 
   return (
     <div className={`flex flex-col mt-10 ${styles.marginX}`}>
@@ -127,10 +130,10 @@ const AdminNewsAndActivities = ({ logout }) => {
               {newsToShow.map((newData, index) => (
                 <div key={newData.id} className='flex flex-row items-center'>
                   <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
-                    <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={newData.imagen} alt={`...`} />
+                    <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={newData.imagenURL} alt={`...`} />
                     <div className='flex flex-col ml-3 sm:ml-5'>
                       <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{newData.titulo}</p>
-                      <p className={`${styles.ptext} line-clamp-2 sm:line-clamp-3`}>{newData.descripcion}</p>
+                      <div dangerouslySetInnerHTML={{__html: newData.descripcion}} className={`font-dmsans text-[16px] line-clamp-2 sm:line-clamp-3`}></div>
                     </div>
                   </div>
                   <button
@@ -141,6 +144,12 @@ const AdminNewsAndActivities = ({ logout }) => {
                       setIsLoading(true);
                       const success = deleteNewById(newData.id);
                       if (success) {
+                        // Create a new array with items that don't have the specified ID
+                        const updatedNewsToShow = newsToShow.filter((singleNew) => singleNew.id !== newData.id);
+
+                        // Update the state with the new array
+                        setNewsToShow(updatedNewsToShow);
+
                         setIsLoading(false);
                       }
                     }}

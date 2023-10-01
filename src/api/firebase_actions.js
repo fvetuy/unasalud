@@ -2,8 +2,7 @@ import NewData from './models/new';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, getDoc, deleteDoc, doc, setDoc, serverTimestamp} from 'firebase/firestore';
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'; // Import signInWithEmailAndPassword
-import { getStorage, ref, uploadString, getDownloadURL } from 'firebase/storage';
-import * as fileType from 'file-type'; // Import file-type for MIME type detection
+import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 
 // Initialize Firebase
 const config = {
@@ -27,10 +26,17 @@ export const readAllNews = async () => {
 
     const noticiasArray = querySnapshot.docs.map((doc) => {
       const data = doc.data();
-      console.log('Document Data:', data);
-      const { titulo, descripcion, imagen, fecha, id } = data;
-      console.log('Extracted Data:', titulo, descripcion, imagen, fecha, id);
-      return new NewData(titulo, descripcion, imagen, fecha, id);
+      
+      const { titulo, descripcion, imagenURL, fecha, id } = data;
+
+      const newData = new NewData({
+        titulo: titulo,
+        descripcion: descripcion,
+        imagenURL: imagenURL,
+        fecha: fecha,
+        id: id,
+      });
+      return newData;
     });
 
     return noticiasArray;
@@ -43,11 +49,17 @@ export const readAllNews = async () => {
 export const deleteNewById = async (newId) => {
   try {
     const newRef = doc(db, 'news', newId);
-
+    
     const docSnapshot = await getDoc(newRef);
     if (docSnapshot.exists()) {
       console.log("exists");
       await deleteDoc(newRef);
+
+      //delete the image form storage
+      const storage = getStorage();
+      const storageRef = ref(storage, `newsImages/${newId}`);
+      await deleteObject(storageRef);
+      
       return true;
     } else {
       console.log("donest");
@@ -94,37 +106,30 @@ export const logout = async () => {
 
 export const uploadNewWithImage = async (newData, imageFile) => {
   const newId = Date.now().toString();
+  const storage = getStorage();
   const storageRef = ref(storage, `newsImages/${newId}`);
 
   try {
-    // Get the MIME type of the image using fileType library
-    const buffer = await imageFile.arrayBuffer();
-    const mime = (await fileType.fromBuffer(buffer))?.mime;
+    // Upload the image to Firebase Storage as bytes
+    await uploadBytes(storageRef, imageFile);
 
-    if (mime && mime.startsWith('image')) {
-      // Upload the image to Firebase Storage as bytes
-      await uploadBytes(storageRef, imageFile);
+    // Get the download URL of the uploaded image
+    const imageUrl = await getDownloadURL(storageRef);
 
-      // Get the download URL of the uploaded image
-      const imageUrl = await getDownloadURL(storageRef);
+    // Add the newData to Firestore with the custom ID
+    const newsCollection = collection(db, 'news');
+    const newDocRef = doc(newsCollection, newId);
+    const newDataToUpload = {
+      titulo: newData.titulo,
+      descripcion: newData.descripcion,
+      imagenURL: imageUrl,
+      fecha: serverTimestamp(),
+      id: newId,
+    };
 
-      // Add the newData to Firestore with the custom ID
-      const newsCollection = collection(db, 'news');
-      const newDocRef = doc(newsCollection, newId);
-      const newDataToUpload = {
-        titulo: newData.titulo,
-        descripcion: newData.descripcion,
-        imagenURL: imageUrl,
-        fecha: serverTimestamp(),
-        id: newId,
-      };
+    await setDoc(newDocRef, newDataToUpload);
 
-      await setDoc(newDocRef, newDataToUpload);
-
-      return true; // Upload successful
-    } else {
-      throw new Error('Invalid image file type.'); // Handle invalid file type
-    }
+    return true; // Upload successful
   } catch (error) {
     console.error(error);
     return false; // Upload failed
