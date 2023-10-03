@@ -1,12 +1,11 @@
 class ActivityData {
-  constructor(titulo, descripcion, imagen, fecha, categoria, contenido) {
-      this.titulo = titulo;
-      this.descripcion = descripcion;
-      this.imagen = imagen;
-      this.fecha = fecha;
-      this.categoria = categoria;
-      this.contenido = contenido;
+  constructor({titulo, descripcion, imagenURL, fecha, categoria}) {
+      this.titulo = titulo || '';
+      this.descripcion = descripcion || '';
+      this.imagenURL = imagenURL || '';
+      this.fecha = fecha || null;
+      this.categoria = categoria || 'educacion';
   }
 }
   
- export default ActivityData;
+export default ActivityData;

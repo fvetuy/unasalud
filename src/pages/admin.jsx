@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { login, checkUserLoggedIn, validateUserAdminToken, logout, uploadNewWithImage, readAllNews, deleteNewById } from '../api/firebase_actions';
+import { login, checkUserLoggedIn, validateUserAdminToken, logout, uploadNewWithImage, readAllNews, deleteNewById, deleteActivityById, uploadActivityWithImage, readActivitiesByCategory } from '../api/firebase_actions';
 import styles from '../style';
 import { AiOutlineMail, AiOutlineLock, AiFillEye, AiOutlineEye, AiFillDelete, AiOutlinePlus } from "react-icons/ai";
 import NewData from '../api/models/new';
+import ActivityData from '../api/models/activity';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { quillModules, quillFormats } from '../constants/index';
@@ -10,77 +11,173 @@ import DOMPurify from 'dompurify';
 
 const AdminNewsAndActivities = ({ logout }) => {
   const [adminFilter, setAdminFilter] = useState('noticias');
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [newsToShow, setNewsToShow] = useState([]); // Initialize with an empty array
+  const [activityFilterCategory, setActivityFilterCategory] = useState('educacion');
+  const [newsError, setNewsError] = useState(null);
+  const [activitiesError, setActivitiesError] = useState(null);
+  const [isLoadingNews, setIsLoadingNews] = useState(true);
+  const [isLoadingActivities, setIsLoadingActivities] = useState(true);
+  const [newsToShow, setNewsToShow] = useState([]);
+  const [activitiesToShow, setActivitiesToShow] = useState([]);
   const [isDeletingNew, setIsDeletingNew] = useState(false);
+  const [isDeletingActivity, setIsDeletingActivity] = useState(false);
 
   const [newDataForm, setNewDataForm] = useState(new NewData({}));
+  const [activityDataForm, setActivityDataForm] = useState({
+    categoria: 'educacion', 
+  });
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedNewImage, setSelectedNewImage] = useState(null);
+  const [selectedActivityImage, setSelectedActivityImage] = useState(null);
 
-  const handleTitleChange = (newValue) => {
+  const handleNewTitleChange = (newValue) => {
     setNewDataForm((prevDataForm) => ({
       ...prevDataForm,
       titulo: newValue,
     }));
   };
 
-  const handleDescriptionChange = (newValue) => {
+  const handleNewDescriptionChange = (newValue) => {
     setNewDataForm((prevDataForm) => ({
       ...prevDataForm,
       descripcion: newValue,
     }));
   };
 
-  const handleImageChange = (e) => {
+  const handleActivityTitleChange = (newValue) => {
+    setActivityDataForm((prevDataForm) => ({
+      ...prevDataForm,
+      titulo: newValue,
+    }));
+  };
+
+  const handleActivityDescriptionChange = (newValue) => {
+    setActivityDataForm((prevDataForm) => ({
+      ...prevDataForm,
+      descripcion: newValue,
+    }));
+  };
+
+  const handleActivityCategoryChange = (newValue) => {
+    if(newValue != activityFilterCategory){
+      setActivityDataForm((prevDataForm) => ({
+        ...prevDataForm,
+        categoria: newValue,
+      }));
+    }
+  };
+
+  const handleNewImageChange = (e) => {
     const file = e.target.files[0];
-    setSelectedImage(file);
+    setSelectedNewImage(file);
+  };
+
+  const handleActivityImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedActivityImage(file);
   };
 
   const handleAddNew = async () => {
-    setIsLoading(true);
+    setIsLoadingNews(true);
 
     try {
+      setNewsError(null);
+
       const newNewsData = {
         titulo: newDataForm.titulo,
         descripcion: newDataForm.descripcion,
       };
 
-      const success = await uploadNewWithImage(newNewsData, selectedImage);
+      if(selectedNewImage == null){
+        setNewsError('Por favor selecciona una imagen');
+      }
+
+      const success = await uploadNewWithImage(newNewsData, selectedNewImage);
 
       if (success) {
         setNewDataForm(new NewData({}));
-        setSelectedImage(null);
+        setSelectedNewImage(null);
         await loadNews();
       } else {
-        setError('Ocurrió un error al agregar la noticia');
+        setNewsError('Ocurrió un newsError al agregar la noticia');
       }
 
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-      setError('Ocurrió un error al agregar la noticia');
-      setIsLoading(false);
+      setIsLoadingNews(false);
+    } catch (newsError) {
+      console.newsError(newsError);
+      setNewsError('Ocurrió un newsError al agregar la noticia');
+      setIsLoadingNews(false);
+    }
+  };
+
+  const handleAddActivity = async () => {
+    try {
+      setIsLoadingActivities(true);
+
+      setActivitiesError(null);
+
+      const newActivityData = {
+        titulo: activityDataForm.titulo,
+        descripcion: activityDataForm.descripcion,
+        categoria: activityDataForm.categoria,
+      };
+
+      if(selectedActivityImage == null){
+        setActivitiesError('Por favor selecciona una imagen');
+      }
+
+      const success = await uploadActivityWithImage(newActivityData, selectedActivityImage);
+
+      if (success) {
+        setActivityDataForm(new ActivityData({}));
+        setSelectedActivityImage(null);
+        await loadActivities();
+      } else {
+        setActivitiesError('Ocurrió un error al agregar la actividad');
+      }
+
+      setIsLoadingActivities(false);
+    } catch (newsError) {
+      setActivitiesError('Ocurrió un newsError al agregar la noticia');
+      setIsLoadingActivities(false);
     }
   };
 
   const loadNews = async () => {
     try {
+      setIsLoadingNews(true);
       const news = await readAllNews();
       setNewsToShow(news);
-      setError(null);
-    } catch (error) {
+      setNewsError(null);
+      setIsLoadingNews(false);
+    } catch (newsError) {
       setNewsToShow([]);
-      setError('Ocurrió un error al cargar las noticias');
+      setNewsError('Ocurrió un error al cargar las noticias');
     } finally {
-      setIsLoading(false);
+      setIsLoadingNews(false);
+    }
+  };
+
+  const loadActivities = async () => {
+    try {
+      setIsLoadingActivities(true);
+      const activities = await readActivitiesByCategory(activityFilterCategory);
+      setActivitiesToShow(activities);
+      setActivitiesError(null);
+      setIsLoadingActivities(false);
+    } catch (activitiesError) {
+      setActivitiesToShow([]);
+      setActivitiesError('Ocurrió un error al cargar las actividades');
+    } finally {
+      setIsLoadingActivities(false);
     }
   };
 
   useEffect(() => {
     if (adminFilter === 'noticias') {
       loadNews();
+    }
+    else if(adminFilter === 'actividades'){
+      loadActivities();
     }
   }, [adminFilter]);
 
@@ -90,7 +187,7 @@ const AdminNewsAndActivities = ({ logout }) => {
 
   return (
     <div className={`flex flex-col mt-10 ${styles.marginX}`}>
-      <p className={`${styles.h4text}`}>Bienvenido, Admin!</p>
+      <p className={`${styles.h3text}`}>Bienvenido, Admin!</p>
       <div className='flex flex-row mt-5'>
         <button
           className={`p-2 px-6 py-2 rounded-3xl text-center ${
@@ -109,16 +206,21 @@ const AdminNewsAndActivities = ({ logout }) => {
           Actividades
         </button>
       </div>
-      {isLoading ? (
+      {isLoadingNews ? (
         <div className='flex mt-10'>
           <div className='loader'></div>
         </div>
       ) : (
         adminFilter === 'noticias' ? (
-          error ? (
-            <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>{error}</p>
+          newsError ? (
+            <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>{newsError}</p>
           ) : (
             <div className='flex flex-col mt-4'>
+              {!isLoadingNews && newsToShow.length > 0 ? 
+                <div></div>
+                :<p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay noticias para mostrar..</p>
+              }
+              
               {newsToShow.map((newData, index) => (
                 <div key={newData.id} className='flex flex-row items-center'>
                   <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
@@ -133,24 +235,25 @@ const AdminNewsAndActivities = ({ logout }) => {
                       isDeletingNew ? 'hidden' : 'flex'
                     }`}
                     onClick={async () => {
-                      setIsLoading(true);
+                      setIsLoadingNews(true);
                       const success = await deleteNewById(newData.id);
                       if (success) {
                         const updatedNewsToShow = newsToShow.filter((singleNew) => singleNew.id !== newData.id);
                         setNewsToShow(updatedNewsToShow);
                       }
-                      setIsLoading(false);
+                      setIsLoadingNews(false);
                     }}
                   >
                     <AiFillDelete color='#FFDCDC' />
                   </button>
                 </div>
               ))}
-              <div className='bg-zinc-400 w-full h-[2px] mt-8 mb-8'></div>
+
+              <div className='bg-zinc-400 w-full h-[2px] mt-2 mb-6'></div>
               <p className={`${styles.h4text}`}>Agregar nueva noticia</p>
-              {selectedImage && (
+              {selectedNewImage && (
                 <img
-                  src={URL.createObjectURL(selectedImage)}
+                  src={URL.createObjectURL(selectedNewImage)}
                   alt="Imagen seleccionada"
                   className="mt-5 mb-2 rounded-md w-full h-[350px] object-cover"
                 />
@@ -159,7 +262,7 @@ const AdminNewsAndActivities = ({ logout }) => {
                 type='file'
                 accept='image/*'
                 required
-                onChange={handleImageChange}
+                onChange={handleNewImageChange}
                 id='fileInput'
                 className={`mb-3 mt-5`}
               />
@@ -171,12 +274,12 @@ const AdminNewsAndActivities = ({ logout }) => {
                 value={newDataForm.titulo}
                 placeholder='Título de la noticia (max 60 caracteres)'
                 className='mb-7 mt-3 p-1.5 rounded-md'
-                onChange={(e) => handleTitleChange(e.target.value)}
+                onChange={(e) => handleNewTitleChange(e.target.value)}
                 maxLength={60}
               />
               <ReactQuill
                 value={newDataForm.descripcion}
-                onChange={handleDescriptionChange}
+                onChange={handleNewDescriptionChange}
                 required
                 placeholder='Escribe aquí la descripción de la noticia...'
                 modules={quillModules}
@@ -195,7 +298,107 @@ const AdminNewsAndActivities = ({ logout }) => {
             </div>
           )
         ) : (
-          <div>Actividades</div>
+          activitiesError ? (
+            <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>{activitiesError}</p>
+          ) : (
+            <div className='flex flex-col mt-4'>
+              {!isLoadingActivities ? 
+              <div className='mt-2'>
+              <label htmlFor="dropdown">Mostrar actividades por la categoria:</label>
+                <select id="dropdown-filter" value={activityFilterCategory} onChange={(e) => {
+                  setActivityFilterCategory(e.target.value)
+                  loadActivities();
+                }}>
+                <option value="educacion">Educacion</option>
+                <option value="investigacion">Investigacion</option>
+                <option value="extension">Extension</option>
+              </select>
+            </div>
+            :<p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay actividades para mostrar..</p>
+              }
+              {activitiesToShow.map((activityData, index) => (
+                <div key={activityData.id} className='flex flex-row items-center'>
+                  <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
+                    <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={activityData.imagenURL} alt={`...`} />
+                    <div className='flex flex-col ml-3 sm:ml-5'>
+                      <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{activityData.titulo}</p>
+                      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(activityData.descripcion)}} className={`font-dmsans text-[16px] line-clamp-2 sm:line-clamp-3`}></div>
+                    </div>
+                  </div>
+                  <button
+                    className={`h-[30px] w-[30px] rounded-full bg-red-500 ml-2 items-center justify-center ${
+                      isDeletingActivity ? 'hidden' : 'flex'
+                    }`}
+                    onClick={async () => {
+                      setIsLoadingActivities(true);
+                      const success = await deleteActivityById(activityData.id);
+                      if (success) {
+                        const updatedActivitiesToShow = activitiesToShow.filter((singleActivity) => singleActivity.id !== activityData.id);
+                        setNewsToShow(updatedActivitiesToShow);
+                      }
+                      setIsLoadingActivities(false);
+                    }}
+                  >
+                    <AiFillDelete color='#FFDCDC' />
+                  </button>
+                </div>
+              ))}
+              <div className='bg-zinc-400 w-full h-[2px] mt-2 mb-6'></div>
+              <p className={`${styles.h4text}`}>Agregar nueva actividad</p>
+              <div className='mt-5'>
+                <label htmlFor="dropdown">Categoria de la nueva actividad:</label>
+                <select id="dropdown-add" value={activityDataForm.categoria} onChange={(e) => {handleActivityCategoryChange(e.target.value)}}>
+                  <option value="educacion">Educacion</option>
+                  <option value="investigacion">Investigacion</option>
+                  <option value="extension">Extension</option>
+                </select>
+              </div>
+              {selectedActivityImage && (
+                <img
+                  src={URL.createObjectURL(selectedActivityImage)}
+                  alt="Imagen seleccionada"
+                  className="mt-5 mb-2 rounded-md w-full h-[350px] object-cover"
+                />
+              )}
+              <input
+                type='file'
+                accept='image/*'
+                required
+                onChange={handleActivityImageChange}
+                id='fileInput'
+                className={`mb-3 mt-5`}
+              />
+              <input
+                id='titulo'
+                name='titulo'
+                type='text'
+                required
+                value={activityDataForm.titulo}
+                placeholder='Título de la actividad (max 60 caracteres)'
+                className='mb-7 mt-3 p-1.5 rounded-md'
+                onChange={(e) => handleActivityTitleChange(e.target.value)}
+                maxLength={60}
+              />
+              <ReactQuill
+                value={activityDataForm.descripcion}
+                onChange={handleActivityDescriptionChange}
+                required
+                placeholder='Escribe aquí la descripción de la actividad...'
+                modules={quillModules}
+                formats={quillFormats}
+                className='bg-white'
+              />
+              <button
+                className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[170px]'
+                onClick={handleAddActivity}
+              >
+                <div className='flex flex-row items-center justify-between'>
+                  <AiOutlinePlus />
+                  Agregar actividad
+                </div>
+              </button>
+            </div>
+          )
         )
       )}
       <div className='form-group'>
@@ -211,23 +414,23 @@ const Admin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [newsError, setNewsError] = useState(null);
+  const [isLoadingNews, setIsLoadingNews] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const checkLoggedInUser = async () => {
       try {
-        setIsLoading(true);
+        setIsLoadingNews(true);
         const loggedInUser = await checkUserLoggedIn();
 
         if (loggedInUser) {
           setIsAdmin(validateUserAdminToken(loggedInUser));
         }
 
-        setIsLoading(false);
-      } catch (error) {
-        setError(error.message);
+        setIsLoadingNews(false);
+      } catch (newsError) {
+        setNewsError(newsError.message);
       }
     };
 
@@ -235,12 +438,12 @@ const Admin = () => {
   }, []);
 
   const handleLogin = async () => {
-    setIsLoading(true);
+    setIsLoadingNews(true);
 
     try {
       const success = await login(email, password);
 
-      setError(null);
+      setNewsError(null);
 
       if (success) {
         const loggedInUser = await checkUserLoggedIn();
@@ -249,13 +452,13 @@ const Admin = () => {
           setIsAdmin(validateUserAdminToken(loggedInUser));
         }
       } else {
-        setError('No se ha podido entrar como Admin. Por favor verifica las credenciales');
+        setNewsError('No se ha podido entrar como Admin. Por favor verifica las credenciales');
       }
 
-      setIsLoading(false);
-    } catch (error) {
-      setError(error.message);
-      setIsLoading(false);
+      setIsLoadingNews(false);
+    } catch (newsError) {
+      setNewsError(newsError.message);
+      setIsLoadingNews(false);
     }
   };
 
@@ -263,8 +466,8 @@ const Admin = () => {
     try {
       await logout();
       setIsAdmin(false);
-    } catch (error) {
-      setError(error.message);
+    } catch (newsError) {
+      setNewsError(newsError.message);
     }
   };
 
@@ -273,7 +476,7 @@ const Admin = () => {
       return <AdminNewsAndActivities logout={handleLogout} />;
     }
 
-    if (isLoading) {
+    if (isLoadingNews) {
       return (
         <div className="flex justify-center items-center h-[80vh]">
           <div className="loader"></div>
@@ -332,7 +535,7 @@ const Admin = () => {
   return (
     <div>
       {handleAdminUI()}
-      {error && <p className={`text-[17px] ${styles.marginX} mt-4 mb-4 rounded-md text-[#ff5454]`}>{error}</p>}
+      {newsError && <p className={`text-[17px] ${styles.marginX} mt-4 mb-4 rounded-md text-[#ff5454]`}>{newsError}</p>}
     </div>
   );
 };
