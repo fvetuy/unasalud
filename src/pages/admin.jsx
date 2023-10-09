@@ -114,7 +114,7 @@ const AdminNewsAndActivities = ({ logout }) => {
       setIsLoadingActivities(true);
 
       setActivitiesError(null);
-      
+console.log(activityDataForm);
       const newActivityData = {
         titulo: activityDataForm.titulo,
         descripcion: activityDataForm.descripcion,
@@ -304,12 +304,12 @@ const AdminNewsAndActivities = ({ logout }) => {
             <div className='flex flex-col mt-4'>
               {!isLoadingActivities ? 
               <div className='mt-2'>
-              <label htmlFor="dropdown-filter">Mostrar actividades por la categoria:</label>
+              <label htmlFor="dropdown-filter">Filtrar actividades por categoria:</label>
                 <select id="dropdown-filter" value={activityFilterCategory} onChange={(e) => {
                   setActivityFilterCategory(e.target.value)
                   loadActivities();
                 }}>
-                <option value="educacion" selected >Educacion</option>
+                <option value="educacion">Educacion</option>
                 <option value="investigacion">Investigacion</option>
                 <option value="extension">Extension</option>
               </select>
@@ -353,6 +353,7 @@ const AdminNewsAndActivities = ({ logout }) => {
                   <option value="extension">Extension</option>
                 </select>
               </div>
+              
               {selectedActivityImage && (
                 <img
                   src={URL.createObjectURL(selectedActivityImage)}
