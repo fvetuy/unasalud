@@ -114,7 +114,7 @@ const AdminNewsAndActivities = ({ logout }) => {
       setIsLoadingActivities(true);
 
       setActivitiesError(null);
-
+      
       const newActivityData = {
         titulo: activityDataForm.titulo,
         descripcion: activityDataForm.descripcion,
@@ -124,9 +124,9 @@ const AdminNewsAndActivities = ({ logout }) => {
       if(selectedActivityImage == null){
         setActivitiesError('Por favor selecciona una imagen');
       }
-
+         
       const success = await uploadActivityWithImage(newActivityData, selectedActivityImage);
-
+      
       if (success) {
         setActivityDataForm(new ActivityData({}));
         setSelectedActivityImage(null);
@@ -136,8 +136,8 @@ const AdminNewsAndActivities = ({ logout }) => {
       }
 
       setIsLoadingActivities(false);
-    } catch (newsError) {
-      setActivitiesError('Ocurrió un newsError al agregar la noticia');
+    } catch (activityError) {
+      setActivitiesError('Ocurrió un activityError al agregar la actividad');
       setIsLoadingActivities(false);
     }
   };
@@ -221,7 +221,7 @@ const AdminNewsAndActivities = ({ logout }) => {
                 :<p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay noticias para mostrar..</p>
               }
               
-              {newsToShow.map((newData, index) => (
+              {newsToShow.map((newData) => (
                 <div key={newData.id} className='flex flex-row items-center'>
                   <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
                     <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={newData.imagenURL} alt={`...`} />
@@ -304,19 +304,19 @@ const AdminNewsAndActivities = ({ logout }) => {
             <div className='flex flex-col mt-4'>
               {!isLoadingActivities ? 
               <div className='mt-2'>
-              <label htmlFor="dropdown">Mostrar actividades por la categoria:</label>
+              <label htmlFor="dropdown-filter">Mostrar actividades por la categoria:</label>
                 <select id="dropdown-filter" value={activityFilterCategory} onChange={(e) => {
                   setActivityFilterCategory(e.target.value)
                   loadActivities();
                 }}>
-                <option value="educacion">Educacion</option>
+                <option value="educacion" selected >Educacion</option>
                 <option value="investigacion">Investigacion</option>
                 <option value="extension">Extension</option>
               </select>
             </div>
             :<p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay actividades para mostrar..</p>
               }
-              {activitiesToShow.map((activityData, index) => (
+              {activitiesToShow.map((activityData) => (
                 <div key={activityData.id} className='flex flex-row items-center'>
                   <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
                     <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={activityData.imagenURL} alt={`...`} />
@@ -334,7 +334,7 @@ const AdminNewsAndActivities = ({ logout }) => {
                       const success = await deleteActivityById(activityData.id);
                       if (success) {
                         const updatedActivitiesToShow = activitiesToShow.filter((singleActivity) => singleActivity.id !== activityData.id);
-                        setNewsToShow(updatedActivitiesToShow);
+                        setActivitiesToShow(updatedActivitiesToShow);
                       }
                       setIsLoadingActivities(false);
                     }}
@@ -346,7 +346,7 @@ const AdminNewsAndActivities = ({ logout }) => {
               <div className='bg-zinc-400 w-full h-[2px] mt-2 mb-6'></div>
               <p className={`${styles.h4text}`}>Agregar nueva actividad</p>
               <div className='mt-5'>
-                <label htmlFor="dropdown">Categoria de la nueva actividad:</label>
+                <label htmlFor="dropdown-add">Categoria de la nueva actividad:</label>
                 <select id="dropdown-add" value={activityDataForm.categoria} onChange={(e) => {handleActivityCategoryChange(e.target.value)}}>
                   <option value="educacion">Educacion</option>
                   <option value="investigacion">Investigacion</option>
