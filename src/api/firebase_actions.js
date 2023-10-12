@@ -162,7 +162,6 @@ export const readActivitiesByCategory = async (category) => {
 
     return activitiesArray;
   } catch (error) {
-    console.log(error);
     return [];
   }
 };
@@ -193,7 +192,7 @@ export const uploadActivityWithImage = async (activityData, imageFile) => {
     };
 
     await setDoc(activityDocRef, activityDataToUpload);
-
+    
     return true; // Upload successful
   } catch (error) {
     console.error(error);

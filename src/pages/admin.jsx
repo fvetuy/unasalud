@@ -23,9 +23,9 @@ const AdminNewsAndActivities = ({ logout }) => {
 
   const [newDataForm, setNewDataForm] = useState(new NewData({}));
   const [activityDataForm, setActivityDataForm] = useState({
-    categoria: 'educacion', 
+    categoria: 'educacion',
+    titulo: '', 
   });
-
   const [selectedNewImage, setSelectedNewImage] = useState(null);
   const [selectedActivityImage, setSelectedActivityImage] = useState(null);
 
@@ -90,21 +90,24 @@ const AdminNewsAndActivities = ({ logout }) => {
       if(selectedNewImage == null){
         setNewsError('Por favor selecciona una imagen');
       }
-
-      const success = await uploadNewWithImage(newNewsData, selectedNewImage);
-
-      if (success) {
-        setNewDataForm(new NewData({}));
-        setSelectedNewImage(null);
-        await loadNews();
-      } else {
-        setNewsError('Ocurrió un newsError al agregar la noticia');
+      else if (!newDataForm.descripcion) {
+        setNewsError('La descripción de la noticia es requerida.');
       }
+      else{
+        const success = await uploadNewWithImage(newNewsData, selectedNewImage);
+        if (success) {
+          setNewDataForm(new NewData({}));
+          setSelectedNewImage(null);
+          await loadNews();
+        } else {
+          setNewsError('Ocurrió un Error al agregar la noticia');
+        }
+      }
+      
 
       setIsLoadingNews(false);
     } catch (newsError) {
-      console.newsError(newsError);
-      setNewsError('Ocurrió un newsError al agregar la noticia');
+      setNewsError('Ocurrió un Error al agregar la noticia');
       setIsLoadingNews(false);
     }
   };
@@ -114,7 +117,6 @@ const AdminNewsAndActivities = ({ logout }) => {
       setIsLoadingActivities(true);
 
       setActivitiesError(null);
-console.log(activityDataForm);
       const newActivityData = {
         titulo: activityDataForm.titulo,
         descripcion: activityDataForm.descripcion,
@@ -122,11 +124,12 @@ console.log(activityDataForm);
       };
 
       if(selectedActivityImage == null){
-        setActivitiesError('Por favor selecciona una imagen');
+        throw('Por favor selecciona una imagen')
       }
-         
+      else if (!activityDataForm.descripcion) {
+        throw('La descripción de la actividad es requerida.')
+      }
       const success = await uploadActivityWithImage(newActivityData, selectedActivityImage);
-      
       if (success) {
         setActivityDataForm(new ActivityData({}));
         setSelectedActivityImage(null);
@@ -134,10 +137,10 @@ console.log(activityDataForm);
       } else {
         setActivitiesError('Ocurrió un error al agregar la actividad');
       }
-
+      
       setIsLoadingActivities(false);
-    } catch (activityError) {
-      setActivitiesError('Ocurrió un activityError al agregar la actividad');
+    } catch (e) {
+      setActivitiesError(e);
       setIsLoadingActivities(false);
     }
   };
@@ -157,10 +160,11 @@ console.log(activityDataForm);
     }
   };
 
-  const loadActivities = async () => {
+  const loadActivities = async (filter = "educacion") => {
     try {
       setIsLoadingActivities(true);
-      const activities = await readActivitiesByCategory(activityFilterCategory);
+      setActivityFilterCategory(filter)
+      const activities = await readActivitiesByCategory(filter);
       setActivitiesToShow(activities);
       setActivitiesError(null);
       setIsLoadingActivities(false);
@@ -258,43 +262,45 @@ console.log(activityDataForm);
                   className="mt-5 mb-2 rounded-md w-full h-[350px] object-cover"
                 />
               )}
-              <input
-                type='file'
-                accept='image/*'
-                required
-                onChange={handleNewImageChange}
-                id='fileInput'
-                className={`mb-3 mt-5`}
-              />
-              <input
-                id='titulo'
-                name='titulo'
-                type='text'
-                required
-                value={newDataForm.titulo}
-                placeholder='Título de la noticia (max 60 caracteres)'
-                className='mb-7 mt-3 p-1.5 rounded-md'
-                onChange={(e) => handleNewTitleChange(e.target.value)}
-                maxLength={60}
-              />
-              <ReactQuill
-                value={newDataForm.descripcion}
-                onChange={handleNewDescriptionChange}
-                required
-                placeholder='Escribe aquí la descripción de la noticia...'
-                modules={quillModules}
-                formats={quillFormats}
-                className='bg-white'
-              />
-              <button
-                className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[155px]'
-                onClick={handleAddNew}
-              >
-                <div className='flex flex-row items-center justify-between'>
-                  <AiOutlinePlus />
-                  Agregar noticia
-                </div>
-              </button>
+              <form onSubmit={handleAddNew}>
+                <input
+                  type='file'
+                  accept='image/*'
+                  required
+                  onChange={handleNewImageChange}
+                  id='fileInput'
+                  className={`mb-3 mt-5`}
+                />
+                <input
+                  id='titulo'
+                  name='titulo'
+                  type='text'
+                  required
+                  value={newDataForm.titulo}
+                  placeholder='Título de la noticia (max 60 caracteres)'
+                  className='mb-7 mt-3 p-1.5 rounded-md'
+                  onChange={(e) => handleNewTitleChange(e.target.value)}
+                  maxLength={60}
+                />
+                <ReactQuill
+                  value={newDataForm.descripcion}
+                  onChange={handleNewDescriptionChange}
+                  required
+                  placeholder='Escribe aquí la descripción de la noticia...'
+                  modules={quillModules}
+                  formats={quillFormats}
+                  className='bg-white'
+                />
+                <button
+                  type='submit'
+                  className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[155px]'
+                >
+                  <div className='flex flex-row items-center justify-between'>
+                    <AiOutlinePlus />
+                    Agregar noticia
+                  </div>
+                </button>
+              </form>
             </div>
           )
         ) : (
@@ -306,16 +312,16 @@ console.log(activityDataForm);
               <div className='mt-2'>
               <label htmlFor="dropdown-filter">Filtrar actividades por categoria:</label>
                 <select id="dropdown-filter" value={activityFilterCategory} onChange={(e) => {
-                  setActivityFilterCategory(e.target.value)
-                  loadActivities();
+                  loadActivities(e.target.value);
                 }}>
                 <option value="educacion">Educacion</option>
                 <option value="investigacion">Investigacion</option>
                 <option value="extension">Extension</option>
               </select>
             </div>
-            :<p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay actividades para mostrar..</p>
+            :<div className="loader"></div>
               }
+              {(activitiesToShow.length <= 0 ? <p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay actividades para mostrar..</p> : <div></div>)}
               {activitiesToShow.map((activityData) => (
                 <div key={activityData.id} className='flex flex-row items-center'>
                   <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
@@ -345,59 +351,61 @@ console.log(activityDataForm);
               ))}
               <div className='bg-zinc-400 w-full h-[2px] mt-2 mb-6'></div>
               <p className={`${styles.h4text}`}>Agregar nueva actividad</p>
-              <div className='mt-5'>
-                <label htmlFor="dropdown-add">Categoria de la nueva actividad:</label>
-                <select id="dropdown-add" value={activityDataForm.categoria} onChange={(e) => {handleActivityCategoryChange(e.target.value)}}>
-                  <option value="educacion">Educacion</option>
-                  <option value="investigacion">Investigacion</option>
-                  <option value="extension">Extension</option>
-                </select>
-              </div>
-              
-              {selectedActivityImage && (
-                <img
-                  src={URL.createObjectURL(selectedActivityImage)}
-                  alt="Imagen seleccionada"
-                  className="mt-5 mb-2 rounded-md w-full h-[350px] object-cover"
+              <form onSubmit={handleAddActivity}>
+                <div className='mt-5'>
+                  <label htmlFor="dropdown-add">Categoria de la nueva actividad:</label>
+                  <select id="dropdown-add" value={activityDataForm.categoria} onChange={(e) => {handleActivityCategoryChange(e.target.value)}}>
+                    <option value="educacion">Educacion</option>
+                    <option value="investigacion">Investigacion</option>
+                    <option value="extension">Extension</option>
+                  </select>
+                </div>
+                
+                {selectedActivityImage && (
+                  <img
+                    src={URL.createObjectURL(selectedActivityImage)}
+                    alt="Imagen seleccionada"
+                    className="mt-5 mb-2 rounded-md w-full h-[350px] object-cover"
+                  />
+                )}
+                <input
+                  type='file'
+                  accept='image/*'
+                  required
+                  onChange={handleActivityImageChange}
+                  id='fileInput'
+                  className={`mb-3 mt-5`}
                 />
-              )}
-              <input
-                type='file'
-                accept='image/*'
-                required
-                onChange={handleActivityImageChange}
-                id='fileInput'
-                className={`mb-3 mt-5`}
-              />
-              <input
-                id='titulo'
-                name='titulo'
-                type='text'
-                required
-                value={activityDataForm.titulo}
-                placeholder='Título de la actividad (max 60 caracteres)'
-                className='mb-7 mt-3 p-1.5 rounded-md'
-                onChange={(e) => handleActivityTitleChange(e.target.value)}
-                maxLength={60}
-              />
-              <ReactQuill
-                value={activityDataForm.descripcion}
-                onChange={handleActivityDescriptionChange}
-                required
-                placeholder='Escribe aquí la descripción de la actividad...'
-                modules={quillModules}
-                formats={quillFormats}
-                className='bg-white'
-              />
-              <button
-                className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[170px]'
-                onClick={handleAddActivity}
-              >
+                <input
+                  id='titulo'
+                  name='titulo'
+                  type='text'
+                  required
+                  value={activityDataForm.titulo}
+                  placeholder='Título de la actividad (max 60 caracteres)'
+                  className='mb-7 mt-3 p-1.5 rounded-md'
+                  onChange={(e) => handleActivityTitleChange(e.target.value)}
+                  maxLength={60}
+                />
+                <ReactQuill
+                  value={activityDataForm.descripcion}
+                  onChange={handleActivityDescriptionChange}
+                  required
+                  placeholder='Escribe aquí la descripción de la actividad...'
+                  modules={quillModules}
+                  formats={quillFormats}
+                  className='bg-white'
+                />
+                <button
+                  type='submit'
+                  className='bg-green-400 p-2 my-5 rounded-md text-white text-[17px] w-[170px]'
+                >
                 <div className='flex flex-row items-center justify-between'>
                   <AiOutlinePlus />
                   Agregar actividad
                 </div>
               </button>
+              </form>
             </div>
           )
         )
