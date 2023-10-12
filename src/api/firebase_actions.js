@@ -195,7 +195,7 @@ export const uploadActivityWithImage = async (activityData, imageFile) => {
     
     return true; // Upload successful
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return false; // Upload failed
   }
 };

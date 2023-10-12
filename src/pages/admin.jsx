@@ -10,6 +10,7 @@ import { quillModules, quillFormats } from '../constants/index';
 import DOMPurify from 'dompurify';
 
 const AdminNewsAndActivities = ({ logout }) => {
+  // State variables
   const [adminFilter, setAdminFilter] = useState('noticias');
   const [activityFilterCategory, setActivityFilterCategory] = useState('educacion');
   const [newsError, setNewsError] = useState(null);
@@ -24,45 +25,32 @@ const AdminNewsAndActivities = ({ logout }) => {
   const [newDataForm, setNewDataForm] = useState(new NewData({}));
   const [activityDataForm, setActivityDataForm] = useState({
     categoria: 'educacion',
-    titulo: '', 
+    titulo: '',
+    descripcion: '',
   });
   const [selectedNewImage, setSelectedNewImage] = useState(null);
   const [selectedActivityImage, setSelectedActivityImage] = useState(null);
 
+  // Handle changes in form inputs
   const handleNewTitleChange = (newValue) => {
-    setNewDataForm((prevDataForm) => ({
-      ...prevDataForm,
-      titulo: newValue,
-    }));
+    setNewDataForm((prevDataForm) => ({ ...prevDataForm, titulo: newValue }));
   };
 
   const handleNewDescriptionChange = (newValue) => {
-    setNewDataForm((prevDataForm) => ({
-      ...prevDataForm,
-      descripcion: newValue,
-    }));
+    setNewDataForm((prevDataForm) => ({ ...prevDataForm, descripcion: newValue }));
   };
 
   const handleActivityTitleChange = (newValue) => {
-    setActivityDataForm((prevDataForm) => ({
-      ...prevDataForm,
-      titulo: newValue,
-    }));
+    setActivityDataForm((prevDataForm) => ({ ...prevDataForm, titulo: newValue }));
   };
 
   const handleActivityDescriptionChange = (newValue) => {
-    setActivityDataForm((prevDataForm) => ({
-      ...prevDataForm,
-      descripcion: newValue,
-    }));
+    setActivityDataForm((prevDataForm) => ({ ...prevDataForm, descripcion: newValue }));
   };
 
   const handleActivityCategoryChange = (newValue) => {
-    if(newValue != activityFilterCategory){
-      setActivityDataForm((prevDataForm) => ({
-        ...prevDataForm,
-        categoria: newValue,
-      }));
+    if (newValue !== activityDataForm.categoria) {
+      setActivityDataForm((prevDataForm) => ({ ...prevDataForm, categoria: newValue }));
     }
   };
 
@@ -76,7 +64,9 @@ const AdminNewsAndActivities = ({ logout }) => {
     setSelectedActivityImage(file);
   };
 
-  const handleAddNew = async () => {
+  // Handle adding a new
+  const handleAddNew = async (e) => {
+    e.preventDefault();
     setIsLoadingNews(true);
 
     try {
@@ -87,13 +77,11 @@ const AdminNewsAndActivities = ({ logout }) => {
         descripcion: newDataForm.descripcion,
       };
 
-      if(selectedNewImage == null){
+      if (selectedNewImage === null) {
         setNewsError('Por favor selecciona una imagen');
-      }
-      else if (!newDataForm.descripcion) {
+      } else if (!newDataForm.descripcion) {
         setNewsError('La descripción de la noticia es requerida.');
-      }
-      else{
+      } else {
         const success = await uploadNewWithImage(newNewsData, selectedNewImage);
         if (success) {
           setNewDataForm(new NewData({}));
@@ -103,19 +91,20 @@ const AdminNewsAndActivities = ({ logout }) => {
           setNewsError('Ocurrió un Error al agregar la noticia');
         }
       }
-      
 
       setIsLoadingNews(false);
-    } catch (newsError) {
+    } catch (error) {
       setNewsError('Ocurrió un Error al agregar la noticia');
       setIsLoadingNews(false);
     }
   };
 
-  const handleAddActivity = async () => {
-    try {
-      setIsLoadingActivities(true);
+  // Handle adding an activity
+  const handleAddActivity = async (e) => {
+    e.preventDefault();
+    setIsLoadingActivities(true);
 
+    try {
       setActivitiesError(null);
       const newActivityData = {
         titulo: activityDataForm.titulo,
@@ -123,21 +112,22 @@ const AdminNewsAndActivities = ({ logout }) => {
         categoria: activityDataForm.categoria,
       };
 
-      if(selectedActivityImage == null){
-        throw('Por favor selecciona una imagen')
-      }
+      if (selectedActivityImage === null) {
+        throw 'Por favor selecciona una imagen';
+      } 
       else if (!activityDataForm.descripcion) {
-        throw('La descripción de la actividad es requerida.')
+        throw 'La descripción de la actividad es requerida.';
       }
+
       const success = await uploadActivityWithImage(newActivityData, selectedActivityImage);
       if (success) {
-        setActivityDataForm(new ActivityData({}));
+        setActivityDataForm({ categoria: 'educacion', titulo: '', descripcion: '' });
         setSelectedActivityImage(null);
-        await loadActivities();
+        await loadActivities(activityFilterCategory);
       } else {
         setActivitiesError('Ocurrió un error al agregar la actividad');
       }
-      
+
       setIsLoadingActivities(false);
     } catch (e) {
       setActivitiesError(e);
@@ -145,6 +135,7 @@ const AdminNewsAndActivities = ({ logout }) => {
     }
   };
 
+  // Load news and activities based on the selected filter
   const loadNews = async () => {
     try {
       setIsLoadingNews(true);
@@ -152,39 +143,38 @@ const AdminNewsAndActivities = ({ logout }) => {
       setNewsToShow(news);
       setNewsError(null);
       setIsLoadingNews(false);
-    } catch (newsError) {
+    } catch (error) {
       setNewsToShow([]);
       setNewsError('Ocurrió un error al cargar las noticias');
-    } finally {
       setIsLoadingNews(false);
     }
   };
 
-  const loadActivities = async (filter = "educacion") => {
+  const loadActivities = async (filter = 'educacion') => {
     try {
       setIsLoadingActivities(true);
-      setActivityFilterCategory(filter)
+      setActivityFilterCategory(filter);
       const activities = await readActivitiesByCategory(filter);
       setActivitiesToShow(activities);
       setActivitiesError(null);
       setIsLoadingActivities(false);
-    } catch (activitiesError) {
+    } catch (error) {
       setActivitiesToShow([]);
       setActivitiesError('Ocurrió un error al cargar las actividades');
-    } finally {
       setIsLoadingActivities(false);
     }
   };
 
+  // Fetch news or activities based on the selected filter on component mount
   useEffect(() => {
     if (adminFilter === 'noticias') {
       loadNews();
-    }
-    else if(adminFilter === 'actividades'){
+    } else if (adminFilter === 'actividades') {
       loadActivities();
     }
   }, [adminFilter]);
 
+  // Handle filter change
   const handleFilterClick = (filter) => {
     setAdminFilter(filter);
   };
@@ -217,7 +207,12 @@ const AdminNewsAndActivities = ({ logout }) => {
       ) : (
         adminFilter === 'noticias' ? (
           newsError ? (
-            <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>{newsError}</p>
+            <div className='flex flex-col w-full items-start'>
+             <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>{newsError}</p>
+             <button onClick={(a) => {setNewsError(null)}}>
+              <p className='underline'>Volver a intentar</p>
+             </button>
+            </div>
           ) : (
             <div className='flex flex-col mt-4'>
               {!isLoadingNews && newsToShow.length > 0 ? 
@@ -262,7 +257,7 @@ const AdminNewsAndActivities = ({ logout }) => {
                   className="mt-5 mb-2 rounded-md w-full h-[350px] object-cover"
                 />
               )}
-              <form onSubmit={handleAddNew}>
+              <form onSubmit={handleAddNew} id='newForm' className='flex flex-col'>
                 <input
                   type='file'
                   accept='image/*'
@@ -305,10 +300,16 @@ const AdminNewsAndActivities = ({ logout }) => {
           )
         ) : (
           activitiesError ? (
-            <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>{activitiesError}</p>
+            <div className='flex flex-col w-full items-start'>
+             <p className={`text-[17px] mt-4 mb-4 rounded-md text-[#ff5454]`}>{activitiesError}</p>
+             <button onClick={(a) => {setActivitiesError(null)}}>
+              <p className='underline'>Volver a intentar</p>
+             </button>
+            </div>
           ) : (
-            <div className='flex flex-col mt-4'>
-              {!isLoadingActivities ? 
+            (isLoadingActivities ? <div className='loader'></div>
+             : 
+             <div className='flex flex-col mt-4'>
               <div className='mt-2'>
               <label htmlFor="dropdown-filter">Filtrar actividades por categoria:</label>
                 <select id="dropdown-filter" value={activityFilterCategory} onChange={(e) => {
@@ -318,9 +319,7 @@ const AdminNewsAndActivities = ({ logout }) => {
                 <option value="investigacion">Investigacion</option>
                 <option value="extension">Extension</option>
               </select>
-            </div>
-            :<div className="loader"></div>
-              }
+             </div>
               {(activitiesToShow.length <= 0 ? <p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay actividades para mostrar..</p> : <div></div>)}
               {activitiesToShow.map((activityData) => (
                 <div key={activityData.id} className='flex flex-row items-center'>
@@ -351,7 +350,7 @@ const AdminNewsAndActivities = ({ logout }) => {
               ))}
               <div className='bg-zinc-400 w-full h-[2px] mt-2 mb-6'></div>
               <p className={`${styles.h4text}`}>Agregar nueva actividad</p>
-              <form onSubmit={handleAddActivity}>
+              <form onSubmit={handleAddActivity} id='activityForm' className='flex flex-col'>
                 <div className='mt-5'>
                   <label htmlFor="dropdown-add">Categoria de la nueva actividad:</label>
                   <select id="dropdown-add" value={activityDataForm.categoria} onChange={(e) => {handleActivityCategoryChange(e.target.value)}}>
@@ -373,11 +372,11 @@ const AdminNewsAndActivities = ({ logout }) => {
                   accept='image/*'
                   required
                   onChange={handleActivityImageChange}
-                  id='fileInput'
+                  id='fileInputActivity'
                   className={`mb-3 mt-5`}
                 />
                 <input
-                  id='titulo'
+                  id='tituloActivity'
                   name='titulo'
                   type='text'
                   required
@@ -391,6 +390,7 @@ const AdminNewsAndActivities = ({ logout }) => {
                   value={activityDataForm.descripcion}
                   onChange={handleActivityDescriptionChange}
                   required
+                  id='descActivity'
                   placeholder='Escribe aquí la descripción de la actividad...'
                   modules={quillModules}
                   formats={quillFormats}
@@ -407,6 +407,8 @@ const AdminNewsAndActivities = ({ logout }) => {
               </button>
               </form>
             </div>
+            )
+            
           )
         )
       )}
