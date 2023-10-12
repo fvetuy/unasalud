@@ -38,7 +38,7 @@ const Hero = () => {
                 <img
                   className="w-full h-full object-cover rounded-lg"
                   src={imagenActividad1}
-                  alt={`Noticias`}
+                  alt={`..`}
                 />
                 <h1 className="absolute bottom-3 left-0 right-0 font-dmsans text-[25px] md:text-[28px] font-regular text-white text-center">
                   Noticias
@@ -126,14 +126,14 @@ const Hero = () => {
                 </div>
             </div>
             
-            <div className='flex flex-row w-full justify-between items-center mt-20'>
+            <div className='flex flex-col w-full justify-between items-center mt-20 xs:flex-row'>
               <a href='noticias'>
-                <div className='relative h-[280px] w-[190px] md:h-[350px] md:w-[250px] sm:h-[300px] sm:w-[230px]'>
+                <div className='relative h-[280px] w-[230px] xs:h-[260px] xs:w-[200px] ss:h-[310px] ss:w-[270px] md:h-[210px] md:w-[250px] mb-10 xs:mb-0'>
                   <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-t from-black/80 to-black/0 rounded-lg"></div>
                   <img
                     className="w-full h-full object-cover rounded-lg"
                     src={imagenActividad1}
-                    alt={`Noticias`}
+                    alt={`..`}
                   />
                   <h1 className="absolute bottom-3 left-0 right-0 font-dmsans text-[25px] md:text-[28px] font-regular text-white text-center">
                     Noticias
@@ -143,15 +143,15 @@ const Hero = () => {
               </a>
             
               <a href='actividades'>
-                <div className='relative h-[280px] w-[190px] md:h-[350px] md:w-[250px] sm:h-[300px] sm:w-[230px]'>
+                <div className='relative h-[280px] w-[230px] xs:h-[260px] xs:w-[200px] ss:h-[310px] ss:w-[270px] md:h-[210px] md:w-[250px]'>
                   <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-t from-black/80 to-black/0 rounded-lg"></div>
                   <img
                     className="w-full h-full object-cover rounded-lg"
                     src={imagenActividad3}
-                    alt={`Noticias`}
+                    alt={`..`}
                   />
                   <h1 className="absolute bottom-3 left-0 right-0 font-dmsans text-[25px] md:text-[28px] font-regular text-white text-center">
-                    Actividades
+                    Actividaes
                   </h1>
                 </div>
               </a>

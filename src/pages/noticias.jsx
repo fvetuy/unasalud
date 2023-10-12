@@ -81,8 +81,8 @@ const Noticias = () => {
             }
           </div>
           <div className={`mt-10 ${styles.marginX}`}>
-           <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(currentNoticia.descripcion)}} className={`font-dmsans text-[16px] line-clamp-2 sm:line-clamp-3`}></div>
-           <div className='w-full h-[180px]'></div>
+           <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(currentNoticia.descripcion)}} className={`font-dmsans text-[16px]`}></div>
+           <div className='w-full h-[130px]'></div>
           </div>
         </div>
       )}
