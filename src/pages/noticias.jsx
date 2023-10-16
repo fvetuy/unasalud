@@ -65,18 +65,18 @@ const Noticias = () => {
                 <button onClick={() => changeSelectedNoticia(false)}>
                   <FiChevronLeft size={22} color="#ffffff" />
                 </button>
-                <h1 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
+                <h2 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
                   {currentNoticia.titulo}
-                </h1>
+                </h2>
                 <button onClick={() => changeSelectedNoticia(true)}>
                   <FiChevronRight size={22} color="#ffffff" />
                 </button>
               </div> 
               : 
               <div className="absolute bottom-10 md:bottom-20 flex flex-row justify-center w-full px-6 sm:px-16">
-                <h1 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
+                <h2 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
                   {currentNoticia.titulo}
-                </h1>
+                </h2>
               </div> 
             }
           </div>
