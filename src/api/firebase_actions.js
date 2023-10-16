@@ -138,6 +138,36 @@ export const deleteNewById = async (newId) => {
 
 
 // activities
+export const findActivityById = async (activityId) => {
+  try {
+    const activityRef = doc(db, 'activities', activityId);
+    const docSnapshot = await getDoc(activityRef);
+
+    if (docSnapshot.exists()) {
+      const data = docSnapshot.data();
+      const { titulo, descripcion, imagenURL, fecha, id, categoria } = data;
+
+      const activityData = new ActivityData({
+        titulo: titulo,
+        descripcion: descripcion,
+        imagenURL: imagenURL,
+        fecha: fecha,
+        id: id,
+        categoria: categoria,
+      });
+
+      return activityData;
+    } else {
+      // La actividad con el ID especificado no existe.
+      return null;
+    }
+  } catch (error) {
+    console.error('Error al buscar la actividad:', error);
+    throw error;
+  }
+};
+
+
 export const readActivitiesByCategory = async (category) => {
   try {
     const categoryQuery = query(collection(db, 'activities'), where('categoria', '==', category));

@@ -3,6 +3,8 @@ import styles from '../style';
 import { readActivitiesByCategory } from '../api/firebase_actions';
 import DOMPurify from 'dompurify';
 import LazyLoad from 'react-lazyload';
+import { Link } from 'react-router-dom';
+
 
 const Actividades = () => {
   const [currentCategory, setCurrentCategory] = useState('educacion');
@@ -15,7 +17,7 @@ const Actividades = () => {
       setIsLoadingActivities(true);
       setCurrentCategory(filter);
       const activities = await readActivitiesByCategory(filter);
-      setActivitiesToShow(activities);
+      setActivitiesToShow(activities);``
       setActivitiesError(null);
       setIsLoadingActivities(false);
     } catch (error) {
@@ -90,7 +92,7 @@ const Actividades = () => {
               </div>
             </div>
             <p className={`${styles.ptext} font-poppins font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-normal text-black self-auto`} dangerouslySetInnerHTML={{ __html: activityData.descripcion.slice(0, 99) + "..." }}></p>
-            <button className="text-black bg-transparent border-none md:text-[18px] sm:text-[16px]"><a href={`${"actividades/" + (activityData.titulo.toLowerCase())}`}>Más info</a></button>
+            <button className="text-black bg-transparent border-none md:text-[18px] sm:text-[16px]"><Link to={`/actividades/${activityData.id.toLowerCase()}`}>Más info</Link></button>
           </div>
         ))
 )}

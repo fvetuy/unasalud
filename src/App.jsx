@@ -1,15 +1,8 @@
 import React, { useEffect } from 'react';
 import styles from './style';
-import { Route, Routes } from 'react-router-dom';
-import { Inicio, Programa, Actividades, Noticias, Admin, PageNotFound } from './pages';
+import { Route, Routes, Router, BrowserRouter } from 'react-router-dom';
+import { Inicio, Programa, Actividades, ActivityDetail, Noticias, Admin, PageNotFound } from './pages';
 import { NavBar, Footer } from './components';
-
-const EInicio = () => <Inicio />;
-const EPrograma = () => <Programa />;
-const EActividades = () => <Actividades />;
-const ENoticias = () => <Noticias />;
-const EAdmin = () => <Admin />;
-const EPageNotFound = () => <PageNotFound />;
 
 const App = () => {
   return (
@@ -21,16 +14,17 @@ const App = () => {
       </div>
 
       <Routes>
-        <Route path="/" element={<EInicio />} />
-        <Route path="/programa" element={<EPrograma />} />
-        <Route path="/actividades" element={<EActividades />} />
-        <Route path="/noticias" element={<ENoticias />} />
-        <Route path="/admin" element={<EAdmin />} />
-        <Route path="*" element={<EPageNotFound />} />
+        <Route path="/" element={<Inicio />} />
+        <Route path="/programa" element={<Programa />} />
+        <Route path="/actividades" element={<Actividades />} />
+        <Route path="/actividades/:id" element={<ActivityDetail />} />
+        <Route path="/noticias" element={<Noticias />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
 
 
-      <div className={`mb-0`}>
+      <div className={`mb-0 mt-2`}>
         <Footer />
       </div>
     </div>
