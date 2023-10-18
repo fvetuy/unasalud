@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { findActivityById } from '../api/firebase_actions';
+import styles from '../style';
+import { Link } from "react-router-dom";
+import { BsArrowRight } from "react-icons/bs";
 
 const ActivityDetail = () => {
   const { id } = useParams();
@@ -21,7 +24,7 @@ const ActivityDetail = () => {
   return (
 
 <div className="flex flex-col w-screen">
-  <div className="relative h-[300px] md:h-[450px]">
+  <section className="relative h-[300px] md:h-[450px]">
     <img
       className="w-full h-full object-cover relative"
       src={activity.imagenURL}
@@ -36,13 +39,28 @@ const ActivityDetail = () => {
           </h2>
         </div>
         <div>
-          <h4 className="font-dmsans font-regular text-white text-center">
-            {activity.descripcion.replace(/<\/?p>/g, '')}
-          </h4>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+  <section className='m-6'>
+    <div>
+      <h1 className={`mx-16 mt-16 mb-2 ${styles.h3text}`}>¿En qué consiste?</h1>
+    <p className=' sm:md:m-20'>{'. ' + activity.descripcion.replace(/<\/?p>/g, '')}</p>  
+    </div>
+  </section>
+    <div className='ml-20 mb-2'>
+  <button className={`font-dmsans text-[16px] xs:text-[16px] font-medium leading-[27px] xs:leading-[31px] text-zinc-500 w-full`}>
+    <span style={{ display: 'flex', alignItems: 'center' }}>
+      <Link to={`/actividades`} style={{ marginRight: '5px' }}>
+        Ver todas las actividades
+      </Link>
+      <div className='md:mt-[4px] sm:mt-[4px] mt-[3px]'>
+      <BsArrowRight/>
+      </div>
+    </span>
+  </button>
+</div>
 </div>
   );
 };
