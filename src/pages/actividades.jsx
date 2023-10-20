@@ -80,20 +80,20 @@ const Actividades = () => {
   <p className={`text-[17px] mt-36 mb-96 rounded-md`}>No hay actividades para mostrar..</p>
 ) : (
         activitiesToShow.map((activityData) => (
-          <div key={activityData.id} className='mb-6 xs:mb-10'>
-            <div className="flex items-center">
-              <div className="w-full h-full">
-              <LazyLoad height={200} once placeholder={<div className="placeholder" style={{ height: '200px' }} />} >
-                <img className='rounded-md' src={activityData.imagenURL} alt={`...`} />
-                </LazyLoad>
-                <h4 className={`${styles.h3text} self-auto pl-0 xs:mb-3 xs:pl-0 xs:p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
-                  {activityData.titulo.slice(0, 20).toString()}
-                </h4>
-              </div>
-            </div>
-            <p className={`${styles.ptext} font-poppins font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-normal text-black self-auto`} dangerouslySetInnerHTML={{ __html: activityData.descripcion.slice(0, 99) + "..." }}></p>
-            <button className="text-black bg-transparent border-none md:text-[18px] sm:text-[16px]"><Link to={`/actividades/${activityData.id.toLowerCase()}`}>Más info</Link></button>
-          </div>
+<div key={activityData.id} className='mb-6 xs:mb-10'>
+  <div className="flex sm:justify-normal md:justify-normal justify-center items-center">
+    <div className="min-w-22 h-full">
+      <LazyLoad height={200} once placeholder={<div className="placeholder" style={{ height: '200px' }} />} >
+        <img className='rounded-md object-cover w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80' src={activityData.imagenURL} alt={`...`} />
+      </LazyLoad>
+      <h4 className={`${styles.h3text} self-auto pl-0 xs:mb-3 xs:pl-0 xs:p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
+        {activityData.titulo.slice(0, 20).toString()}
+      </h4>
+      <p className={`${styles.ptext} font-poppins font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-normal text-black self-auto`} dangerouslySetInnerHTML={{ __html: activityData.descripcion.slice(0, 99) + "..." }}></p>
+  <button className="text-black bg-transparent border-none md:text-[18px] sm:text-[16px]"><Link to={`/actividades/${activityData.id.toLowerCase()}`}>Más info</Link></button>
+    </div>
+  </div>
+</div>
         ))
 )}
 </div>
