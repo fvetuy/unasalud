@@ -42,14 +42,17 @@ const Noticias = () => {
           <div className="loader"></div>
         </div>
       )}
-
       {error && (
         <div className="text-center flex justify-center items-center h-[500px]">
           Lo sentimos, ha ocurrido un error al cargar las noticias. Prueba de nuevo o reintenta más tarde.
         </div>
       )}
-
-      {currentNoticia && !isLoading && !error && (
+      {!isLoading && !error && noticias.length === 0 && (
+        <div className="text-center flex justify-center items-center h-[500px]">
+          No hay noticias actualmente
+        </div>
+      )}
+      {currentNoticia && !isLoading && !error && noticias.length > 0 && (
         <div className="flex flex-col w-screen">
           <div className="relative h-[300px] md:h-[450px]">
             <img
@@ -91,4 +94,3 @@ const Noticias = () => {
 };
 
 export default Noticias;
-   
