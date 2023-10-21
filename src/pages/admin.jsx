@@ -223,7 +223,7 @@ const AdminNewsAndActivities = ({ logout }) => {
               
               {newsToShow.map((newData) => (
                 <div key={newData.id} className='flex flex-row items-center'>
-                  <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
+                  <div className='flex flex-row w-full bg-white my-3 sm:my-7 rounded-md sm:rounded-xl'>
                     <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={newData.imagenURL} alt={`...`} />
                     <div className='flex flex-col ml-3 sm:ml-5'>
                       <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{newData.titulo}</p>
@@ -324,7 +324,7 @@ const AdminNewsAndActivities = ({ logout }) => {
               {(activitiesToShow.length <= 0 ? <p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay actividades para mostrar..</p> : <div></div>)}
               {activitiesToShow.map((activityData) => (
                 <div key={activityData.id} className='flex flex-row items-center'>
-                  <div className='flex flex-row w-full bg-white my-2 p-3 sm:p-7 rounded-md sm:rounded-xl'>
+                  <div className='flex flex-row w-full bg-white my-3 sm:my-7 rounded-md sm:rounded-xl'>
                   <LazyLoad height={200} once placeholder={<div className="placeholder" style={{ height: '200px' }} />} >
                     <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={activityData.imagenURL} alt={`...`} />
                     </LazyLoad>

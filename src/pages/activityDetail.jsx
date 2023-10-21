@@ -50,7 +50,7 @@ const ActivityDetail = () => {
     </div>
   </section>
     <div className='ml-20 mb-2'>
-  <button className={`font-dmsans text-[16px] xs:text-[16px] font-medium leading-[27px] xs:leading-[31px] text-zinc-500 w-full`}>
+  <button className={`font-dmsans text-[16px] xs:text-[16px] font-medium leading-[27px] xs:leading-[31px] text-black/80 w-full`}>
     <span style={{ display: 'flex', alignItems: 'center' }}>
       <Link to={`/actividades`} style={{ marginRight: '5px' }}>
         Ver todas las actividades
