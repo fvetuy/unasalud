@@ -4,6 +4,7 @@ import { getFirestore, collection, getDocs, getDoc, deleteDoc, doc, setDoc, serv
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'; // Import signInWithEmailAndPassword
 import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import ActivityData from './models/activity';
+import ImageCompressor from 'image-compressor';
 
 // Initialize Firebase
 const config = {
@@ -88,8 +89,12 @@ export const uploadNewWithImage = async (newData, imageFile) => {
   
  
   try {
+    const compressedImageFile = await ImageCompressor(imageFile, {
+      quality: 0.8,
+    });
+
     // Upload the image to Firebase Storage as bytes
-    await uploadBytes(storageRef, imageFile);
+    await uploadBytes(storageRef, compressedImageFile);
 
     // Get the download URL of the uploaded image
     const imageUrl = await getDownloadURL(storageRef);
@@ -138,6 +143,36 @@ export const deleteNewById = async (newId) => {
 
 
 // activities
+export const findActivityById = async (activityId) => {
+  try {
+    const activityRef = doc(db, 'activities', activityId);
+    const docSnapshot = await getDoc(activityRef);
+
+    if (docSnapshot.exists()) {
+      const data = docSnapshot.data();
+      const { titulo, descripcion, imagenURL, fecha, id, categoria } = data;
+
+      const activityData = new ActivityData({
+        titulo: titulo,
+        descripcion: descripcion,
+        imagenURL: imagenURL,
+        fecha: fecha,
+        id: id,
+        categoria: categoria,
+      });
+
+      return activityData;
+    } else {
+      // La actividad con el ID especificado no existe.
+      return null;
+    }
+  } catch (error) {
+    console.error('Error al buscar la actividad:', error);
+    throw error;
+  }
+};
+
+
 export const readActivitiesByCategory = async (category) => {
   try {
     const categoryQuery = query(collection(db, 'activities'), where('categoria', '==', category));
@@ -171,10 +206,13 @@ export const uploadActivityWithImage = async (activityData, imageFile) => {
   const storage = getStorage();
   const storageRef = ref(storage, `activitiesImages/${activityId}`);
   
- 
+  const compressedImageFile = await ImageCompressor(imageFile, {
+    quality: 0.8,
+  });
+
   try {
     // Upload the image to Firebase Storage as bytes
-    await uploadBytes(storageRef, imageFile);
+    await uploadBytes(storageRef, compressedImageFile);
 
     // Get the download URL of the uploaded image
     const imageUrl = await getDownloadURL(storageRef);

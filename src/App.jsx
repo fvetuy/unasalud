@@ -1,40 +1,41 @@
 import React, { useEffect } from 'react';
 import styles from './style';
-import { Route, Routes } from 'react-router-dom';
-import { Inicio, Programa, Actividades, Noticias, Admin, PageNotFound } from './pages';
+import { Route, Routes, Router, BrowserRouter } from 'react-router-dom';
+import { Inicio, Programa, Actividades, ActivityDetail, Noticias, Admin, PageNotFound } from './pages';
 import { NavBar, Footer } from './components';
-
-const EInicio = () => <Inicio />;
-const EPrograma = () => <Programa />;
-const EActividades = () => <Actividades />;
-const ENoticias = () => <Noticias />;
-const EAdmin = () => <Admin />;
-const EPageNotFound = () => <PageNotFound />;
+import backgroundTexture from './assets/background_texture.jpg'; // Import the background image
 
 const App = () => {
   return (
-    <div className="w-full overflow-hidden" style={{backgroundImage: "url(\"../src/assets/background_texture.png",  backgroundSize: "cover", backgroundAttachment: "fixed"} }>
-      <div className={`bg-black ${styles.paddingX} ${styles.flexCenter}`}>
+  <div className="w-full min-h-screen flex flex-col"
+  style={{
+    backgroundImage: `url(${backgroundTexture})`,
+    backgroundRepeat: 'repeat',
+    backgroundSize: 'cover',
+  }}>
+    <div className="flex-shrink-0 bg-black">
+      <div className={`${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
           <NavBar />
         </div>
       </div>
-
-      <Routes>
-        <Route path="/" element={<EInicio />} />
-        <Route path="/programa" element={<EPrograma />} />
-        <Route path="/actividades" element={<EActividades />} />
-        <Route path="/noticias" element={<ENoticias />} />
-        <Route path="/admin" element={<EAdmin />} />
-        <Route path="*" element={<EPageNotFound />} />
-      </Routes>
-
-
-      <div className={`mb-0`}>
-        <Footer />
-      </div>
     </div>
-  );
+    <div className="flex-grow">
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/programa" element={<Programa />} />
+        <Route path="/actividades" element={<Actividades />} />
+        <Route path="/actividades/:id" element={<ActivityDetail />} />
+        <Route path="/noticias" element={<Noticias />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </div>
+    <div className="mt-auto">
+      <Footer />
+    </div>
+  </div>
+ );
 };
 
 export default App;

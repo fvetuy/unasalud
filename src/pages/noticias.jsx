@@ -42,14 +42,17 @@ const Noticias = () => {
           <div className="loader"></div>
         </div>
       )}
-
       {error && (
         <div className="text-center flex justify-center items-center h-[500px]">
           Lo sentimos, ha ocurrido un error al cargar las noticias. Prueba de nuevo o reintenta más tarde.
         </div>
       )}
-
-      {currentNoticia && !isLoading && !error && (
+      {!isLoading && !error && noticias.length === 0 && (
+        <div className="text-center flex justify-center items-center h-[500px]">
+          No hay noticias actualmente
+        </div>
+      )}
+      {currentNoticia && !isLoading && !error && noticias.length > 0 && (
         <div className="flex flex-col w-screen">
           <div className="relative h-[300px] md:h-[450px]">
             <img
@@ -65,18 +68,18 @@ const Noticias = () => {
                 <button onClick={() => changeSelectedNoticia(false)}>
                   <FiChevronLeft size={22} color="#ffffff" />
                 </button>
-                <h1 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
+                <h2 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
                   {currentNoticia.titulo}
-                </h1>
+                </h2>
                 <button onClick={() => changeSelectedNoticia(true)}>
                   <FiChevronRight size={22} color="#ffffff" />
                 </button>
               </div> 
               : 
               <div className="absolute bottom-10 md:bottom-20 flex flex-row justify-center w-full px-6 sm:px-16">
-                <h1 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
+                <h2 className="font-dmsans text-[25px] md:text-[35px] font-regular text-white text-center">
                   {currentNoticia.titulo}
-                </h1>
+                </h2>
               </div> 
             }
           </div>

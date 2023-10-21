@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../style';
-import { Hero, MisionVision, MuestraActividadesInicio } from '../components';
+import { Hero, MisionVision } from '../components';
 import { logoBadge } from '../assets';
 
 const inicio = () => {
