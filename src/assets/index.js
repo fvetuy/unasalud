@@ -17,6 +17,7 @@ import logoBadge from "./logoBadge.png";
 import imagenActividad1 from "./imagen_actividad_1.png";
 import imagenActividad2 from "./imagen_actividad_2.png";
 import imagenActividad3 from "./imagen_actividad_3.png";
+import logo120Fvet from "./logo_120_fvet.png";
 
 export {
     logo,
@@ -38,4 +39,5 @@ export {
     imagenActividad1,
     imagenActividad2,
     imagenActividad3,
+    logo120Fvet,
 };

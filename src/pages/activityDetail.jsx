@@ -18,7 +18,9 @@ const ActivityDetail = () => {
   }, [id]);
 
   if (!activity) {
-    return <div>Cargando actividad...</div>;
+    return <div className="flex justify-center items-center h-[80vh]">
+    <div className="loader"></div>
+  </div>;
   }
 
   return (

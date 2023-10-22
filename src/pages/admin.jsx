@@ -223,7 +223,7 @@ const AdminNewsAndActivities = ({ logout }) => {
               
               {newsToShow.map((newData) => (
                 <div key={newData.id} className='flex flex-row items-center'>
-                  <div className='flex flex-row w-full bg-white my-3 sm:my-7 rounded-md sm:rounded-xl'>
+                  <div className='flex flex-row w-full bg-white my-3 sm:my-7 rounded-md sm:rounded-xl pl-3 py-3'>
                     <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={newData.imagenURL} alt={`...`} />
                     <div className='flex flex-col ml-3 sm:ml-5'>
                       <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{newData.titulo}</p>
@@ -308,7 +308,9 @@ const AdminNewsAndActivities = ({ logout }) => {
              </button>
             </div>
           ) : (
-            (isLoadingActivities ? <div className='loader'></div>
+            (isLoadingActivities ?  <div className='flex mt-10'>
+            <div className='loader'></div>
+          </div>
              : 
              <div className='flex flex-col mt-4'>
               <div className='mt-2'>
@@ -316,18 +318,18 @@ const AdminNewsAndActivities = ({ logout }) => {
                 <select id="dropdown-filter" value={activityFilterCategory} onChange={(e) => {
                   loadActivities(e.target.value);
                 }}>
-                <option value="educacion">Educacion</option>
-                <option value="investigacion">Investigacion</option>
-                <option value="extension">Extension</option>
+                <option value="educacion">Educación</option>
+                <option value="investigacion">Investigación</option>
+                <option value="extension">Extensión</option>
               </select>
              </div>
               {(activitiesToShow.length <= 0 ? <p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay actividades para mostrar..</p> : <div></div>)}
               {activitiesToShow.map((activityData) => (
                 <div key={activityData.id} className='flex flex-row items-center'>
-                  <div className='flex flex-row w-full bg-white my-3 sm:my-7 rounded-md sm:rounded-xl'>
+                  <div className='flex flex-row w-full bg-white my-3 sm:my-7 rounded-md sm:rounded-xl pl-3 py-3'>
                   <LazyLoad height={200} once placeholder={<div className="placeholder" style={{ height: '200px' }} />} >
                     <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={activityData.imagenURL} alt={`...`} />
-                    </LazyLoad>
+                  </LazyLoad>
                     <div className='flex flex-col ml-3 sm:ml-5'>
                       <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{activityData.titulo}</p>
                       <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(activityData.descripcion)}} className={`font-dmsans text-[16px] line-clamp-2 sm:line-clamp-3`}></div>
@@ -357,9 +359,9 @@ const AdminNewsAndActivities = ({ logout }) => {
                 <div className='mt-5'>
                   <label htmlFor="dropdown-add">Categoria de la nueva actividad:</label>
                   <select id="dropdown-add" value={activityDataForm.categoria} onChange={(e) => {handleActivityCategoryChange(e.target.value)}}>
-                    <option value="educacion">Educacion</option>
-                    <option value="investigacion">Investigacion</option>
-                    <option value="extension">Extension</option>
+                    <option value="educacion">Educación</option>
+                    <option value="investigacion">Investigación</option>
+                    <option value="extension">Extensión</option>
                   </select>
                 </div>
                 
