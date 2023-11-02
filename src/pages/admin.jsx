@@ -8,7 +8,6 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { quillModules, quillFormats } from '../constants/index';
 import DOMPurify from 'dompurify';
-import LazyLoad from 'react-lazyload';
 
 const AdminNewsAndActivities = ({ logout }) => {
   // State variables
@@ -327,9 +326,7 @@ const AdminNewsAndActivities = ({ logout }) => {
               {activitiesToShow.map((activityData) => (
                 <div key={activityData.id} className='flex flex-row items-center'>
                   <div className='flex flex-row w-full bg-white my-3 sm:my-7 rounded-md sm:rounded-xl pl-3 py-3'>
-                  <LazyLoad height={200} once placeholder={<div className="placeholder" style={{ height: '200px' }} />} >
                     <img className='w-[100px] h-[100px] sm:w-[160px] sm:h-[160px] object-cover rounded-md' src={activityData.imagenURL} alt={`...`} />
-                  </LazyLoad>
                     <div className='flex flex-col ml-3 sm:ml-5'>
                       <p className={`font-dmsans text-[16px] xs:text-[18px] font-medium leading-[27px] xs:leading-[31px] text-zinc-700 line-clamp-1 sm:line-clamp-2`}>{activityData.titulo}</p>
                       <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(activityData.descripcion)}} className={`font-dmsans text-[16px] line-clamp-2 sm:line-clamp-3`}></div>

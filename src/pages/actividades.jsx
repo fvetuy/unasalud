@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styles from '../style';
 import { readActivitiesByCategory } from '../api/firebase_actions';
 import DOMPurify from 'dompurify';
-import LazyLoad from 'react-lazyload';
 import { Link } from 'react-router-dom';
 
 
@@ -86,9 +85,7 @@ const Actividades = () => {
   <a href={`/actividades/${activityData.id.toLowerCase()}`}>
     <div className="flex sm:justify-normal md:justify-normal justify-center items-center">
       <div className="min-w-22 h-full">
-        <LazyLoad height={200} once placeholder={<div className="placeholder" style={{ height: '200px' }} />} >
-          <img className='rounded-xl object-cover w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80' src={activityData.imagenURL} alt={`...`} />
-        </LazyLoad>
+        <img className='rounded-xl object-cover w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80' src={activityData.imagenURL} alt={`...`} />
         <h4 className={`${styles.h3text} self-auto xs:mb-2 xs:pl-0 xs:p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
           {activityData.titulo.slice(0, 20).toString()}
         </h4>
