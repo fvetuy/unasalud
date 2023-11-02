@@ -11,7 +11,7 @@ const Header = () => (
 
         <a href='https://www.fvet.edu.uy'>
           <div className="flex items-center justify-end">
-            <img className="w-[180px] h-[180px] md:w-[200px] md:h-[200px] object-contain" src={logo120Fvet} alt="logo-fvet"/>
+            <img className="w-[115px] h-[115px] md:w-[150px] md:h-[150px] object-contain" src={logo120Fvet} alt="logo-fvet"/>
           </div>
         </a>
 
@@ -35,7 +35,7 @@ const Header = () => (
 
           <a href='https://www.fvet.edu.uy'>
             <div className="flex items-center justify-end">
-              <img className="w-[180px] h-[180px] object-contain" src={logo120Fvet} alt="logo-fvet"/>
+              <img className="w-[140px] h-[140px] object-contain" src={logo120Fvet} alt="logo-fvet"/>
             </div>
           </a>
         </div>
@@ -84,7 +84,7 @@ const Hero = () => {
             <div className='flex flex-col'>
               <h1 className={`font-dmsans font-semibold ss:text-[64px] text-[52px] text-black ss:leading-[100px] leading-[75px] w-full mt-4`}>Programa Una Salud</h1>
 
-              <p className={`font-dmsans text-[18px] font-medium text-black/70 my-4 max-w-[600px]`}>
+              <p className={`font-dmsans text-[22px] font-medium text-black/70 my-4 max-w-[600px]`}>
                 La Facultad de Veterinaria renueva su compromiso con la Sociedad con un enfoque transdisciplinario, multisectorial y colaborativo en Una Salud, Un Mundo, Un Bienestar.
               </p>
 
