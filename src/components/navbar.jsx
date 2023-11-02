@@ -52,7 +52,7 @@ const NavBar = () => {
             }} text={nav.title}>
               Ubicacion y contacto
             </button>)  : 
-            (<a href={nav.id === "inicio" ? "/" : `/${nav.id}`}>{nav.title}</a>)}
+            (<a href={`/${nav.id}`}>{nav.title}</a>)}
           </li>
         ))}
       </ul>

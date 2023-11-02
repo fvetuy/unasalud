@@ -12,7 +12,7 @@ const App = () => {
     backgroundImage: `url(${backgroundTexture})`,
     backgroundRepeat: 'repeat',
     backgroundSize: 'cover',
-  }}>
+  }}> c
     <div className="flex-shrink-0 bg-black">
       <div className={`${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
@@ -22,7 +22,7 @@ const App = () => {
     </div>
     <div className="flex-grow">
       <Routes>
-        <Route path="/" element={<Inicio />} />
+        <Route path="/inicio" element={<Inicio />} />
         <Route path="/programa" element={<Programa />} />
         <Route path="/actividades" element={<Actividades />} />
         <Route path="/actividades/:id" element={<ActivityDetail />} />
