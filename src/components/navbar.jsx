@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { close, trazoAnimalesBlanco, menu } from "../assets";
-import { navLinks, urlBasename } from "../constants";
+import { navLinks } from "../constants";
 import ContactInfoPopup from "./ui/contact_info_popup";
 
 const NavBar = () => {
