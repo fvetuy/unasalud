@@ -12,7 +12,7 @@ const App = () => {
     backgroundImage: `url(${backgroundTexture})`,
     backgroundRepeat: 'repeat',
     backgroundSize: 'cover',
-  }}> c
+  }}>
     <div className="flex-shrink-0 bg-black">
       <div className={`${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
@@ -22,12 +22,12 @@ const App = () => {
     </div>
     <div className="flex-grow">
       <Routes>
-        <Route path="/inicio" element={<Inicio />} />
-        <Route path="/programa" element={<Programa />} />
-        <Route path="/actividades" element={<Actividades />} />
-        <Route path="/actividades/:id" element={<ActivityDetail />} />
-        <Route path="/noticias" element={<Noticias />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path={process.env.PUBLIC_URL + '/inicio'} element={<Inicio />} />
+        <Route path={process.env.PUBLIC_URL + '/programa'} element={<Programa />} />
+        <Route path={process.env.PUBLIC_URL + '/actividades'} element={<Actividades />} />
+        <Route path={process.env.PUBLIC_URL + '/actividades/:id'} element={<ActivityDetail />} />
+        <Route path={process.env.PUBLIC_URL + '/noticias'} element={<Noticias />} />
+        <Route path={process.env.PUBLIC_URL + '/admin'} element={<Admin />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
