@@ -16,7 +16,7 @@ const NavBar = () => {
     <nav className="w-full flex py-6 navbar">
       <ul className="list-none sm:flex hidden justify-between items-center flex-1">
           <img
-            href={`${urlBasename + '/'}`}
+            href='/una-salud/'
             src={trazoAnimalesBlanco}
             alt="una salud"
             className="w-[150px] h-[40px] object-contain"
@@ -34,7 +34,7 @@ const NavBar = () => {
       </ul>
       
       <div className="sm:hidden flex flex-row flex-1 justify-between items-center z-[2]">
-      <img href={`${urlBasename + '/'}`} src={trazoAnimalesBlanco} alt="una salud" className="w-[150px] h-[40px] object-contain"/>
+      <img href='/una-salud/' src={trazoAnimalesBlanco} alt="una salud" className="w-[150px] h-[40px] object-contain"/>
           <img src={toggle ?  close : menu} alt="menu" className="w-[28px] h-[28px] object-contain z-[2]" onClick={() => setToggle((prev) => !prev )}/>
           <div className={`${toggle ? 'flex' : 'hidden'} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50`}>
          
