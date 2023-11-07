@@ -37,7 +37,7 @@ export const misionYVision = [
 export const quillModules = {
   toolbar: [
     ['bold', 'italic', 'underline', 'strike'], // Text formatting buttons
-    ['link'], // Link button
+    ['link'], 
     [{ list: 'ordered' }, { list: 'bullet' }], // List buttons
     ['clean'], // Remove formatting button
   ],

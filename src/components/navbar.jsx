@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { close, trazoAnimalesBlanco, menu } from "../assets";
 import { navLinks } from "../constants";
 import ContactInfoPopup from "./ui/contact_info_popup";
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const [toggle, setToggle] = useState(false)
