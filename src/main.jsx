@@ -34,9 +34,11 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router}>
-      <App/>
-    </RouterProvider>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Suspense fallback={<div className="flex justify-center items-center h-screen">
+      <div className="loader"></div>
+    </div>}>
+      {router}
+    </Suspense>
+  </BrowserRouter>
 );
