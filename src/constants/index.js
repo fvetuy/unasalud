@@ -1,5 +1,7 @@
 import { ImgActividad1, ImgActividad2, ImgActividad3,IconoActividad1, IconoActividad2, IconoActividad3 } from '../assets'
 
+export const urlBasename = '/una-salud'
+
 export const navLinks = [
     {
       id: "inicio",

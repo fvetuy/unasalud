@@ -4,6 +4,7 @@ import { Route, Routes, Router, BrowserRouter } from 'react-router-dom';
 import { Inicio, Programa, Actividades, ActivityDetail, Noticias, Admin, PageNotFound } from './pages';
 import { NavBar, Footer } from './components';
 import backgroundTexture from './assets/background_texture.jpg'; // Import the background image
+import { urlBasename } from './constants';
 
 const App = () => {
   return (
@@ -22,12 +23,12 @@ const App = () => {
     </div>
     <div className="flex-grow">
       <Routes>
-        <Route path={process.env.PUBLIC_URL + '/'} element={<Inicio />} />
-        <Route path={process.env.PUBLIC_URL + '/programa'} element={<Programa />} />
-        <Route path={process.env.PUBLIC_URL + '/actividades'} element={<Actividades />} />
-        <Route path={process.env.PUBLIC_URL + '/actividades/:id'} element={<ActivityDetail />} />
-        <Route path={process.env.PUBLIC_URL + '/noticias'} element={<Noticias />} />
-        <Route path={process.env.PUBLIC_URL + '/admin'} element={<Admin />} />
+        <Route path={urlBasename + '/'} element={<Inicio />} />
+        <Route path={urlBasename + '/programa'} element={<Programa />} />
+        <Route path={urlBasename + '/actividades'} element={<Actividades />} />
+        <Route path={urlBasename + '/actividades/:id'} element={<ActivityDetail />} />
+        <Route path={urlBasename + '/noticias'} element={<Noticias />} />
+        <Route path={urlBasename + '/admin'} element={<Admin />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>

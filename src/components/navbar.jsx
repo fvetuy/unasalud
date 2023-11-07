@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { close, trazoAnimalesBlanco, menu } from "../assets";
-import { navLinks } from "../constants";
+import { navLinks, urlBasename } from "../constants";
 import ContactInfoPopup from "./ui/contact_info_popup";
 import { Link } from "react-router-dom";
 
@@ -30,7 +30,7 @@ const NavBar = () => {
             (<button className="ml-5 px-4 py-4  text-white rounded" onClick={handlePopupToggle} text={nav.title}>
              Ubicacion y contacto
             </button>)  : 
-            (<a href={nav.id === "inicio" ? "/" : `/${nav.id}`}>{nav.title}</a>)}
+            (<a href={`${urlBasename}/${nav.id == "inicio" ? '' : nav.id}`}>{nav.title}</a>)}
           </li>
         ))}
       </ul>
