@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { close, trazoAnimalesBlanco, menu } from "../assets";
 import { navLinks, urlBasename } from "../constants";
 import ContactInfoPopup from "./ui/contact_info_popup";
-import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [toggle, setToggle] = useState(false)
@@ -16,13 +15,12 @@ const NavBar = () => {
   return (
     <nav className="w-full flex py-6 navbar">
       <ul className="list-none sm:flex hidden justify-between items-center flex-1">
-      <Link to="/">
           <img
+            href={`${urlBasename + '/'}`}
             src={trazoAnimalesBlanco}
             alt="una salud"
             className="w-[150px] h-[40px] object-contain"
           />
-        </Link>
         {navLinks.map((nav, index) => (
           <li
             key={nav.id} className={`dmsans font-normal cursor-pointer text-[15px] ${index === navLinks.length - 1 ? 'ml-auto' : 'ml-10'} text-white`}>
@@ -30,15 +28,13 @@ const NavBar = () => {
             (<button className="ml-5 px-4 py-4  text-white rounded" onClick={handlePopupToggle} text={nav.title}>
              Ubicacion y contacto
             </button>)  : 
-            (<a href={`${urlBasename}/${nav.id == "inicio" ? '' : nav.id}`}>{nav.title}</a>)}
+            (<Link to={`/una-salud/${nav.id == "inicio" ? '' : nav.id}`}>{nav.title}</Link>)}
           </li>
         ))}
       </ul>
       
       <div className="sm:hidden flex flex-row flex-1 justify-between items-center z-[2]">
-      <Link to="/">
-      <img src={trazoAnimalesBlanco} alt="una salud" className="w-[150px] h-[40px] object-contain"/>
-      </Link>
+      <img href={`${urlBasename + '/'}`} src={trazoAnimalesBlanco} alt="una salud" className="w-[150px] h-[40px] object-contain"/>
           <img src={toggle ?  close : menu} alt="menu" className="w-[28px] h-[28px] object-contain z-[2]" onClick={() => setToggle((prev) => !prev )}/>
           <div className={`${toggle ? 'flex' : 'hidden'} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50`}>
          
