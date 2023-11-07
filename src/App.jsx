@@ -22,7 +22,7 @@ const App = () => {
     </div>
     <div className="flex-grow">
       <Routes>
-        <Route path={process.env.PUBLIC_URL + '/inicio'} element={<Inicio />} />
+        <Route path={process.env.PUBLIC_URL + '/'} element={<Inicio />} />
         <Route path={process.env.PUBLIC_URL + '/programa'} element={<Programa />} />
         <Route path={process.env.PUBLIC_URL + '/actividades'} element={<Actividades />} />
         <Route path={process.env.PUBLIC_URL + '/actividades/:id'} element={<ActivityDetail />} />
