@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../style';
 import { logo120Fvet, logoFvetColor, logoUdelarColor, logoBadge, imagenActividad1, imagenActividad3 } from '../assets';
+import { Link } from 'react-router-dom';
 
 const Header = () => (
   <div className='w-full'>
@@ -9,23 +10,23 @@ const Header = () => (
           <img className="w-[130px] h-[130px] md:w-[150px] md:h-[150px] object-contain" src={logoBadge} alt="logo-fvet"/>
         </div>
 
-        <a href='https://www.fvet.edu.uy'>
+        <Link to='https://www.fvet.edu.uy'>
           <div className="flex items-center justify-end">
             <img className="w-[115px] h-[115px] md:w-[150px] md:h-[150px] object-contain" src={logo120Fvet} alt="logo-fvet"/>
           </div>
-        </a>
+        </Link>
 
-        <a href='https://www.fvet.edu.uy'>
+        <Link to='https://www.fvet.edu.uy'>
           <div className="flex items-center justify-end">
             <img className="w-[200px] h-[200px] md:w-[250px] md:h-[250px] object-contain" src={logoFvetColor} alt="logo-fvet"/>
           </div>
-        </a>
+        </Link>
         
-        <a href='https://udelar.edu.uy/portal/'>
+        <Link to='https://udelar.edu.uy/portal/'>
           <div className="flex items-center justify-end">
             <img className="w-[200px] h-[200px] md:w-[280px] md:h-[280px] object-contain" src={logoUdelarColor} alt="logo-fvet"/>
           </div>
-        </a>
+        </Link>
       </div>
       <div className='xs:hidden flex-col items-center h-[320px] justify-center'>
         <div className='flex flex-row justify-between w-full'>
@@ -33,25 +34,25 @@ const Header = () => (
             <img className="w-[180px] h-[180px] object-contain" src={logoBadge} alt="logo-fvet"/>
           </div>
 
-          <a href='https://www.fvet.edu.uy'>
+          <Link to='https://www.fvet.edu.uy'>
             <div className="flex items-center justify-end">
               <img className="w-[140px] h-[140px] object-contain" src={logo120Fvet} alt="logo-fvet"/>
             </div>
-          </a>
+          </Link>
         </div>
 
         <div className='flex flex-row justify-between w-full'>
-          <a href='https://www.fvet.edu.uy'>
+          <Link to='https://www.fvet.edu.uy'>
             <div className="flex items-center justify-end">
               <img className="w-[200px] h-[200px] object-contain" src={logoFvetColor} alt="logo-fvet"/>
             </div>
-          </a>
+          </Link>
           
-          <a href='https://udelar.edu.uy/portal/'>
+          <Link to='https://udelar.edu.uy/portal/'>
             <div className="flex items-center justify-end">
               <img className="w-[200px] h-[200px] object-contain" src={logoUdelarColor} alt="logo-fvet"/>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
   </div>
@@ -67,7 +68,7 @@ const Hero = () => {
           </div>
           
           <div className='hidden lg:flex flex-row justify-between w-full mt-10 '>
-            <a href='noticias'>
+            <Link to='noticias'>
               <div className='relative h-[380px] w-[230px]'>
                 <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-t from-black/80 to-black/0 rounded-lg"></div>
                 <img
@@ -79,7 +80,7 @@ const Hero = () => {
                   Noticias
                 </h1>
               </div>
-            </a>
+            </Link>
             
             <div className='flex flex-col'>
               <h1 className={`font-dmsans font-semibold ss:text-[64px] text-[52px] text-black ss:leading-[100px] leading-[75px] w-full mt-4`}>Programa Una Salud</h1>
@@ -88,7 +89,7 @@ const Hero = () => {
                 La Facultad de Veterinaria renueva su compromiso con la Sociedad con un enfoque transdisciplinario, multisectorial y colaborativo en Una Salud, Un Mundo, Un Bienestar.
               </p>
 
-              <a className="mt-3" href=" #mision-vision">Ver nuestra Misión y Visión</a>
+              <a className="mt-3" href=" #mision-vision">Ver nuestra Mision y Vision</a>
 
               <div className='flex flex-col mt-6'>
                 <p className={`${styles.ptext}`}>
@@ -113,7 +114,7 @@ const Hero = () => {
               </div>
             </div>
            
-            <a href='actividades'>
+            <Link to='actividades'>
               <div className='relative h-[380px] w-[230px]'>
                 <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-t from-black/80 to-black/0 rounded-lg"></div>
                 <img
@@ -125,7 +126,7 @@ const Hero = () => {
                   Actividades
                 </h1>
               </div>
-            </a>
+            </Link>
           </div>
 
           <div className='flex lg:hidden flex-col w-full mt-10'>
@@ -162,7 +163,7 @@ const Hero = () => {
             </div>
             
             <div className='flex flex-col w-full justify-between items-center mt-20 xs:flex-row'>
-              <a href='noticias'>
+              <Link to='noticias'>
                 <div className='relative h-[280px] w-[230px] xs:h-[260px] xs:w-[200px] ss:h-[310px] ss:w-[270px] md:h-[210px] md:w-[250px] mb-10 xs:mb-0'>
                   <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-t from-black/80 to-black/0 rounded-lg"></div>
                   <img
@@ -175,9 +176,9 @@ const Hero = () => {
                   </h1>
                 </div>
               
-              </a>
+              </Link>
             
-              <a href='actividades'>
+              <Link to='actividades'>
                 <div className='relative h-[280px] w-[230px] xs:h-[260px] xs:w-[200px] ss:h-[310px] ss:w-[270px] md:h-[210px] md:w-[250px]'>
                   <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-t from-black/80 to-black/0 rounded-lg"></div>
                   <img
@@ -189,7 +190,7 @@ const Hero = () => {
                     Actividaes
                   </h1>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
       </div>
