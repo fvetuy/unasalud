@@ -16,12 +16,9 @@ const NavBar = () => {
   return (
     <nav className="w-full flex py-6 navbar">
       <ul className="list-none sm:flex hidden justify-between items-center flex-1">
-          <img
-            href='/una-salud/'
-            src={trazoAnimalesBlanco}
-            alt="una salud"
-            className="w-[150px] h-[40px] object-contain"
-          />
+      <Link to="/una-salud/">
+        <img src={trazoAnimalesBlanco} alt="una salud" className="w-[150px] h-[40px] object-contain" />
+      </Link>
         {navLinks.map((nav, index) => (
           <li
             key={nav.id} className={`dmsans font-normal cursor-pointer text-[15px] ${index === navLinks.length - 1 ? 'ml-auto' : 'ml-10'} text-white`}>
@@ -29,7 +26,7 @@ const NavBar = () => {
             (<button className="ml-5 px-4 py-4  text-white rounded" onClick={handlePopupToggle} text={nav.title}>
              Ubicacion y contacto
             </button>)  : 
-            (<Link to={`/una-salud/${nav.id == "inicio" ? '' : nav.id}`}>{nav.title}</Link>)}
+            (<Link to={`/${nav.id == "inicio" ? '' : nav.id}`}>{nav.title}</Link>)}
           </li>
         ))}
       </ul>
@@ -49,8 +46,8 @@ const NavBar = () => {
             }} text={nav.title}>
               Ubicacion y contacto
             </button>)  : 
-            (<a href={nav.id === "inicio" ? `${process.env.PUBLIC_URL + "/"}` : `${process.env.PUBLIC_URL + "/" + nav.id}`}>{nav.title}</a>)}
-          </li>
+             (<Link to={`/${nav.id == "inicio" ? '' : nav.id}`}>{nav.title}</Link>)}
+            </li>
         ))}
       </ul>
 

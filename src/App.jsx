@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import styles from './style';
+import { Outlet } from 'react-router-dom';
 import { NavBar, Footer } from './components';
-import backgroundTexture from './assets/background_texture.jpg';
+import backgroundTexture from './assets/background_texture.jpg'; // Import the background image
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         </div>
       </div>
     </div>
+    <Outlet/>
     <div className="mt-auto">
       <Footer />
     </div>

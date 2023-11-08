@@ -3,7 +3,7 @@ import styles from '../style';
 import { Hero, MisionVision } from '../components';
 import { logoBadge } from '../assets';
 
-const inicio = () => {
+const Inicio = () => {
   return (
     <div className='mb-40'>
       <div className={`${styles.paddingX} ${styles.flexCenter}`}> 
@@ -23,4 +23,4 @@ const inicio = () => {
   )
 }
 
-export default inicio
+export default Inicio

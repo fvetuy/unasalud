@@ -4,7 +4,7 @@ import { programHeaderImage, cordinatorPhoto, logoBadge, imagenActividad1, image
 import { cordinatorInfo, cordinatorName } from "../constants";
 import { MisionVision} from '../components';
 
-const programa = () => {
+const Programa = () => {
   return (
     <div className="flex flex-col text-center">
        <div className="relative w-full h-[300px] md:h-[450px]">
@@ -47,4 +47,4 @@ const programa = () => {
   )
 }
 
-export default programa;
+export default Programa;
