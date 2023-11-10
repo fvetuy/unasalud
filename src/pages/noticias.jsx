@@ -49,7 +49,7 @@ const Noticias = () => {
       )}
       {!isLoading && !error && noticias.length === 0 && (
         <div className="text-center flex justify-center items-center h-[500px]">
-          No hay noticias actualmente
+          No hay noticias actualmente.
         </div>
       )}
       {currentNoticia && !isLoading && !error && noticias.length > 0 && (

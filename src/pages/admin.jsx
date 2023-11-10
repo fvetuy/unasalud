@@ -322,7 +322,7 @@ const AdminNewsAndActivities = ({ logout }) => {
                 <option value="extension">Extensión</option>
               </select>
              </div>
-              {(activitiesToShow.length <= 0 ? <p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay actividades para mostrar..</p> : <div></div>)}
+              {(activitiesToShow.length <= 0 ? <p className={`text-[17px]  mt-4 mb-4 rounded-md]`}>No hay actividades para mostrar.</p> : <div></div>)}
               {activitiesToShow.map((activityData) => (
                 <div key={activityData.id} className='flex flex-row items-center'>
                   <div className='flex flex-row w-full bg-white my-3 sm:my-7 rounded-md sm:rounded-xl pl-3 py-3'>

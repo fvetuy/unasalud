@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../style';
 import { logo120Fvet, logoFvetColor, logoUdelarColor, logoBadge, imagenActividad1, imagenActividad3 } from '../assets';
 import { Link } from 'react-router-dom';
+import { Link as ScrollLink, Element } from 'react-scroll';
 
 const Header = () => (
   <div className='w-full'>
@@ -88,8 +89,17 @@ const Hero = () => {
               <p className={`font-dmsans text-[22px] font-medium text-black/70 my-4 max-w-[600px]`}>
                 La Facultad de Veterinaria renueva su compromiso con la Sociedad con un enfoque transdisciplinario, multisectorial y colaborativo en Una Salud, Un Mundo, Un Bienestar.
               </p>
-
-              <a className="mt-3" href=" #mision-vision">Ver nuestra Mision y Vision</a>
+              <ScrollLink
+                activeClass="active"
+                to="mision-vision"
+                spy={true}
+                className='mt-3 cursor-pointer'
+                smooth={false}
+                offset={-50}
+                duration={300}
+              >
+                Ver nuestra Mision y Vision
+              </ScrollLink>
 
               <div className='flex flex-col mt-6'>
                 <p className={`${styles.ptext}`}>
@@ -136,8 +146,17 @@ const Hero = () => {
                 <p className={`${styles.ptext} my-4 max-w-[600px]`}>
                   La Facultad de Veterinaria renueva su compromiso con la Sociedad con un enfoque transdisciplinario, multisectorial y colaborativo en Una Salud, Un Mundo, Un Bienestar.
                 </p>
-
-                <a className="mt-3" href=" #mision-vision">Ver nuestra Mision y Vision</a>
+                <ScrollLink
+                  activeClass="active"
+                  to="mision-vision"
+                  spy={true}
+                  className='mt-3 cursor-pointer'
+                  smooth={false}
+                  offset={-50}
+                  duration={300}
+                >
+                  Ver nuestra Mision y Vision
+                </ScrollLink>
 
                 <div className='flex flex-col mt-6'>
                   <p className={`${styles.ptext}`}>

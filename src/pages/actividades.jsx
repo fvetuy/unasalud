@@ -76,28 +76,30 @@ const Actividades = () => {
               </div>
             </div>
             <section id='muestraActividades' className={`flex justify-center items-center flex-col sm:flex-row flex-wrap sm:mb-20 mb-10 ${styles.marginX}`}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-            {activitiesToShow.length <= 0 ? (
-              <p className={`text-[17px] mt-36 mb-96 rounded-md`}>No hay actividades para mostrar..</p>
-) : (
-        activitiesToShow.map((activityData) => (
-<div key={activityData.id} className='mb-6 xs:mb-10'>
-  <a href={`/actividades/${activityData.id.toLowerCase()}`}>
-    <div className="flex sm:justify-normal md:justify-normal justify-center items-center">
-      <div className="min-w-22 h-full">
-        <img className='rounded-xl object-cover w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80' src={activityData.imagenURL} alt={`...`} />
-        <h4 className={`${styles.h3text} self-auto xs:mb-2 xs:pl-0 xs:p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
-          {activityData.titulo.slice(0, 20).toString()}
-        </h4>
-        <p className={`${styles.ptext} font-poppins font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-normal text-black self-auto`} dangerouslySetInnerHTML={{ __html: activityData.descripcion.slice(0, 99)}}></p>
-    <button className="text-black bg-transparent border-none md:text-[18px] sm:text-[16px] mt-6"><Link to={`/actividades/${activityData.id.toLowerCase()}`}>Más info</Link></button>
-      </div>
-    </div>
-  </a>
-</div>
-        ))
-)}
-</div>
+            <div className={`${activitiesToShow.length > 0 ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10' : 'flex flex-1'}`}>
+              {activitiesToShow.length <= 0 ? (
+                <p className={`text-[18px] rounded-md`}>No hay actividades para mostrar.</p>
+              ) : (
+              activitiesToShow.map((activityData) => (
+                <div key={activityData.id} className='mb-6 xs:mb-10'>
+                  <Link to={`/actividades/${activityData.id.toLowerCase()}`}>
+                    <div className="flex sm:justify-normal md:justify-normal justify-center items-center">
+                      <div className="min-w-22 h-full">
+                        <img className='rounded-xl object-cover w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80' src={activityData.imagenURL} alt={`...`} />
+                        <h4 className={`${styles.h3text} self-auto xs:mb-2 xs:pl-0 xs:p-5 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl`}>
+                          {activityData.titulo.slice(0, 20).toString()}
+                        </h4>
+                        <p className={`${styles.ptext} font-poppins font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl leading-normal text-black self-auto`} dangerouslySetInnerHTML={{ __html: activityData.descripcion.slice(0, 99)}}></p>
+                        <button className="text-black bg-transparent border-none md:text-[18px] sm:text-[16px] mt-6">
+                          <Link to={`/actividades/${activityData.id.toLowerCase()}`}>Más info</Link>
+                        </button>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))
+            )}
+            </div>
 </section>
           </div>
         )
