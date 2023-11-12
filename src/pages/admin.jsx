@@ -459,13 +459,10 @@ const Admin = () => {
       setNewsError(null);
 
       if (success) {
-        const loggedInUser = await checkUserLoggedIn();
-
-        if (loggedInUser) {
-          setIsAdmin(validateUserAdminToken(loggedInUser));
-        }
+        setIsAdmin(true)
       } else {
         setNewsError('No se ha podido entrar como Admin. Por favor verifica las credenciales');
+        setIsAdmin(false);
       }
 
       setIsLoadingNews(false);

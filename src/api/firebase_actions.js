@@ -22,18 +22,27 @@ initializeApp(config);
 const db = getFirestore();
 const auth = getAuth(); // Initialize Firebase Authentication
 
-
-
 // Function to log in a user
 export const login = async (email, password) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password); // Use signInWithEmailAndPassword from Firebase Auth
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Verifying the "admin" claim
+    const isAdmin = validateUserAdminToken(user);
+
+    if (!isAdmin) {
+      // If the user doesn't have admin privileges, log them out
+      await logout();
+      throw new Error('Usuario no tiene privilegios de admin.');
+    }
+
     return true; // Login successful
   } catch (error) {
-    throw new Error('Login failed. Please check your credentials.'); // Throw an error for handling in the component
+    console.error(error);
+    throw new Error('Verifica tus credenciales.'); // Throw an error for handling in the component
   }
 };
-
 // Function to check if a user is logged in
 export const checkUserLoggedIn = () => {
   return new Promise((resolve) => {
