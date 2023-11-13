@@ -34,6 +34,17 @@ export const misionYVision = [
   }
 ];
 
+export const coCoordinadores = [
+  "Juan Perez",
+  "Pedro Sanchez",
+  "Luis Alberto Torres",
+];
+
+export const asesores = [
+  "Valentino Rodriguez",
+  "Dr. Maximiliano Ortiz",
+];
+
 export const quillModules = {
   toolbar: [
     ['bold', 'italic', 'underline', 'strike'], // Text formatting buttons

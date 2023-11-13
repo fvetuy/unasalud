@@ -8,6 +8,11 @@
   font-family: dmsans;
   src: url(..//DMSans-Regular.ttf);
 }
+
+body{
+  background-color: #ede6d4;
+}
+
 .dmsans{
   font-family: dmsans;
 }

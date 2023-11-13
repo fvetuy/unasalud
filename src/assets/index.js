@@ -10,7 +10,7 @@ import IconoActividad3 from "./IconoActividad3.png";
 import logoFvetColor from "./logoFvetColor.png";
 import logoUdelarColor from "./logoUdelarColor.png";
 import programHeaderImage from "./programHeaderImage.png";
-import cordinatorPhoto from "./cordinatorPhoto.png";
+import cordinatorPhoto from "./cordinatorPhoto.jpeg";
 import logoBadge from "./logoBadge.png";
 import imagenActividad1 from "./imagen_actividad_1.png";
 import imagenActividad2 from "./imagen_actividad_2.png";

@@ -35,7 +35,9 @@ const NavBar = () => {
       <Link to="/">
         <img src={trazoAnimalesBlanco} alt="una salud" className="w-[150px] h-[40px] object-contain" />
       </Link>
-      <button onClick={() => setToggle((prev) => !prev)}>
+      <button onClick={() => {
+        setToggle((prev) => !prev)
+      }}>
        {toggle ? (<div/>) : (<FaBars width={28} height={28} color="white"/>)}
       </button>
       <div className={`${toggle ? 'flex flex-col' : 'hidden'} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50`}>
@@ -48,12 +50,12 @@ const NavBar = () => {
           <li key={nav.id} className={`dmsans font-normal cursor-pointer text-[16px] ${index === navLinks.length - 1 ? 'mr-0' : 'mb-4'} text-white`}>
             {index === navLinks.length - 1 ? 
             (<button className="text-white rounded" onClick={() => {
+              setToggle(false);
               handlePopupToggle();
-              setToggle(prev => !prev);
             }} text={nav.title}>
               Ubicacion y contacto
             </button>)  : 
-             (<Link to={`/${nav.id == "inicio" ? '' : nav.id}`}>{nav.title}</Link>)}
+             (<Link onClick={() => setToggle(false)} to={`/${nav.id == "inicio" ? '' : nav.id}`}>{nav.title}</Link>)}
             </li>
         ))}
         <div className="w-full h-[0.5px] bg-white mx-2 my-4"></div>

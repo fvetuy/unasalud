@@ -10,7 +10,6 @@ const App = () => {
   style={{
     backgroundImage: `url(${backgroundTexture})`,
     backgroundRepeat: 'repeat',
-    backgroundSize: 'cover',
   }}>
     <div className="flex-shrink-0 bg-black">
       <div className={`${styles.paddingX} ${styles.flexCenter}`}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../style';
 import { programHeaderImage, cordinatorPhoto, logoBadge, imagenActividad1, imagenActividad2, imagenActividad3 } from '../assets/index';
-import { cordinatorInfo, cordinatorName } from "../constants";
+import { cordinatorInfo, cordinatorName, coCoordinadores, asesores } from "../constants";
 import { MisionVision} from '../components';
 
 const Programa = () => {
@@ -28,6 +28,28 @@ const Programa = () => {
         <p className={`${styles.ptext} text-left max-w-[700px] block md:hidden mt-10`}>{cordinatorInfo}</p>
        </div>
        <img className="w-[200px] h-[200px] object-contain mx-auto mt-20 hidden md:block" src={logoBadge} alt="program-header-image"/>
+       <div className={`flex-col grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 sm:gap-60 gap-2 mt-20 mb-20`}>
+          <div className='flex flex-col'>
+            <div className={`font-dmsans ${styles.flexCenter} text-[30px] font-medium text-black`}>
+              Cocoordinadores
+            </div>
+            <ul>
+              {coCoordinadores.map((cocoordinador, index) => (
+                <li key={index}>•{cocoordinador}</li>
+              ))}
+            </ul>
+          </div>
+          <div className='flex flex-col mt-10 sm:mt-0'>
+            <div className={`font-dmsans ${styles.flexCenter} text-[30px] font-medium text-black`}>
+              Asesores
+            </div>
+            <ul>
+              {asesores.map((asesor, index) => (
+                <li key={index}>•{asesor}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
        <MisionVision/>
        <div className='mt-60 mb-10 relative w-full h-[300px] p-4 md:p-6'>
         <div className="absolute top-0 w-[200px] h-[200px] sm:w-[270px] sm:h-[270px]">

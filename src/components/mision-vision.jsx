@@ -9,9 +9,9 @@ const misionVision = () => {
   {misionYVision.map((misionVision) => (
     <div key={misionVision.id} className="flex flex-col mt-0">
       <div className={`font-dmsans ${styles.flexCenter} text-[30px] font-medium text-black mb-4`}>
-        <h4>
+
           {misionVision.id}
-        </h4>
+
       </div>
       <p className={`${styles.ptext} max-w-[1400px] text-center`}>
         {misionVision.texto}
