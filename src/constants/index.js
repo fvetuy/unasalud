@@ -35,9 +35,18 @@ export const misionYVision = [
 ];
 
 export const coCoordinadores = [
-  "Juan Perez",
-  "Pedro Sanchez",
-  "Luis Alberto Torres",
+  {
+    nombre: "Dr. Juan Manuel Verdes Garcia",
+    afiliacion: "Unidad Académica de Patología. Departamento de Patobiología",
+    intereses: "Intereses que competen a Una Salud: Investigación diagnóstica de diferentes patógenos (infecciosos, parasitarios, tóxicos) que afectan la salud y el bienestar de los animales, el hombre y el ambiente, con énfasis en aquellos causantes de zoonosis.",
+    link: "https://www.fvet.edu.uy/departamentos/patobiologia/",
+  },
+  {
+    nombre: "Dr. Juan Pablo Damián",
+    afiliacion: " Departamento de Biociencias Veterinarias y Núcleo de Bienestar Animal",
+    intereses: "Etología, Bienestar, Salud Pública",
+    link: "https://www.fvet.edu.uy/departamentos/biociencias-veterinarias/",
+  },
 ];
 
 export const asesores = [
@@ -60,71 +69,4 @@ export const quillFormats = [
 
 export const cordinatorName = "María Teresa Correa";
 
-export const cordinatorInfo = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting.";
-
-export const actividades = [
-   // Se van a mostrar solamente los primeros tres elementos del array de actividades en la pagina principal
-  {
-    id: "Educacion",
-    icono: IconoActividad1,
-    img: ImgActividad1,
-    texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "educacion" 
-  },
-  {
-    id: "Investigacion",
-    icono: IconoActividad2,
-    img: ImgActividad2,
-    texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "investigacion" 
-  },
-  {
-    id: "Extension",
-    icono: IconoActividad3,
-    img: ImgActividad3,
-    texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "extension" 
-  },
-  {
-    id: "ActividadX",
-    icono: IconoActividad3,
-    img: ImgActividad3,
-    texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "Investigacion" 
-  },
-  {
-    id: "ActividadY",
-    icono: IconoActividad3,
-    img: ImgActividad3,
-    texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "Investigacion" 
-  },
-  {
-    id: "ActividadZ",
-    icono: IconoActividad3,
-    img: ImgActividad3,
-    texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "Investigacion" 
-  },
-  {
-    id: "ActividadA",
-    icono: IconoActividad3,
-    img: ImgActividad3,
-    texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "Investigacion" 
-  },
-  {
-    id: "ActividadB",
-    icono: IconoActividad3,
-    img: ImgActividad3,
-    texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "Investigacion" 
-  },
-  {
-    id: "ActividadC",
-    icono: IconoActividad3,
-    img: ImgActividad3,
-    texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    categoria: "Investigacion" 
-  },
-];
+export const cordinatorInfo = "La Dra. Maria Teresa Correa es la Coordinadora del Program Una Salud. Como Asistente Academica para Una Salud, desde la Facultad de Veterinaria de la UdelaR, es ademas responsable de el Nucleo Academico de Una Salud y de otros programas y proyectos en este tema. Sus intereses cubren areas de estadistica, epidemiologica, salud publica, antropologia medica, analisis y comunicacion de riesgo y politicas sanitarias. Es Profesora Emerita de la Universidad de Carolina del Norte y Academica de Honor de la Academia Nacional de Veterinaria, Uruguay.";

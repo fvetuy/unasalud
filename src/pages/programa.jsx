@@ -3,6 +3,7 @@ import styles from '../style';
 import { programHeaderImage, cordinatorPhoto, logoBadge, imagenActividad1, imagenActividad2, imagenActividad3 } from '../assets/index';
 import { cordinatorInfo, cordinatorName, coCoordinadores, asesores } from "../constants";
 import { MisionVision} from '../components';
+import { Link } from 'react-router-dom';
 
 const Programa = () => {
   return (
@@ -29,24 +30,31 @@ const Programa = () => {
        </div>
        <img className="w-[200px] h-[200px] object-contain mx-auto mt-20 hidden md:block" src={logoBadge} alt="program-header-image"/>
        <div className={`flex-col grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 sm:gap-60 gap-2 mt-20 mb-20`}>
-          <div className='flex flex-col'>
-            <div className={`font-dmsans ${styles.flexCenter} text-[30px] font-medium text-black`}>
+          <div className='flex flex-col mx-5'>
+            <div className={`font-dmsans ${styles.flexCenter} text-[30px] font-medium text-black mb-3`}>
               Cocoordinadores
             </div>
             <ul>
-              {coCoordinadores.map((cocoordinador, index) => (
-                <li key={index}>•{cocoordinador}</li>
-              ))}
-            </ul>
+            {coCoordinadores.map((cocoordinador, index) => (
+              <li
+                key={index}
+                className='mb-3'
+              >
+                <p className='text-[20px]'>•{cocoordinador.nombre}</p>
+                <p className='my-2'>Afiliacion: {cocoordinador.afiliacion}</p>
+                Intereses: {cocoordinador.intereses}
+                <br />
+                <Link to = {cocoordinador.link} className='font-medium my-2'>Mas info</Link>
+              </li>
+            ))}
+          </ul>
           </div>
           <div className='flex flex-col mt-10 sm:mt-0'>
             <div className={`font-dmsans ${styles.flexCenter} text-[30px] font-medium text-black`}>
               Asesores
             </div>
             <ul>
-              {asesores.map((asesor, index) => (
-                <li key={index}>•{asesor}</li>
-              ))}
+              
             </ul>
           </div>
         </div>
